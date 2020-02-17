@@ -1,0 +1,88 @@
+
+/*
+
+Contains styles to be used for all pages (headers / footers)
+
+
+
+ */
+
+@import url('https://fonts.googleapis.com/css?family=Arvo&display=swap');
+*, *::before, *::after{
+    box-sizing: border-box;
+}
+body{
+    padding:0;
+    margin:0;
+    background-image: url("../images/background.jpg");;
+    font-family: Arvo, sans-serif;
+    font-size: 1.2rem;
+    color:white;
+    min-height: 100vh;
+}
+
+.full-height-grow{
+    display: flex;
+    flex-direction: column;
+}
+
+.logo {
+    display: flex;
+    align-items: center;
+    font-size: 1.25em ;
+    color: inherit;
+    text-decoration: none;
+}
+
+.brand-name {
+    margin-left: 1rem;
+}
+
+.main-nav ul {
+    display: flex;
+    margin:0;
+    padding: 0;
+    list-style: none;
+}
+
+.main-nav a {
+    color: inherit;
+    text-decoration: none;
+    padding: 1rem;
+}
+
+.main-nav a:hover {
+    color: #adadad;
+}
+
+.main-header{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.container{
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 40px;
+}
+
+.title {
+    font-weight: 500;
+    font-size: 3em;
+    margin-bottom: 1rem;
+    margin-top: 0;
+}
+.subtitle {
+    font-weight: 500;
+    font-size: 1.2em;
+    margin-bottom: 3rem;
+}
+.btn {
+    color:white;
+    background-color: orangered;
+    padding: .75rem 1.5rem;
+    border-radius: .5rem;
+    text-decoration: none;
+    font-size: .9rem;
+}
