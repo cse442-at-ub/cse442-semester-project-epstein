@@ -15,6 +15,7 @@
     display: flex;
     align-items: stretch;
     justify-content: flex-end;
+    padding: 0 40px;
 }
 .home-main-section .main-img{
     background-image: url("../images/home-art.png");
@@ -32,6 +33,7 @@
     align-items: flex-start;
     margin: 1rem;
     align-self: center;
+    padding: 0 40px;
 }
 
 /*

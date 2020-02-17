@@ -3,8 +3,6 @@
 
 Contains styles to be used for all pages (headers / footers)
 
-
-
  */
 
 @import url('https://fonts.googleapis.com/css?family=Arvo&display=swap');
@@ -14,7 +12,6 @@ Contains styles to be used for all pages (headers / footers)
 body{
     padding:0;
     margin:0;
-    /*background-image: url("../images/background.jpg");;*/
     background: #9053c7;
     background: -webkit-linear-gradient(-135deg, #f0ffb1, #fdc689);
     background: -o-linear-gradient(-135deg, #f0ffb1, #fdc689);
@@ -37,48 +34,45 @@ body{
     font-size: 1.25em ;
     color: inherit;
     text-decoration: none;
-    margin-left: 3px;
+    margin-left: 20px;
 }
 
-.brand-name {
-    margin-left: 1rem;
-}
 
-.main-nav {
+.ls-button {
     display: flex;
-    margin:0;
+    margin-right: 20px;
+    background-color: darkslategrey;
     padding: 0;
-    background: grey;
+    border-radius: .5rem;
+    text-decoration: none;
+    font-size: .9rem;
 
 }
 
-.main-nav a {
-    color: inherit;
+.ls-button a {
+    color: white;
     text-decoration: none;
     padding: 1rem;
-    background: -webkit-linear-gradient(-135deg, #f0ffb1, #fdc689);
-    background: -o-linear-gradient(-135deg, #f0ffb1, #fdc689);
-    background: -moz-linear-gradient(-135deg, #f0ffb1, #fdc689);
-    background: linear-gradient(-135deg, #f0ffb1, #fdc689);
 }
 
-.main-nav a:hover {
-    color: #adadad;
+.ls-button:hover {
+    background-color: darkred;
 }
 
 .main-header{
     display: flex;
     justify-content: space-between;
     align-items: center;
-    background: white;
+    background: #ff9966;  /* fallback for old browsers */
+    background: -webkit-linear-gradient(to top, #ff5e62, #ff9966);  /* Chrome 10-25, Safari 5.1-6 */
+    background: linear-gradient(to top, #ff5e62, #ff9966); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
     color: black;
-
 }
 
 .container{
     max-width: 1440px;
     margin: 0 auto;
-    padding: 0;
+    padding: 0 0px;
 }
 
 .title {
@@ -92,11 +86,20 @@ body{
     font-size: 1.2em;
     margin-bottom: 3rem;
 }
-.btn {
+.subtitle2{
+    font-weight: 500;
+    font-size: 1.2em;
+    margin-bottom: 3rem;
+}
+.join-btn {
     color:white;
-    background-color: orangered;
+    background-color: darkslategrey;
     padding: .75rem 1.5rem;
     border-radius: .5rem;
     text-decoration: none;
     font-size: .9rem;
 }
+.join-btn:hover {
+    background-color: darkred;
+}
+
