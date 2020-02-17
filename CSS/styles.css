@@ -14,10 +14,15 @@ Contains styles to be used for all pages (headers / footers)
 body{
     padding:0;
     margin:0;
-    background-image: url("../images/background.jpg");;
+    /*background-image: url("../images/background.jpg");;*/
+    background: #9053c7;
+    background: -webkit-linear-gradient(-135deg, #f0ffb1, #fdc689);
+    background: -o-linear-gradient(-135deg, #f0ffb1, #fdc689);
+    background: -moz-linear-gradient(-135deg, #f0ffb1, #fdc689);
+    background: linear-gradient(-135deg, #f0ffb1, #fdc689);
     font-family: Arvo, sans-serif;
     font-size: 1.2rem;
-    color:white;
+    color:black;
     min-height: 100vh;
 }
 
@@ -59,6 +64,7 @@ body{
     display: flex;
     justify-content: space-between;
     align-items: center;
+
 }
 
 .container{
