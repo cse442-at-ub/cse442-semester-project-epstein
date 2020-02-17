@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <title>profile</title>
+  </head>
+  <body>
+  	<div id="background">
+  
+  	<div id="top_container">
+  		<div id="top_bar">
+			<img src="https://s3-us-west-2.amazonaws.com/figma-alpha-api/img/2c86/0145/a380ebf943b3603d2539b7a959293bed" width="1152" height="94">
+	  	</div>
+  		<img src="https://s3-us-west-2.amazonaws.com/figma-alpha-api/img/d142/4144/9aa20bc3ef1e731745f99df9b3aea96f" width="1152" height="94" id="barstyle">
+ 		<img src="https://s3-us-west-2.amazonaws.com/figma-alpha-api/img/07d1/8609/15b8a7f80b9492690d9cee0e9952176a" width="95" height="92" id="home">
+  		<img src="https://s3-us-west-2.amazonaws.com/figma-alpha-api/img/1159/4455/cb1a2216adacc8259b6688a9d12f7f10" width="88" height="94" id="heisenberg">
+  	</div>
+  	<div class="group" id="basic_info">
+		<div class="left top rectangle" id="profile_pic"></div>
+		<div class="left top rectangle" id="pic_icon"></div>
+		<div class="left top text" id="name">Josh Grimm</div>
+		<div class="left top rectangle" id="dm_icon"></div>
+		<div class="left top rectangle" id="share_icon"></div>
+		<div class="left top rectangle" id="edit_icon"></div>
+		<div class="left top rectangle" id="info"></div>
+		<div class="left top text" id="major">Major:</div>
+		<div class="left top text" id="year">Class of:</div>
+		<div class="left top text" id="linkedin">LinkedIn:</div>
+		<div class="left top text" id="github">GitHub:</div>
+	</div>
+  </body>
+</html>
+
+<style>
+
+#background {
+	background-image: url("https://s3-alpha-sig.figma.com/img/f749/1af2/d1e1694f5daa5b6ed2f6549c3b961f60?Expires=1582502400&Signature=TyDu2Yp~hydcInmmzwbAcg~36oB67t7kh2as3mSw~uwmIA9BNOMjd~CXBwnBLrciZmMmrfPeffIiNPerWdsnO5StEs3ues~yNbyPspXu96V7LSea7iH2Si6llwKUm2BklNKfeluWbtQIGj51xJnVbIfW6oWTxM3~M7WSAIAqGsxHyh~kQltbHRBa4wWcXy0uc-j8Fwsq0ywUaYiBc1CrV5vV7CfbYm1xbtrudHX0Ck~65vXhJRjAl3fpZxJYZpX~xlRGe7TdUHAR1KhIfxYawKUS~B3E8VPCrzk2LDYCnIe6DYL5YtUKfk2~8-tAgzJEsxqJBFnMvpeQ79HV3oqVyw__&Key-Pair-Id=APKAINTVSUGEWH5XD5UA");
+	background-repeat: no-repeat;
+	background-position: center center;
+	width: 1152px;
+	height: 700px;
+	z-index: 0;
+}
+
+
+
+#top_container {
+width: 1152px;
+height: 100px;
+position: relative;
+}
+
+#top_bar,
+#barstyle{
+width: 100%;
+height: 100%;
+position: absolute;
+top: 0;
+}
+#home,
+#heisenberg{
+width: 90%;
+height: 90%;
+position: absolute;
+top: 0;
+}
+#top_bar{
+z-index:3;
+}
+#barstyle{
+z-index: 5;
+}
+#home{
+z-index: 10;
+right: 580px;
+}
+#heisenberg{
+z-index: 10;
+left: 580px;
+}
+
+	#profile_pic {
+			background: rgb(196, 196, 196);
+			border-radius: 40px;
+			width: 180px;
+			top: 94px;
+			height: 180px;
+		}
+	#pic_icon {
+			background-image: url("https://s3-alpha-sig.figma.com/img/b910/ab0e/70d02482df0970b7323c32cb453e8dca?Expires=1582502400&Signature=H8~E7HcmZtWBmX3mj1fAGa0larzTcaHjQLkYrjUTAufUbubcyFMSRtJztf0RAahVBHiDqfqfL02xVNS0tEIOC4hlHVpbY82ewWcSrAWS-2fQrDl4F7VtuVrvJa-Yx3LWZRnsmX0pSBOFfRaeSzWiFPvpISLi3PMOMt3Z-qDiwy1eNS5f8DCGhJ38~NL08j3k3q79rsEGtA9FLL8tddn0jHFO5MQyT17dzlqjtFrw4aYRACQ8LB9W4F5xW5dnj5liOJ0MHa8dCVmMlUc8FcuUyX8B4Z7EPp2gco7Cs-DapP-xJv06Ej2SiKqDfx2USx31oI-7zBUX6Ioyq2i7ZQQIJA__&Key-Pair-Id=APKAINTVSUGEWH5XD5UA");
+			background-size: cover;
+			background-repeat: no-repeat;
+			background-position: center center;
+			position:absolute;
+			left: 52px;
+			width: 90px;
+			top: 160px;
+			height: 76.7442px;
+			z-index:10;
+		}
+ 
+		#name {
+			font-family: ABeeZee;
+			font-size: 24px;
+			font-weight: 400;
+			letter-spacing: 0px;
+			color: rgb(0, 0, 0);
+			vertical-align: middle;
+			text-align: center;
+			justify-content: center;
+			width: 180px;
+			align-items: center;
+			line-height: 28.125px;
+			height: 52px;
+			top: 280px;
+		}
+		#dm_icon {
+			background-image: url("https://s3-alpha-sig.figma.com/img/714b/c018/4ed65e47bfb4e365835faa7b0f479801?Expires=1582502400&Signature=EvSDUjXWCDNei5hw~IAh4IdMaCT5RAqF7xwpU17n9eBl8z-kgaJG5LyHsqD3SBfZ~aO9YaMPIn6vZPZ~Igs7remo7k8bBoY2izY~4v~caQAU3Ru14bUJOW4PlWNQWvBHYpbMMIggQGYuhhWR8ukq4Vvh7wgtoDyxlSDHWlrEUI9vrQLCVhb5j8k6qNa0Pg5ZWoXrLgGxH6LH8KO~WryZIQ1ggJV~jlzxZtFER2xx6SqJSOoJJHNXTBuZJJxMmHraS4j4BC8tK6AYE4iJ~edQIYB5gbAVOfoYKIb5XXLwDNqdxoLsyZDejART6gaTT6063TVd95aSQMxGTp7hn4Kj9g__&Key-Pair-Id=APKAINTVSUGEWH5XD5UA");
+			background-size: cover;
+			background-repeat: no-repeat;
+			background-position: center center;
+			position:absolute;
+			top:323px;
+			left: 15px;
+			width: 40px;
+			height: 40px;
+		}
+ 		#share_icon {
+			background-image: url("https://s3-alpha-sig.figma.com/img/bc38/d0cd/3a12b158c9fe6c863deff43941fb6407?Expires=1582502400&Signature=USinl0tUBC2S4N~9frqRNZC2QiCCZcYA7Y-kPtKWYJ4GoVMGu49LiNC1rXFXQJmvOukD--yOaF6c6lGIxLBaQXLwiG2~prCHpsjCFRvNesEN6gmeYa2rPPAeqixrtG-dp4j709L39tcN-kNu4TZllWx6OB8xYwKS~jRxem-kJyoMkNaI6UPv5aLylmb0EtTDqSvRBZNehhRIYp7IFD-kx-eNnEZnFgS7NDSyAbcardUtFijTjDRV0bN0oY4ut8D2D~s1n7Xdrv7er7iRF~F1mn8ZNXqXJ~i8dtdFdbeFoC3tgbidPzu2iie1s5QbDDXyv9rgS5MHlzrVWupShl3ygQ__&Key-Pair-Id=APKAINTVSUGEWH5XD5UA");
+			background-size: cover;
+			background-repeat: no-repeat;
+			background-position: center center;
+			position:absolute;
+						top:323px;
+			left: 63px;
+			width: 40px;
+			height: 40px;
+		}
+ 
+ 
+		#edit_icon {
+			background-image: url("https://s3-alpha-sig.figma.com/img/9260/edb8/2ef659a8767ab49b60d7b6d3007780cd?Expires=1582502400&Signature=HbIYsp~Yr9X-GlWgqjBvAKtRSqR~gKYW07ETNUANPricMWrKTztm2Ok07yiaPJV7vRlEJF1ACYq8K7qG9ATWnQOhUftFM0PAHlayFoooZb5DiuQLUpBTIRc15cxdDYD2MXWXx6pq-h9spnEtzEdR8yCd9MkmK89hBJs~RtC0fKthr00vOJiDGdUwGt4XPkg7L7bFAVWVtnOrEBzN~dRmKQdiZ~7KtBPQIp0wXEExaYo08ahq0ohdWkCm9sA9bcl~v9~zUl21s-JAdMzZ3Mz2ZCPzp2S-d8D8Wa-hprgbFUV2qC~h1IuDLjeaQ4fzYPjRDT86A5eE~4nSdG8-hmAnTA__&Key-Pair-Id=APKAINTVSUGEWH5XD5UA");
+			background-size: cover;
+			background-repeat: no-repeat;
+			background-position: center center;
+			position:absolute;
+			left: 105px;
+			width: 50px;
+			top: 318px;
+			height: 48.2759px;
+		}
+ 
+ 
+		#info {
+			background: rgb(196, 196, 196);
+			border-radius: 40px;
+			width: 180px;
+			top: 371px;
+			height: 279px;
+			position:absolute;
+		}
+ 
+		#github {
+			font-family: ABeeZee;
+			font-size: 16px;
+			font-weight: 400;
+			letter-spacing: 0px;
+			color: rgb(0, 0, 0);
+			vertical-align: middle;
+			text-align: center;
+			justify-content: center;
+			width: 108px;
+			align-items: center;
+			line-height: 18.75px;
+			height: 39px;
+			left: -13px;
+			top: 546px;
+			position:absolute;
+		}
+ 
+		#major {
+			font-family: ABeeZee;
+			font-size: 16px;
+			font-weight: 400;
+			letter-spacing: 0px;
+			color: rgb(0, 0, 0);
+			vertical-align: middle;
+			text-align: center;
+			justify-content: center;
+			width: 103px;
+			align-items: center;
+			line-height: 18.75px;
+			height: 74px;
+			left: -13px;
+			top: 394px;
+			position:absolute;
+		}
+ 
+		#linkedin {
+			font-family: ABeeZee;
+			font-size: 16px;
+			font-weight: 400;
+			letter-spacing: 0px;
+			color: rgb(0, 0, 0);
+			vertical-align: middle;
+			text-align: center;
+			justify-content: center;
+			width: 121px;
+			align-items: center;
+			line-height: 18.75px;
+			height: 47px;
+			left: -13px;
+			top: 478px;
+			position:absolute;
+		}
+ 
+		#year {
+			font-family: ABeeZee;
+			font-size: 16px;
+			font-weight: 400;
+			letter-spacing: 0px;
+			color: rgb(0, 0, 0);
+			vertical-align: middle;
+			text-align: center;
+			justify-content: center;
+			width: 67px;
+			align-items: center;
+			line-height: 18.75px;
+			height: 74px;
+			top: 430px;
+			position:absolute;
+		}
+ 
+	
+ 
+
+
+</style>
