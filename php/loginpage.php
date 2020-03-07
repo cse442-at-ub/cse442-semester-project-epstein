@@ -30,23 +30,22 @@
 				<img src="../images/IconCSE442.png" alt="IMG">
 			</div>
 
-			<form class="login100-form validate-form">
+
+			<form class="login100-form validate-form" action = "processlogin.php" method="POST">
 					<span>
-						<center>
 							<img src="../images/loginImage.png" alt="Girl in a jacket" style="width:30%;height:auto;">
-						</center>
 					</span>
 				<span class="login100-form-title">
 						Student Login
 					</span>
 				<span>
-						<center>
 							<button class="button button1" height=10px>Switch Mode</button>
-						</center>
 					</span>
 
 				<div class="wrap-input100 validate-input" data-validate = "Valid email is required: ex@abc.xyz">
+
 					<input class="input100" type="text" name="email" placeholder="Email">
+
 					<span class="focus-input100"></span>
 					<span class="symbol-input100">
 							<i class="fa fa-envelope" aria-hidden="true"></i>
@@ -54,7 +53,9 @@
 				</div>
 
 				<div class="wrap-input100 validate-input" data-validate = "Password is required">
+
 					<input class="input100" type="password" name="pass" placeholder="Password">
+
 					<span class="focus-input100"></span>
 					<span class="symbol-input100">
 							<i class="fa fa-lock" aria-hidden="true"></i>
@@ -62,9 +63,9 @@
 				</div>
 
 				<div class="container-login100-form-btn">
-					<button class="login100-form-btn">
-						<a href = "HomePage.html"> Login </a>
-					</button>
+
+						<input class="login100-form-btn" type = "submit" value="Login">
+
 				</div>
 
 				<div class="text-center p-t-12">
@@ -83,6 +84,9 @@
 					</a>
 				</div>
 			</form>
+
+
+
 		</div>
 	</div>
 </div>
