@@ -20,15 +20,6 @@
 
         <button class = "dropbtn">
             <img src = "../images/heisenberg.svg" width = "50" height ="50">
-            <?php
-            session_start();
-            include('conn.php');
-            $userid=$_SESSION['id'];
-
-            $userq=mysqli_query($conn,"select * from `users` where id='$userid'");
-            $userrow=mysqli_fetch_array($userq);
-            echo $userrow['username'];
-            ?>
         </button>
 
         <div class="dropdown-content">
