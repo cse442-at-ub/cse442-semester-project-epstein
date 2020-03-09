@@ -28,7 +28,7 @@
 
 
         <div class="dropdown-content">
-            <a href="../HTML/profile.html">View Profile</a>
+            <a href="profile.php">View Profile</a>
             <a href="#">Account Settings?</a>
 
             <a href="logout.php">Sign Out</a>
