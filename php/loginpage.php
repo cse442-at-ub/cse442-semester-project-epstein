@@ -1,3 +1,5 @@
+<?php session_start(); ?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -51,6 +53,14 @@
 							<i class="fa fa-envelope" aria-hidden="true"></i>
 						</span>
 				</div>
+
+                <?php
+
+                if (isset($_SESSION['message'])){
+                    echo $_SESSION['message'];
+                }
+                unset($_SESSION['message']);
+                ?>
 
 				<div class="wrap-input100 validate-input" data-validate = "Password is required">
 

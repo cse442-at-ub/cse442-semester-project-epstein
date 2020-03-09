@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -8,8 +9,8 @@
 </head>
 
 
-
 <body class = "container full-height-grow">
+
 
 <header class = "main-header">
 
@@ -23,13 +24,14 @@
 
         <button class = "dropbtn">
             <img src = "../images/heis.png" width = "50" height ="50">
-            <a> Insert username</a>
         </button>
 
+
         <div class="dropdown-content">
-            <a href="profile.html">View Profile</a>
+            <a href="../HTML/profile.html">View Profile</a>
             <a href="#">Account Settings?</a>
-            <a href="../php/loginpage.php">Sign Out</a>
+
+            <a href="logout.php">Sign Out</a>
         </div>
     </div>
 
@@ -42,10 +44,10 @@
     <div class = "left-side-wrapper">
 
             <ul class = "classes-list">
-                <li > <a href ="post-thread.html" class = "classoption"> Class 1 </a> </li>
-                <li > <a href ="post-thread.html" class = "classoption"> Class 2 </a> </li>
-                <li > <a href ="post-thread.html" class = "classoption"> Class 3 </a> </li>
-                <li > <a href ="post-thread.html" class = "classoption"> Class 4 </a> </li>
+                <li > <a href ="../HTML/post-thread.html" class = "classoption"> Class 1 </a> </li>
+                <li > <a href ="../HTML/post-thread.html" class = "classoption"> Class 2 </a> </li>
+                <li > <a href ="../HTML/post-thread.html" class = "classoption"> Class 3 </a> </li>
+                <li > <a href ="../HTML/post-thread.html" class = "classoption"> Class 4 </a> </li>
             </ul>
 
 
@@ -54,7 +56,15 @@
 
     <div class = "right-side-wrapper">
 
+        <?php
+        session_start();
+        include('conn.php');
+        $userid=$_SESSION['id'];
 
+        $userq=mysqli_query($conn,"select * from `users` where id='$userid'");
+        $userrow=mysqli_fetch_array($userq);
+        echo $userrow['username'];
+        ?>
 
     </div>
 
