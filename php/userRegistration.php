@@ -1,3 +1,5 @@
+<?php session_start(); ?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -30,20 +32,22 @@
 				<img src="../images/IconCSE442.png" alt="IMG">
 			</div>
 
-			<form class="login100-form validate-form">
+			<form class="login100-form validate-form"  action = 'processregistration.php' method="POST">
 					<span>
-						<center>
 							<img src="../images/loginImage.png" alt="Girl in a jacket" style="width:30%;height:auto;">
-						</center>
 					</span>
 				<span class="login100-form-title">
 						Student Registration
 					</span>
 				<span>
-						<center>
 							<button class="button button1" height=10px>Switch Mode</button>
-						</center>
 					</span>
+                <?php
+                if (isset($_SESSION['message'])){
+                    echo $_SESSION['message'];
+                }
+                unset($_SESSION['message']);
+                ?>
 
                 <div class="wrap-input100 validate-input" data-validate = "First Name is required">
 						<input class="input100" type="text" name="firstName" placeholder="First Name">
@@ -54,7 +58,7 @@
                 </div>	
 
                 <div class="wrap-input100 validate-input" data-validate = "Last Name is required">
-                    <input class="input100" type="text" name="LastName" placeholder="Last Name">
+                    <input class="input100" type="text" name="lastName" placeholder="Last Name">
                     <span class="focus-input100"></span>
                     <span class="symbol-input100">
                             <i class="fa fa-user" aria-hidden="true"></i>
@@ -70,7 +74,7 @@
                 </div> 
                 
                 <div class="wrap-input100 validate-input" data-validate = "Username is required">
-                    <input class="input100" type="text" name="usename" placeholder="Username">
+                    <input class="input100" type="text" name="username" placeholder="Username">
                     <span class="focus-input100"></span>
                     <span class="symbol-input100">
                             <i class="fa fa-user" aria-hidden="true"></i>
@@ -85,12 +89,10 @@
 						</span>
 				</div>
 
-				<div class="container-login100-form-btn">
-                    
-                    <button class="btn btn-lg btn-primary s-scroll-trigger" id="signupbtn">
-                        <a><a href="loginpage.html">Sign Up</a>
-                    </button>
-                    </a>
+                <div class="container-login100-form-btn">
+
+                    <input class="login100-form-btn" type = "submit" value="Sign up">
+
                 </div>
 
             </form>

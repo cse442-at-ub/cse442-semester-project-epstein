@@ -63,6 +63,7 @@
 
         $userq=mysqli_query($conn,"select * from `users` where id='$userid'");
         $userrow=mysqli_fetch_array($userq);
+        echo 'hello';
         echo $userrow['username'];
         ?>
 

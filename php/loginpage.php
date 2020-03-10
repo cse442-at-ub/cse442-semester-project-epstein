@@ -55,11 +55,10 @@
 				</div>
 
                 <?php
-
-                if (isset($_SESSION['message'])){
-                    echo $_SESSION['message'];
-                }
-                unset($_SESSION['message']);
+                    if (isset($_SESSION['message'])){
+                       echo $_SESSION['message'];
+                    }
+                    unset($_SESSION['message']);
                 ?>
 
 				<div class="wrap-input100 validate-input" data-validate = "Password is required">
@@ -88,7 +87,7 @@
 				</div>
 
 				<div class="text-center p-t-136">
-					<a class="txt2" href="userRegistration.html">
+					<a class="txt2" href="userRegistration.php">
 						Create your Account
 						<i class="fa fa-long-arrow-right m-l-5" aria-hidden="true"></i>
 					</a>
