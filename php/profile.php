@@ -7,27 +7,8 @@
     <script type="text/javascript" src="../js/Profile.js"></script>
   </head>
   <body class = "container full-height-grow">
-  
-  <header class = "main-header">
 
-    <a href="homepage.php" class="logo">
-
-        <img src="../images/IconCSE4421.svg" width="150" height="75" fill-opacity=".5">
-
-    </a>
-
-    <div class="dropdown">
-
-        <button class = "dropbtn">
-            <img src = "../images/heisenberg.svg" width = "50" height ="50">
-        </button>
-
-        <div class="dropdown-content">
-            <a id=view_profile href="profile.php">View Profile</a>
-            <a href="loginpage.php">Sign Out</a>
-        </div>
-    </div>
-</header>
+  <?php include('header.php'); ?>
   
   <section class = "profile-main-section" id="main">
 

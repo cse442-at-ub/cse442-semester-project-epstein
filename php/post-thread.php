@@ -1,55 +1,48 @@
 <?php session_start(); ?>
+
 <!DOCTYPE html>
-<html lang="en" style="
-	background: linear-gradient(-135deg, #f0ffb1, #fdc689);
-	width: 1920px;
-	height: 1080px;
-"><head>
+<html lang="en"><head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Post</title>
     <link href="../CSS/postthreadstyles.css" rel="stylesheet" type="text/css">
 </head>
-<body>
-	<strong style="
-	font-size: -webkit-xxx-large;">CSE 442
-	</strong><span>
-		<p style="font-size: xx-large;">I will be taking this course, have some questions</p></span>
-	<a><a href="will be home link">
-		<img src="../images/homeicon.png" alt="home" width="80" height="80" style="
-			position: absolute;
-			left: 1550px;
-			top: 23px;
-		">
-		</a>	
-		<a><a href="will be profile link">
-		<img src="../images/icons8-name-96.png" alt="profile" width="80" height="80" style="
-			position: absolute;
-			left: 1640px;
-			top: 23px;
-		">
-		</a>
-		<div style="margin-bottom:10px;width:1700px;height: 170px;border: 4px solid #e0b1b1;margin-top: 15px;background-color: white;">Can someone tell me about this class? Who usually teaches this course? Any tips?</div>
-		<ul class="post-OP">
-			<li class="poster">
-				<div class="media-body">
-					<span class="text-muted pull-right">
-						<small class="text-muted">55 min ago</small>
-					</span>
-					<strong class="text-success">Posted by: <a>
-						<a href="will be profile link"> @RaselAhmed</strong>
-					</a>
-			</li>
-		</ul>	
-	<hr style="
-    margin-top: 0px;
-	">
-</body>
-<body>
-	<div class="row bootstrap snippets">
+
+
+<body class ="container full-height-grow">
+
+<?php include('header.php');?>
+
+
+<?php
+if (isset($_POST['classi'])){
+
+    $_SESSION['currentClass'] = $_POST['classi'];
+    echo '<strong style="font-size: xx-large">';
+    $classid = $_SESSION['currentClass'];
+    include ('conn.php');
+    $classname = mysqli_query($conn,"select * from classes where id = '$classid'");
+    $rows = mysqli_fetch_array($classname);
+    $namerow = $rows['name'];
+    $numrow = $rows['classnum'];
+
+
+    echo $numrow;
+    echo $namerow;
+
+
+
+
+    echo'</strong>';
+
+}
+?>
+
+<div class="row bootstrap snippets">
 		<div class="col-md-6 col-md-offset-2 col-sm-12">
 			<div class="comment-wrapper">
 				<div class="panel panel-info">
+
 					<div class="panel-heading">
 						<p><strong>Comment Panel</strong></p>
 					</div>
@@ -60,6 +53,8 @@
 						<div class="clearfix"></div>
 						<hr>
 						<ul class="media-list">
+
+
 							<li class="media">
 								<a href="#" class="pull-left">
 									<img src="https://bootdey.com/img/Content/user_1.jpg" alt="" class="img-circle">
@@ -77,6 +72,8 @@
 									</p>		
 								</div>
 							</li>
+
+
 							<li class="media">
 								<a href="#" class="pull-left">
 									<img src="https://bootdey.com/img/Content/user_2.jpg" alt="" class="img-circle">
@@ -95,24 +92,8 @@
 									</p>
 								</div>
 							</li>
-							<li class="media">
-								<a href="#" class="pull-left">
-									<img src="https://bootdey.com/img/Content/user_3.jpg" alt="" class="img-circle">
-								</a>
-								<div class="media-body">
-									<span class="text-muted pull-right">
-										<small class="text-muted">42 min ago</small>
-									</span>
-									<a>
-									<a href="will be profile link">
-									<strong class="text-success">@JoeyD</strong>
-									</a>
-									<p>
-										Thank you Kanye, very cool.<span><a href="#" style="
-											margin-left: 20px;">reply</a></span>
-									</p> 
-								</div>
-							</li>
+
+
 						</ul>
 					</div>
 				</div>
