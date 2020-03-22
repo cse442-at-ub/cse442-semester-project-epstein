@@ -1,4 +1,3 @@
-<!DOCTYPE html>
 <html>
   <head>
     <meta charset="UTF-8">
@@ -6,7 +5,7 @@
     <link href ="../CSS/profile.css" rel = "stylesheet">
     <script type="text/javascript" src="../js/Profile.js"></script>
   </head>
-  <?php include('header.php'); ?>
+  <?php include('header.php'); 
        session_start();
        
        //connect to database, pull the appropriate row from the user database for whoever is logged in
@@ -142,7 +141,7 @@
   
   </section>
 		</form>
-
+?>
 	
   </body>
 </html>
