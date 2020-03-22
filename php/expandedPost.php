@@ -1,4 +1,3 @@
-<?php session_start(); ?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -31,24 +30,48 @@
                     <img src="../images/IconCSE442.png" alt="Girl in a jacket" style="width:30%;">
                 </center>
                 <span class="login100-form-title">
-						Question 
+						Discussion Board 
                 </span>
                 <div>
-                    <h1>
-                        Can someone explain to me what are diodes used for ? 
-                    </h1>
+                    
                     <p>
-                        A diode is a two-terminal electronic component that conducts current primarily in one direction (asymmetric conductance); it has low (ideally zero) resistance in one direction, and high (ideally infinite) resistance in the other. A diode vacuum tube or thermionic diode is a vacuum tube with two electrodes, a heated cathode and a plate, in which electrons can flow in only one direction, from cathode to plate. A semiconductor diode, the most commonly used type today, is a crystalline piece of semiconductor material with a p–n junction connected to two electrical terminals.
+                        <?php
+// 1. database credentials
+$host = "tethys.cse.buffalo.edu";
+$username = "mdrafsan";
+$password = "50100208";
+$dbname = "cse442_542_2020_spring_teamg_db";
+// 2. connect to database
+try {
+    
+    $conn = new mysqli($host, $username, $password, $dbname);
+    $post_id = $_GET['post_id'];
+    $sql = "SELECT id, subject, content, date FROM POSTS where id=$post_id";
+    $result = $conn->query($sql);
+    if ($result->num_rows > 0) {
+        echo "<table><tr><th></th><th></th></tr>";
+        
+        while($row = $result->fetch_assoc()) {
+            echo "<tr><td>"." ".""." ".$row["content"]."</td></tr>";
+            echo "<tr><td>"."<hr>"."</td></tr>";
+            
+
+        }
+        echo "</table>";
+    } else {
+        echo "0 results";
+    }
+    
+} catch(PDOException $e) {
+    echo $e->getMessage();
+}
+?>
                     </p>
                 </div>
                 
-                <div class="wrap-answerBox">
-                    <input class="input100" type="text" name="email" placeholder="Say something">
-                </div>
-                .
-                <button class="login100-form-btn">
-							Post
-				</button>
+                <form action="" method="post">
+                <textarea input type="text" name="number1" cols="40" rows="5" style="margin-bottom:10px;width:700px;height: 150px;border: 4px solid #e0b1b1;margin-top: 15px;background-color: coral;"></textarea>
+		        <p><input type="submit"/></p>
 			</div>
 		</div>
 	</div>
@@ -76,47 +99,15 @@
 </body>
 </html>
 <?php
-// 1. database credentials
-$host = "tethys.cse.buffalo.edu";
-$username = "mdrafsan";
-$password = "50100208";
-$dbname = "cse442_542_2020_spring_teamg_db";
-// 2. connect to database
 function testdb_connect ($host, $username, $password){
     $dbh = new PDO("mysql:host=$host;dbname=cse442_542_2020_spring_teamg_db", $username, $password);
     return $dbh;
 }
-try {
-    $conn = new mysqli($host, $username, $password, $dbname);
-    
-    $sql = "SELECT id, subject, content, date FROM POSTS";
-    $result = $conn->query($sql);
-    if ($result->num_rows > 0) {
-        echo "<table><tr><th></th><th></th></tr>";
-        
-        while($row = $result->fetch_assoc()) {
-            echo "<tr><td>".$row["subject"]." - "." ".$row["content"]."</td></tr>";
-            echo "<tr><td>"."<button onclick=\"location.href='index.html'\">Go To Post</button>"."<hr>"."</td></tr>";
-            
-
-        }
-        echo "</table>";
-    } else {
-        echo "0 results";
-    }
-    
-} catch(PDOException $e) {
-    echo $e->getMessage();
-}
-
-function addNewPost() {
-    
-}
-
 if (isset($_POST['number1'])) {
     $dbh = testdb_connect ($host, $username, $password);
     $description = addslashes ($_POST['number1']);
-    $query = "INSERT INTO POSTS ". "(subject,content, date) "."VALUES ". "('English 101','$description','2014')"; 
+    $postid = $_GET['post_id'];
+    $query = "INSERT INTO comments ". "(post_id,content) "."VALUES ". "('$postid','$description')"; 
     
     $stmt = $dbh->prepare( $query );
     $product_id=1;
@@ -124,5 +115,26 @@ if (isset($_POST['number1'])) {
     $stmt->execute();
     $row = $stmt->fetch(PDO::FETCH_ASSOC);
     echo "<meta http-equiv='refresh' content='0'>";
+}
+    
+try {
+    $conn = new mysqli($host, $username, $password, $dbname);
+    $postid = $_GET['post_id'];
+    $sql = "SELECT post_id, content FROM comments WHERE post_id='$postid'";
+    $result = $conn->query($sql);
+    if ($result->num_rows > 0) {
+        echo "<table><tr><th></th><th></th></tr>";
+        
+        while($row = $result->fetch_assoc()) {
+            echo "<tr><td>".$row["content"]."</td></tr>";
+            $postID = $row["post_id"];
+            echo "<tr><td>"."<hr>"."</td></tr>";
+        }
+        echo "</table>";
+    } else {
+    }
+    
+} catch(PDOException $e) {
+    echo $e->getMessage();
 }
 ?>
