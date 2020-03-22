@@ -58,6 +58,39 @@
 
 </body></html>
 <?php
+// 1. database credentials
+$host = "tethys.cse.buffalo.edu";
+$username = "mdrafsan";
+$password = "50100208";
+$dbname = "cse442_542_2020_spring_teamg_db";
+// 2. connect to database
+function testdb_connect ($host, $username, $password){
+    $dbh = new PDO("mysql:host=$host;dbname=cse442_542_2020_spring_teamg_db", $username, $password);
+    return $dbh;
+}
+try {
+    $conn = new mysqli($host, $username, $password, $dbname);
+    
+    $sql = "SELECT id, subject, content, date FROM POSTS";
+    $result = $conn->query($sql);
+    if ($result->num_rows > 0) {
+        echo "<table><tr><th></th><th></th></tr>";
+        
+        while($row = $result->fetch_assoc()) {
+            echo "<tr><td>".$row["subject"]." - "." ".$row["content"]."</td></tr>";
+            $postID = $row["id"];
+            echo "<tr><td>"."<button onclick=\"location.href='/expandedPost.php?post_id=$postID'\" type=\"button\">Go To Post</button>"."<hr>"."</td></tr>";
+            
+
+        }
+        echo "</table>";
+    } else {
+        echo "0 results";
+    }
+    
+} catch(PDOException $e) {
+    echo $e->getMessage();
+}
 if (isset($_POST['number1'])) {
     $dbh = testdb_connect ($host, $username, $password);
     $description = addslashes ($_POST['number1']);
