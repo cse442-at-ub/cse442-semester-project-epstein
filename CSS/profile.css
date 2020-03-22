@@ -1,0 +1,257 @@
+
+@import url('https://fonts.googleapis.com/css?family=Arvo&display=swap');
+*, *::before, *::after {
+    box-sizing: border-box;
+}
+
+body{
+    padding:0;
+    margin:0;
+    background: #9053c7;
+    background: -webkit-linear-gradient(-135deg, #f0ffb1, #fdc689);
+    background: -o-linear-gradient(-135deg, #f0ffb1, #fdc689);
+    background: -moz-linear-gradient(-135deg, #f0ffb1, #fdc689);
+    background: linear-gradient(-135deg, #f0ffb1, #fdc689);
+    font-family: Arvo, sans-serif;
+    font-size: 1.2rem;
+    color:black;
+    min-height: 100vh;
+}
+
+.full-height-grow{
+    display: flex;
+    flex-direction: column;
+}
+
+.logo {
+    display: flex;
+    align-items: center;
+    font-size: 1.25em ;
+    color: inherit;
+    text-decoration: none;
+    margin-left: 20px;
+}
+
+
+.dropbtn {
+    display: flex;
+    margin-right: 20px;
+    background-color: darkslategrey;
+    padding: 0;
+    border-radius: .5rem;
+    text-decoration: none;
+    font-size: .9rem;
+
+}
+
+.dropbtn a {
+    color: white;
+    text-decoration: none;
+    padding: 1rem;
+}
+
+
+.main-header{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: #ff9966;  /* fallback for old browsers */
+    background: -webkit-linear-gradient(to top, #ff5e62, #ff9966);  /* Chrome 10-25, Safari 5.1-6 */
+    background: linear-gradient(to top, #ff5e62, #ff9966); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+    color: black;
+}
+
+.container{
+    max-width: 1440px;
+    margin: 0 auto;
+    padding: 0 0px;
+}
+
+.title {
+    font-weight: 500;
+    font-size: 3em;
+    margin-bottom: 1rem;
+    margin-top: 0;
+}
+
+.dropdown {
+    position: relative;
+    display: inline-block;
+}
+
+/* Dropdown Content (Hidden by Default) */
+.dropdown-content {
+    display: none;
+    position: absolute;
+    background-color: #f1f1f1;
+    min-width: 160px;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    z-index: 1;
+}
+
+/* Links inside the dropdown */
+.dropdown-content a {
+    color: black;
+    padding: 12px 16px;
+    text-decoration: none;
+    display: block;
+}
+
+/* Change color of dropdown links on hover */
+.dropdown-content a:hover {background-color: #ddd;}
+
+/* Show the dropdown menu on hover */
+.dropdown:hover .dropdown-content {display: block;}
+
+
+.profile-main-section{
+    display: flex;
+    align-items: stretch;
+    justify-content: space-between;
+    flex-grow: 1;
+}
+
+.edit-profile-section{
+    display: flex;
+        align-items: stretch;
+    justify-content: space-between;
+    flex-grow: 1;
+}
+
+
+.left-side-wrapper{
+	width:33%;
+	height:100%;
+}
+
+.center-wrapper{
+	width:33%;
+	height:100%;
+}
+
+
+.right-side-wrapper{
+	width:33%;
+	height:100%;
+}
+
+#profile_pic{
+
+		 
+	  border-radius:50% 50% 50% 50%;  
+	  border: 1px solid black ;
+	  margin-top: 20px;
+      margin-left: 48px;
+	
+}
+
+		.text {
+		    margin-left: 8px;
+			font-family: Arvo, sans-serif;
+			font-size: 24px;
+			font-weight: 400;
+			letter-spacing: 0px;
+			color: rgb(0, 0, 0);
+			vertical-align: middle;
+			text-align: center;
+			justify-content: center;
+			
+		}
+		
+		.smalltext {
+			margin-top: 20px;
+		    margin-left: 30px;
+			font-family: Arvo, sans-serif;
+			font-size: 18px;
+			font-weight: 400;
+			letter-spacing: 0px;
+			color: rgb(0, 0, 0);
+			
+		}
+		
+		.icons{
+			cursor: pointer;
+			margin-left:24px;
+		
+		}
+		
+		#edit{
+			margin-left: 32px;
+			margin-bottom: 2px;
+		}
+		
+		.info {
+	
+			background: rgb(256, 256, 256);
+			border-radius: 40px;
+			height: 200px;
+			width: 200px;
+			position:relative;
+		}
+		 #year{
+		 margin-top: 32px;
+		 
+		 }
+ 
+	 	#linkedin {
+ 			cursor: pointer;
+			margin-top: 40px;
+			margin-left: 24px;
+		}
+		
+		#github {
+			cursor: pointer;
+			margin-top: 40px;
+			margin-left: 10px;
+		
+		}
+ 
+		#skills_box {
+			background: rgb(256, 256, 256);
+			border-radius: 40px;
+			margin-top: 80px;
+			width: 420px;
+			height: 160px;
+			position:relative;			
+		}
+ 
+		#bio_box {
+			background: rgb(256, 256, 256);
+			border-radius: 40px;
+			width: 420px;
+			position:relative;
+			margin-top: 40px;
+		}
+ 
+
+		
+	 	#last_box {
+			background: rgb(256, 256, 256);
+			border-radius: 40px;
+			width: 300px;
+			position:relative;
+			margin-top:80px
+		}
+ 
+
+		#classes {
+			background: rgb(256, 256, 256);
+			border-radius: 40px;
+			width: 300px;
+			position:relative;
+			margin-top:40px
+			
+		}
+ 
+		 #class_links,#last_post {
+			 margin-top: 60px;
+			 position:relative;
+		 
+		 }
+ 
+.edit-profile-section{
+	display: none;
+	
+}
+
+
