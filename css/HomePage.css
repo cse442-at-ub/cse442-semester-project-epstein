@@ -16,20 +16,24 @@
     flex-direction: column;
     display: flex;
     align-items: stretch;
+    margin: 1rem;
     justify-content: flex-end;
-    margin-left: 40px;
     align-self: center;
+    padding: 0 40px;
     background-color: inherit;
     width: 50%;
 }
 
 .home-main-section .right-side-wrapper{
-    display: flex;
+    flex-grow: 1;
     flex-direction: column;
-    align-items: flex-start;
+    display: flex;
+    align-items: stretch;
     margin: 1rem;
+    justify-content: flex-end;
     align-self: center;
     padding: 0 40px;
+    background-color: inherit;
     width: 50%;
 }
 
@@ -126,6 +130,9 @@ removes left side div from screen when too small
 .dropdown {
     position: relative;
     display: inline-block;
+    float: right;
+    padding: 0;
+    margin:0 20px 0 0;
 }
 
 /* Dropdown Content (Hidden by Default) */
@@ -147,10 +154,11 @@ removes left side div from screen when too small
 }
 
 /* Change color of dropdown links on hover */
-.dropdown-content a:hover {background-color: #ddd;}
+.dropdown-content a:hover {background-color: #ddd; }
 
 /* Show the dropdown menu on hover */
-.dropdown:hover .dropdown-content {display: block;}
+.dropdown:hover .dropdown-content {display: block; left: auto;
+    right: 4px;}
 
 .classoption{
     background: #ff9966;  /* fallback for old browsers */
