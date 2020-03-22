@@ -8,7 +8,7 @@
   </head>
   <body class = "container full-height-grow">
   
-  <header class = "main-header">
+  <header class = "main-header">s
 
     <a href="homepage.php" class="logo">
 
