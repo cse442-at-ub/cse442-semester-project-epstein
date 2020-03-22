@@ -1,3 +1,4 @@
+<?php session_start()?>
 <html>
   <head>
     <meta charset="UTF-8">
@@ -5,8 +6,12 @@
     <link href ="../CSS/profile.css" rel = "stylesheet">
     <script type="text/javascript" src="../js/Profile.js"></script>
   </head>
+  
+  <body class = "container full-height-grow">
+	<section class = "profile-main-section" id="main">
+
+    <div class = "group" id = "left-side-wrapper">
   <?php include('header.php'); 
-       session_start();
        
        //connect to database, pull the appropriate row from the user database for whoever is logged in
        include('conn.php');
@@ -41,17 +46,14 @@
             $classes[] = $classq;
         }
  
-  <body class = "container full-height-grow">
-  <section class = "profile-main-section" id="main">
-
-    <div class = "group" id = "left-side-wrapper">
+echo '
 		<img id="profile_pic" src = "'.$profile_pic.'" width=100px; height=100px;></img>
 		<div class="text" id="name">
-		<p id = "name_text">'.$name'</p>
+		<p id = "name_text">'.$name.'</p>
 		</div>
 		<img class = "icons" onclick="openDM()" title="Start direct message" src = "../images/message.svg" width = "26" height ="26"></img>
 	    <img class="icons" onclick="share()" title="Copy profile link" src = "../images/share.svg" width = "26" height ="26"></img>
-		<img class="icons" onClick="edit();" title="Edit profile" src = "../images/edit.svg" width = 26" height ="26" id="edit"></img>
+		<img class="icons" onClick="edit();" title="Edit profile" src = "../images/edit.svg" width = "26" height ="26" id="edit"></img>
 		<div class="info">
 		<div class="smalltext" id="major">
 		<p id = "major_text">Major: '.$major.'</p>
@@ -83,7 +85,7 @@
     <div class = "group" id = "right-side-wrapper">
 		<div class="info" id="classes">
 		<div class="smalltext" id="class_text">Registered Classes</div>
-		 echo '<form name = "classf" id = "classform" method = "POST" action = "post-thread.php">
+	    <form name = "classf" id = "classform" method = "POST" action = "post-thread.php">
                <input name = "classi" type = "hidden" id = "classinput" value = "">
         
                <ul class = "classes-list">';
@@ -96,7 +98,7 @@
                 }
 
         echo '</ul>
-              </form>';
+              </form>
 		</div>
 		<div class="info" id="last_box">
 		<div class="smalltext" id="last_comment">Last Comment: Will be here sprint 3</div>
@@ -141,8 +143,8 @@
   
   </section>
 		</form>
-?>
+
 	
   </body>
 </html>
-
+';
