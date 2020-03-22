@@ -1,18 +1,3 @@
-Skip to content
-Search or jump to…
-
-Pull requests
-Issues
-Marketplace
-Explore
- 
-@jjgrimm 
-Code Issues 19 Pull requests 0 Projects 0 Actions Wiki Security Pulse Community
-cse442-semester-project-epstein-didn-t-kill-himself/php/profile.php
-@joeydubill joeydubill Removed redundant test
-80c8cd1 5 minutes ago
-128 lines (101 sloc)  4.2 KB
-  
 <!DOCTYPE html>
 <html>
   <head>
@@ -21,71 +6,45 @@ cse442-semester-project-epstein-didn-t-kill-himself/php/profile.php
     <link href ="../CSS/profile.css" rel = "stylesheet">
     <script type="text/javascript" src="../js/Profile.js"></script>
   </head>
+  <?php include('header.php'); ?>
+       session_start();
+       include('conn.php');
+       $userid=$_SESSION['id'];
+       $userq=mysqli_query($conn,"select * from 'users' where id='$userid'");
+       $userrow=mysqli_fetch_array($userq);
+	   $name=$userrow['name'];
+       $profile_pic=$userrow['picture_path'];
+       $major=$userrow['major'];
+       $year=$userrow['graduation'];
+       $linkedin=$userrow['linkedin'];
+       $github=$userrow['github'];
+       $bio=$userrow['biography'];
+       $skills=$userrow['skills'];
+       
+ 
   <body class = "container full-height-grow">
-  
-  <header class = "main-header">
-
-    <a href="homepage.php" class="logo">
-
-        <img src="../images/IconCSE4421.svg" width="150" height="75" fill-opacity=".5">
-
-    </a>
-
-    <div class="dropdown">
-
-        <button class = "dropbtn">
-            <img src = "../images/heisenberg.svg" width = "50" height ="50">
-        </button>
-
-        <div class="dropdown-content">
-            <a id=view_profile href="profile.php">View Profile</a>
-            <a href="loginpage.php">Sign Out</a>
-        </div>
-    </div>
-</header>
-  
   <section class = "profile-main-section" id="main">
 
     <div class = "group" id = "left-side-wrapper">
-		<img id="profile_pic" src = 
-            <?php
-            session_start();
-            include('conn.php');
-            $userid=$_SESSION['id'];
-
-            $userq=mysqli_query($conn,"select * from `users` where id='$userid'");
-            $userrow=mysqli_fetch_array($userq);
-            echo $userrow['username'];
-            ?>
-            width=100px; height=100px;></img>
+		<img id="profile_pic" src = "'.$profile_pic.'" width=100px; height=100px;></img>
 		<div class="text" id="name">
-		<p id = "name_text">
-            <?php
-            session_start();
-            include('conn.php');
-            $userid=$_SESSION['id'];
-
-            $userq=mysqli_query($conn,"select * from `users` where id='$userid'");
-            $userrow=mysqli_fetch_array($userq);
-            echo $userrow['username'];
-            ?>
-        </p>
+		<p id = "name_text">'.$name'</p>
 		</div>
 		<img class = "icons" onclick="openDM()" title="Start direct message" src = "../images/message.svg" width = "26" height ="26"></img>
 	    <img class="icons" onclick="share()" title="Copy profile link" src = "../images/share.svg" width = "26" height ="26"></img>
 		<img class="icons" onClick="edit();" src = "../images/edit.svg" width = 26" height ="26" id="edit"></img>
 		<div class="info">
 		<div class="smalltext" id="major">
-		<p id = "major_text">Major: </p>
+		<p id = "major_text">Major: '.$major.'</p>
 		</div>
 		<div class="smalltext" id="year">
-		<p id ="year_text">Class of: </p>
+		<p id ="year_text">Class of: '.$year.'</p>
 		</div>
 		<p>
-		<a id="linkedin_link" href="https://www.linkedin.com/"> 
+		<a id="linkedin_link" href="'.$linkedin.'"> 
 		<img id="linkedin" src = "../images/linkedin.svg" width = "40" height ="40"></img>
 		</a>
-		<a id="github_link" href="https://www.github.com/"> 
+		<a id="github_link" href="'.$github.'"> 
 		<img id="github" src = "../images/github.svg" width = "40" height ="40"></img>
 		</a>
 		</p>
@@ -95,21 +54,21 @@ cse442-semester-project-epstein-didn-t-kill-himself/php/profile.php
 
     <div class = "group" id = "center-wrapper">
 		<div class="info" id="bio_box">
-		<div class="smalltext" id="bio_text">About Me:</div>
+		<div class="smalltext" id="bio_text">About Me: '.$bio.'</div>
 		</div>
 		<div class="info" id="skills_box">
-		<div class="smalltext" id="skills_text">Skills:</div>
+		<div class="smalltext" id="skills_text">Skills: '.$skills.'</div>
 		</div>
 	</div>
 
     <div class = "group" id = "right-side-wrapper">
 		<div class="info" id="classes">
 		<div class="smalltext" id="class_text">Registered Classes</div>
-		<div class="smalltext" id="class_links">links to class boards</div>
+		<div class="smalltext" id="class_links"></div>
 		</div>
 		<div class="info" id="last_box">
-		<div class="smalltext" id="last_comment">Last Comment:</div>
-		<div class="smalltext" id="last_post">Last Post:</div>
+		<div class="smalltext" id="last_comment">Last Comment: Will be here sprint 3</div>
+		<div class="smalltext" id="last_post">Last Post: Will be here sprint 3</div>
 		</div>
 		
 	</div>
