@@ -8,10 +8,14 @@
   </head>
   <?php include('header.php'); ?>
        session_start();
+       
+       //connect to database, pull the appropriate row from the user database for whoever is logged in
        include('conn.php');
        $userid=$_SESSION['id'];
        $userq=mysqli_query($conn,"select * from 'users' where id='$userid'");
        $userrow=mysqli_fetch_array($userq);
+    
+       //create all the variables to be used in the html elements
 	   $name=$userrow['name'];
        $profile_pic=$userrow['picture_path'];
        $major=$userrow['major'];
@@ -32,7 +36,7 @@
 		</div>
 		<img class = "icons" onclick="openDM()" title="Start direct message" src = "../images/message.svg" width = "26" height ="26"></img>
 	    <img class="icons" onclick="share()" title="Copy profile link" src = "../images/share.svg" width = "26" height ="26"></img>
-		<img class="icons" onClick="edit();" src = "../images/edit.svg" width = 26" height ="26" id="edit"></img>
+		<img class="icons" onClick="edit();" title="Edit profile" src = "../images/edit.svg" width = 26" height ="26" id="edit"></img>
 		<div class="info">
 		<div class="smalltext" id="major">
 		<p id = "major_text">Major: '.$major.'</p>
@@ -80,6 +84,8 @@
 
 
   <section class = "edit-profile-section" id="edit-section">
+  	<form class="icons" action="saveprofile.php" method = "POST">
+  
 	    <div class = "left-side-wrapper">
 		    <div class="text" id="editformheader">Edit Profile Info:</div><br>
 		    <label for="uploadpic">Upload Profile Picture</label>
@@ -106,6 +112,7 @@
   
   
   </section>
+		</form>
 
 	
   </body>
