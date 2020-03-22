@@ -1,12 +1,12 @@
 <?php session_start();
 	  //get data to store
-	  $name = $_POST['name'];
-	  $pic = $_POST['profile_pic'];
-      $major = $_POST['major'];
-      $year = $_POST['year'];
-      $linkedin = $_POST['linkedin'];
-      $github = $_POST['github'];
-      $bio = $_POST['bio'];
+	  $name = $_POST['fullname'];
+	  $pic = $_POST['file-input'];
+      $major = $_POST['majorinput'];
+      $year = $_POST['yearinput'];
+      $linkedin = $_POST['linkedin_url'];
+      $github = $_POST['github_url'];
+      $bio = $_POST['about'];
       $skills = $_POST['skills'];
       $id = $_SESSION['id'];
       

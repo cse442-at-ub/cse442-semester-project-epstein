@@ -84,7 +84,7 @@
 
 
   <section class = "edit-profile-section" id="edit-section">
-  	<form class="icons" action="saveprofile.php" method = "POST">
+  	<form action="saveprofile.php" method = "POST">
   
 	    <div class = "left-side-wrapper">
 		    <div class="text" id="editformheader">Edit Profile Info:</div><br>
@@ -107,7 +107,7 @@
 	    </div>
 
 		  
-	<input type = "button" id="save" onclick="save_edit()" value="Save Changes" />
+	<input type = "submit" id="save"  value="Save Changes" />
 		
   
   
