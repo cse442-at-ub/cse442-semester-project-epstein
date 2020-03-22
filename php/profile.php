@@ -25,6 +25,22 @@
        $bio=$userrow['biography'];
        $skills=$userrow['skills'];
        
+       //gets all class-user data
+        $allclasses = mysqli_query($conn, "select * from `userclasses` where userid ='$user_id'");
+        if (!$allclasses){
+            echo "Error accessing class list";
+        }
+        //fetches classid list
+        $class_ids = array();
+        while ($line = mysqli_fetch_assoc($allclasses)){
+            $class_ids[] = $line['classid'];
+        }
+        //fetches actual classes by classid and sets to $classes
+        $classes = array();
+        foreach($class_ids as $class_id){
+            $classq = mysqli_fetch_array(mysqli_query($conn, "select * from classes where id ='$class_id'"));
+            $classes[] = $classq;
+        }
  
   <body class = "container full-height-grow">
   <section class = "profile-main-section" id="main">
@@ -68,7 +84,20 @@
     <div class = "group" id = "right-side-wrapper">
 		<div class="info" id="classes">
 		<div class="smalltext" id="class_text">Registered Classes</div>
-		<div class="smalltext" id="class_links"></div>
+		 echo '<form name = "classf" id = "classform" method = "POST" action = "post-thread.php">
+               <input name = "classi" type = "hidden" id = "classinput" value = "">
+        
+               <ul class = "classes-list">';
+
+                foreach($classes as $class){
+                    $id = $class['id'];
+
+                    //displays element (one class) with id set as class id
+                    echo '<li onclick="clk(this.id)" id = "'.$id.'" class = "classoption" > '.$class['classnum'] . $class['name'].' </li> ';
+                }
+
+        echo '</ul>
+              </form>';
 		</div>
 		<div class="info" id="last_box">
 		<div class="smalltext" id="last_comment">Last Comment: Will be here sprint 3</div>
