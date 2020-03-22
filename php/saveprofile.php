@@ -1,7 +1,7 @@
 <?php session_start();
 	  //get data to store
 	  $name = $_POST['fullname'];
-	  $pic = $_POST['file-input'];
+	  $picture_file = $_POST['file-input'];
       $major = $_POST['majorinput'];
       $year = $_POST['yearinput'];
       $linkedin = $_POST['linkedin_url'];
@@ -11,9 +11,10 @@
       $id = $_SESSION['id'];
       
       require_once 'validate.php';
+      //check that inputs are valid to be stored in database
       $validate_profile = new validate_profile();
-      if (!($validate_profile->valid_picture($pic))) {
-	      $_SESSION['message']="Picture must be ";
+      if (!($validate_profile->valid_picture($picture_file))) {
+	      $_SESSION['message']="Picture must be less than 2MB";
           header('location:profile.php');
           exit();
        }
@@ -61,18 +62,22 @@
        }
        
        include('conn.php');
+       $file_name = basename($picture_file).strval($id);
        $query = mysqli_query($conn,"update 'cse442_542_2020_spring_teamg_db' 'users'
        set 'name' = '$name', 'major' = '$major', 'graduation = '$year',
        'linkedin' = '$linkedin', 'github' = '$github', 'biography' = '$bio',
-       'skills' = '$skills', 'picture_path' = '$pic' WHERE 'users' 'id' = '$id'");
+       'skills' = '$skills', 'picture_path' = '/web/CSE442-542/2020-spring/cse-442g/images/profile/.$file_name' WHERE 'users' 'id' = '$id'");
        
        
        
 	class validate_profile {
 	
 		public function valid_picture($picture){
-		
-		
+			$size = filesize($picture);
+			$kilobytes = round($size / 1024 , 2);
+			if(kilobytes<2048){
+			return true;
+			}
 			return false;
 		}
 	
