@@ -2,6 +2,7 @@
 <html>
   <head>
     <meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Profile Page</title>
     <link href ="../CSS/profile.css" rel = "stylesheet">
     <script type="text/javascript" src="../js/Profile.js"></script>
@@ -11,7 +12,7 @@
   <body class = "container full-height-grow">
 	<section class = "profile-main-section" id="main">
 
-    <div class = "group" id = "left-side-wrapper">
+    <div class = "column" id = "left-side-wrapper">
        <?php
        //connect to database, pull the appropriate row from the user database for whoever is logged in
        include('conn.php');
@@ -72,17 +73,23 @@ echo '
     </div>
 
 
-    <div class = "group" id = "center-wrapper">
+    <div class = "column" id = "center-wrapper">
 		<div class="info" id="bio_box">
 		<div class="smalltext" id="bio_text">About Me: '.$bio.'</div>
 		</div>
 		<div class="info" id="skills_box">
 		<div class="smalltext" id="skills_text">Skills: '.$skills.'</div>
 		</div>
+		
 	</div>
 
-    <div class = "group" id = "right-side-wrapper">
-		<div class="info" id="classes">
+    <div class = "column" id = "right-side-wrapper">
+		<script type = "text/javascript">
+            function clk(elem) {
+                document.getElementById("allclassinput").setAttribute("value", elem);
+                document.getElementById("allclassform").submit();
+            }
+        </script>
 		<div class="smalltext" id="class_text">Registered Classes</div>
 	    <form name = "classf" id = "classform" method = "POST" action = "post-thread.php">
                <input name = "classi" type = "hidden" id = "classinput" value = "">
@@ -94,14 +101,11 @@ echo '
 
                     //displays element (one class) with id set as class id
                     echo '<li onclick="clk(this.id)" id = "'.$id.'" class = "classoption" > '.$class['classnum'] . $class['name'].' </li> ';
-                }
+                } 
         echo '</ul>
               </form>
-		</div>
-		<div class="info" id="last_box">
-		<div class="smalltext" id="last_comment">Last Comment: Will be here sprint 3</div>
-		<div class="smalltext" id="last_post">Last Post: Will be here sprint 3</div>
-		</div>
+
+		 
 		
 	</div>
 
@@ -114,7 +118,7 @@ echo '
   <section class = "edit-profile-section" id="edit-section">
   	<form action="saveprofile.php" method = "POST" enctype="multipart/form-data">
 		 				
-	    <div class = "group" id = "left-side-wrapper1">
+	    <div class = "column" id = "left-side-wrapper1">
 		    <div class="text" id="editformheader">Edit Profile Info:</div><br>
 		    <label for="uploadpic">Upload Profile Picture</label><br>
 			<input type="file" name="uploadpic" id="uploadpic" accept="image/gif, image/jpeg, image/png" /><br>
