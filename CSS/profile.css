@@ -111,6 +111,24 @@ body{
     flex-grow: 1;
 }
 
+#left-side-wrapper{
+	width:20%;
+	  padding: 15px;
+	float:left;
+}
+
+#center-wrapper,#right-side-wrapper{
+	width:40%;
+	  padding: 15px;
+	float:left;
+}
+
+.profile-main-section:after {
+  content: "";
+  display: table;
+  clear: both;
+}
+
 .edit-profile-section{
     display: flex;
         align-items: stretch;
@@ -119,34 +137,27 @@ body{
 }
 
 
-.left-side-wrapper{
-	width:33%;
-	height:100%;
-}
-
-.center-wrapper{
-	width:33%;
-	height:100%;
-}
 
 
-.right-side-wrapper{
-	width:33%;
-	height:100%;
+#about, #skills{
+	width: 100%;
+  padding: 12px 20px;
+  margin: 8px 0;
+  box-sizing: border-box;
 }
+
+
 
 #profile_pic{
-
+	  position: relative;
 		 
 	  border-radius:50% 50% 50% 50%;  
 	  border: 1px solid black ;
 	  margin-top: 20px;
       margin-left: 48px;
-	
 }
 
-		.text {
-		    margin-left: 8px;
+		#name {
 			font-family: Arvo, sans-serif;
 			font-size: 24px;
 			font-weight: 400;
@@ -171,7 +182,7 @@ body{
 		
 		.icons{
 			cursor: pointer;
-			margin-left:24px;
+			margin-left:32px;
 		
 		}
 		
@@ -181,11 +192,11 @@ body{
 		}
 		
 		.info {
-	
+			margin-left:18px;
 			background: rgb(256, 256, 256);
 			border-radius: 40px;
-			height: 200px;
-			width: 200px;
+			height: 40%;
+			width: 75%;
 			position:relative;
 		}
 		 #year{
@@ -222,32 +233,15 @@ body{
 			position:relative;
 			margin-top: 40px;
 		}
- 
 
-		
-	 	#last_box {
-			background: rgb(256, 256, 256);
-			border-radius: 40px;
-			width: 300px;
-			position:relative;
-			margin-top:80px
-		}
  
-
-		#classes {
-			background: rgb(256, 256, 256);
-			border-radius: 40px;
-			width: 300px;
-			position:relative;
-			margin-top:40px
-			
-		}
- 
-		 #class_links,#last_post {
+		 #smalltext {
+			 margin-left: 40px;
 			 margin-top: 60px;
-			 position:relative;
+			 position:center;
 		 
 		 }
+		 
  
 .edit-profile-section{
 	display: none;
