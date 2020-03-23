@@ -6,18 +6,17 @@
     <link href ="../CSS/profile.css" rel = "stylesheet">
     <script type="text/javascript" src="../js/Profile.js"></script>
   </head>
-  
+<?php include('header.php'); ?>
+
   <body class = "container full-height-grow">
 	<section class = "profile-main-section" id="main">
 
     <div class = "group" id = "left-side-wrapper">
-  <?php include('header.php'); 
-       
+       <?php
        //connect to database, pull the appropriate row from the user database for whoever is logged in
        include('conn.php');
        $userid=$_SESSION['id'];
-       $userq=mysqli_query($conn,"select * from 'users' where id='$userid'");
-       $userrow=mysqli_fetch_array($userq);
+       $userrow=mysqli_fetch_array(mysqli_query($conn,"select * from users where id='$userid'"));
     
        //create all the variables to be used in the html elements
 	   $name=$userrow['name'];
@@ -30,7 +29,7 @@
        $skills=$userrow['skills'];
        
        //gets all class-user data
-        $allclasses = mysqli_query($conn, "select * from `userclasses` where userid ='$user_id'");
+        $allclasses = mysqli_query($conn, "select * from `userclasses` where userid ='$userid'");
         if (!$allclasses){
             echo "Error accessing class list";
         }
@@ -96,7 +95,6 @@ echo '
                     //displays element (one class) with id set as class id
                     echo '<li onclick="clk(this.id)" id = "'.$id.'" class = "classoption" > '.$class['classnum'] . $class['name'].' </li> ';
                 }
-
         echo '</ul>
               </form>
 		</div>
@@ -114,26 +112,26 @@ echo '
 
 
   <section class = "edit-profile-section" id="edit-section">
-  	<form action="saveprofile.php" method = "POST">
-  
-	    <div class = "left-side-wrapper">
+  	<form action="saveprofile.php" method = "POST" enctype="multipart/form-data">
+		 				
+	    <div class = "group" id = "left-side-wrapper1">
 		    <div class="text" id="editformheader">Edit Profile Info:</div><br>
-		    <label for="uploadpic">Upload Profile Picture</label>
-			<input id="file-input" type="file" accept="image/gif, image/jpeg, image/png" name="image" /><br>
-			<label for="fullname">Full Name:</label>
-			<input type="text" id="fullname" name="fullname" value="Full Name"><br>
-			<label for="majorinput">Major:</label>
-			<input type="text" id="majorinput" name="majorinput" value="Computer Science"><br>
-			<label for="yearinput">Class of:</label>
-			<input type="text" id="yearinput" name="yearinput" value="2021"><br>
-			<label for="linkedin_url">LinkedIn URL:</label>
-			<input type="text" id="linkedin_url" name="linkedin_url" value="https://www.linkedin.com/"><br>
-			<label for="github_url">GitHub URL:</label>
-			<input type="text" id="github_url" name="github_url" value="https://www.github.com/"><br>
-			<label for="about">About Me:</label>
-			<input type="text" id="about" name="about" value="Enter bio here"><br>
-			<label for="skills">Skills:</label>
-			<input type="text" id="skills" name="skills" value="Enter skills here"><br>
+		    <label for="uploadpic">Upload Profile Picture</label><br>
+			<input type="file" name="uploadpic" id="uploadpic" accept="image/gif, image/jpeg, image/png" /><br>
+			<label for="fullname">Full Name:</label><br>
+			<input type="text" id="fullname" name="fullname" value="'.$name.'"><br>
+			<label for="majorinput">Major:</label><br>
+			<input type="text" id="majorinput" name="majorinput" value="'.$major.'"><br>
+			<label for="yearinput">Class of:</label><br>
+			<input type="text" id="yearinput" name="yearinput" value="'.$year.'"><br>
+			<label for="linkedin_url">LinkedIn URL:</label><br>
+			<input type="text" id="linkedin_url" name="linkedin_url" value="'.$linkedin.'"><br>
+			<label for="github_url">Github URL:</label><br>
+			<input type="text" id="github_url" name="github_url" value="'.$github.'"><br>
+			<label for="about">About Me:</label><br>
+			<input type="text" id="about" name="about" value="'.$bio.'"><br>
+			<label for="skills">Skills:</label><br>
+			<input type="text" id="skills" name="skills" value="'.$skills.'"><br>
 	    </div>
 
 		  
