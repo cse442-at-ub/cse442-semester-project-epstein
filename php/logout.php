@@ -1,6 +1,4 @@
-<?php
-
-    session_start();
+<?php session_start();
 
     // Unset all of the session variables.
     $_SESSION = array();
@@ -15,9 +13,10 @@
     }
 
     // Finally, destroy the session.
+    unset($_SESSION['username']);
     session_destroy();
-$_SESSION['message']="Successfully logged out";
-header('location:loginpage.php');
+    $_SESSION['message']="Successfully logged out";
+    header('location:loginpage.php');
 
 
 

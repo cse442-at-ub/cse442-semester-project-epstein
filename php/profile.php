@@ -8,7 +8,7 @@
     <script type="text/javascript" src="../js/Profile.js"></script>
   </head>
 <?php include('header.php'); ?>
-
+  
   <body class = "container full-height-grow">
 	<section class = "profile-main-section" id="main">
 

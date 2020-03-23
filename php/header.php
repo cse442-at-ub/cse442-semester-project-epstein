@@ -12,9 +12,9 @@
 <header class = "main-header">
 
     <div class="logo">
-
-        <img src="../images/IconCSE4421.svg" width="150" height="75" fill-opacity=".5">
-
+        <a href = "homepage.php">
+             <img src="../images/IconCSE4421.svg" width="150" height="75" fill-opacity=".5">
+        </a>
     </div>
 
     <div class="dropdown">
@@ -26,8 +26,6 @@
 
         <div class="dropdown-content">
             <a href="profile.php">View Profile</a>
-            <a href="#">Account Settings?</a>
-
             <a href="logout.php">Sign Out</a>
         </div>
     </div>
