@@ -1,4 +1,9 @@
-<?php session_start()?>
+<?php session_start();
+include('header.php');
+if (!isset($_SESSION['id'])) {
+    header('Location: loginpage.php');
+
+}?>
 
 <!DOCTYPE html>
 <html lang="en"> <head>
@@ -11,7 +16,7 @@
 <body class = "container full-height-grow">
 
 
-<?php include('header.php'); ?>
+
 
 
 <section class = "home-main-section">

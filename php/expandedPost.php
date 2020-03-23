@@ -1,3 +1,11 @@
+<?php session_start();
+include('header.php');
+if (!isset($_SESSION['id'])) {
+    header('Location: loginpage.php');
+
+}
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -21,7 +29,7 @@
 	<link rel="stylesheet" type="text/css" href="../CSS/expandedPost.css">
 <!--===============================================================================================-->
 </head>
-<?php include('header.php');?>
+
 <body>
 	<div class="limiter">
 		<div class="container-login100">
@@ -107,7 +115,8 @@ if (isset($_POST['number1'])) {
     $dbh = testdb_connect ($host, $username, $password);
     $description = addslashes ($_POST['number1']);
     $postid = $_GET['post_id'];
-    $query = "INSERT INTO comments ". "(post_id,content) "."VALUES ". "('$postid','$description')"; 
+    $OP = $_SESSION['id'];
+    $query = "INSERT INTO comments ". "(post_id,content, userid) "."VALUES ". "('$postid','$description', $OP)";
     
     $stmt = $dbh->prepare( $query );
     $product_id=1;
@@ -120,12 +129,25 @@ if (isset($_POST['number1'])) {
 try {
     $conn = new mysqli($host, $username, $password, $dbname);
     $postid = $_GET['post_id'];
-    $sql = "SELECT post_id, content FROM comments WHERE post_id='$postid'";
+    $sql = "SELECT post_id, content, userid FROM comments WHERE post_id='$postid'";
     $result = $conn->query($sql);
     if ($result->num_rows > 0) {
         echo "<table><tr><th></th><th></th></tr>";
         
         while($row = $result->fetch_assoc()) {
+            $OPID = $row['userid'];
+            $userq = mysqli_query($conn, "select username, name, picture_path from users where id = '$OPID'");
+            $userrows=mysqli_fetch_array($userq);
+            $OPuser = $userrows['username'];
+            $OPpath = $userrows['picture_path'];
+
+            //display OP
+            echo "<tr><td>Posted by: ";
+            echo $OPuser;
+            //display OP image
+            echo "<img src='".$OPpath."' width='17' height='17' >
+                  <tr></td>";
+
             echo "<tr><td>".$row["content"]."</td></tr>";
             $postID = $row["post_id"];
             echo "<tr><td>"."<hr>"."</td></tr>";

@@ -1,3 +1,9 @@
+<?php session_start();
+include('header.php');
+if (!isset($_SESSION['id'])) {
+    header('Location: loginpage.php');
+}
+?>
 
 <!DOCTYPE html>
 <html lang="en" style="
@@ -9,10 +15,7 @@
     <link href="styles.css" rel="stylesheet" type="text/css">
 </head>
 <body>
- <?php
- include('header.php');
- session_start();
-
+<?php
 if (isset($_GET['classi']) ||  isset($_GET['allclassi'])){
     //to differentiate between all classes and user's classes
     if (!isset($_GET['classi'])){
@@ -61,7 +64,7 @@ function testdb_connect ($host, $username, $password){
 try {
     $conn = new mysqli($host, $username, $password, $dbname);
 
-    $sql = "SELECT id, subject, content, date FROM POSTS where classid = '$classid'";
+    $sql = "SELECT id, userid, subject, content, date FROM POSTS where classid = '$classid'";
     $result = $conn->query($sql);
     if ($result->num_rows > 0) {
         echo "<table><tr><th></th><th></th></tr>";
@@ -69,8 +72,21 @@ try {
         while($row = $result->fetch_assoc()) {
             echo "<tr><td>".$row["subject"]." - "." ".$row["content"]."</td></tr>";
             $postID = $row["id"];
-            echo "<tr><td>"."<button onclick=\"location.href='expandedPost.php?post_id=$postID'\" type=\"button\">Go To Post</button>"."<hr>"."</td></tr>";
+            $OPID = $row['userid'];
+            $userq = mysqli_query($conn, "select username, name, picture_path from users where id = '$OPID'");
+            $userrows=mysqli_fetch_array($userq);
+            $OPuser = $userrows['username'];
+            $OPpath = $userrows['picture_path'];
 
+            //display OP
+            echo "<tr><td>Posted by: ";
+            echo $OPuser;
+            //display OP image
+            echo "<img src='".$OPpath."' width='17' height='17' >
+                  <tr></td>";
+
+
+            echo "<tr><td>"."<button onclick=\"location.href='expandedPost.php?post_id=$postID'\" type=\"button\">Go To Post</button>"."<hr>"."</td></tr>";
 
         }
         echo "</table>";
@@ -85,7 +101,8 @@ try {
 if (isset($_POST['number1'])) {
     $dbh = testdb_connect ($host, $username, $password);
     $description = addslashes ($_POST['number1']);
-    $query = "INSERT INTO POSTS ". "(subject,content, date, classid) "."VALUES ". "('->','$description','2014', $classid)";
+    $OP = $_SESSION['id'];
+    $query = "INSERT INTO POSTS ". "(subject,content, date, classid, userid) "."VALUES ". "('->','$description','2014', $classid, $OP )";
 
     $stmt = $dbh->prepare( $query );
     $product_id=1;
