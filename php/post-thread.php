@@ -102,7 +102,9 @@ if (isset($_POST['number1'])) {
     $dbh = testdb_connect ($host, $username, $password);
     $description = addslashes ($_POST['number1']);
     $OP = $_SESSION['id'];
-    $query = "INSERT INTO POSTS ". "(subject,content, date, classid, userid) "."VALUES ". "('->','$description','2014', $classid, $OP )";
+    $date = date('Y/m/d H:i:s');
+
+    $query = "INSERT INTO POSTS ". "(subject,content, date, classid, userid) "."VALUES ". "('->','$description','$date', $classid, $OP )";
 
     $stmt = $dbh->prepare( $query );
     $product_id=1;
