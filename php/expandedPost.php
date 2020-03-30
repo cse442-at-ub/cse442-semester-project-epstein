@@ -117,7 +117,8 @@ if (isset($_POST['number1'])) {
     $description = addslashes ($_POST['number1']);
     $postid = $_GET['post_id'];
     $OP = $_SESSION['id'];
-    $query = "INSERT INTO comments ". "(post_id,content, userid) "."VALUES ". "('$postid','$description', $OP)";
+    $date = date('Y/m/d H:i:s');
+    $query = "INSERT INTO comments ". "(post_id,content,userid,datePosted) "."VALUES ". "('$postid','$description', $OP, '$date')";
     
     $stmt = $dbh->prepare( $query );
     $product_id=1;
@@ -130,7 +131,7 @@ if (isset($_POST['number1'])) {
 try {
     $conn = new mysqli($host, $username, $password, $dbname);
     $postid = $_GET['post_id'];
-    $sql = "SELECT post_id, content, userid FROM comments WHERE post_id='$postid'";
+    $sql = "SELECT post_id, content, userid, datePosted FROM comments WHERE post_id='$postid'";
     $result = $conn->query($sql);
     if ($result->num_rows > 0) {
         echo "<table><tr><th></th><th></th></tr>";
@@ -145,10 +146,11 @@ try {
             //display OP
             echo "<tr><td>Posted by: ";
             echo $OPuser;
+            echo "<tr><td>Date posted: ";
+            echo $row["datePosted"];
             //display OP image
             echo "<img src='".$OPpath."' width='17' height='17' >
                   <tr></td>";
-
             echo "<tr><td>".$row["content"]."</td></tr>";
             $postID = $row["post_id"];
             
