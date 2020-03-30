@@ -54,13 +54,14 @@ try {
     
     $conn = new mysqli($host, $username, $password, $dbname);
     $post_id = $_GET['post_id'];
-    $sql = "SELECT id, subject, content, date FROM POSTS where id=$post_id";
+    $sql = "SELECT id, subject, content, date FROM POSTS where id=$post_id"; 
     $result = $conn->query($sql);
     if ($result->num_rows > 0) {
         echo "<table><tr><th></th><th></th></tr>";
         
         while($row = $result->fetch_assoc()) {
             echo "<tr><td>"." ".""." ".$row["content"]."</td></tr>";
+            echo "<tr><td>"." ".""." "."Posted On: ".$row["date"]."</td></tr>";
             echo "<tr><td>"."<hr>"."</td></tr>";
             
 
@@ -150,6 +151,7 @@ try {
 
             echo "<tr><td>".$row["content"]."</td></tr>";
             $postID = $row["post_id"];
+            
             echo "<tr><td>"."<hr>"."</td></tr>";
         }
         echo "</table>";
