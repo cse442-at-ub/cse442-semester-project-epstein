@@ -15,7 +15,7 @@ if (!isset($_SESSION['id'])) {
     <link href="styles.css" rel="stylesheet" type="text/css">
 </head>
 <body>
-   <strong style="font-size: xx-large">Inbox</strong>;
+   <strong style="font-size: xx-large">Inbox</strong><br>
 
 
 </body></html>
@@ -29,11 +29,11 @@ try {
     $messages = $conn->query($sql);
     if ($messages->num_rows > 0) {
         echo "<table><tr><th></th>Received<th></th></tr>";
-
+		$senders = array();
         while($row = $messages->fetch_assoc()) {
             $sender_id = $row['sender_id'];
-			if(!senders.contains($sender_id)){
-			$senders.add($sender_id)
+			if(!in_array($sender_id, $senders)){
+			array_push($senders, $sender_id);
             $msgID = $row["id"];
             $previous_msgID = $row['lastid'];
             echo "<tr><td>".$row["message"]."</td></tr>";            
@@ -44,40 +44,45 @@ try {
 
             echo "<tr><td>Sent From: ";
             echo $sender_name;
-            echo "at" ;
-            echo $row['timestamp'];
+            echo " <br> Date: " ;
+            echo substr($row['timestamp'], 5, 5);
+			echo " <br> Time: ";
+			echo substr($row['timestamp'], 11, 8);
             echo      "</tr></td>";
+
 
 
             echo "<tr><td>"."<button onclick=\"location.href='directmessage.php?msg_id=$msgID'\" type=\"button\">Open Message Thread</button>"."<hr>"."</td></tr>";
 			}
         }
     } else {
-        echo "0 received messages";
+        echo "0 received messages <br>";
     }
     
     
      $sql = "SELECT * FROM direct_messages where sender_id = '$userid' ORDER BY timestamp";
     $messages = $conn->query($sql);
     if ($messages->num_rows > 0) {
-        echo "<table><tr><th></th>/Sent<th></th></tr>";
-
+        echo "<table><tr><th></th><br><b>Sent</b><th></th></tr>";
+		$recipients = array();
         while($row = $messages->fetch_assoc()) {
             $recipient_id = $row['recipient_id'];
-			if(!recievers.contains($recipient_id)){
-			$senders.add($recipient_id);
+			if(!in_array($recipient_id, $recipients)){
+			array_push($recipients, $recipient_id);
             $msgID = $row["id"];
             $previous_msgID = $row['lastid'];
             echo "<tr><td>".$row["message"]."</td></tr>";            
-            $recipientq = mysqli_query($conn, "select name from users where id = '$sender_id'");
+            $recipientq = mysqli_query($conn, "select name from users where id = '$recipient_id'");
             $recipient_rows=mysqli_fetch_array($recipientq);
             $recipient_name = $recipient_rows['name'];
 
 
             echo "<tr><td>Sent To: ";
             echo $recipient_name;
-            echo "at" ;
-            echo $row['timestamp'];
+            echo " <br> Date: " ;
+            echo substr($row['timestamp'], 5, 5);
+			echo " <br> Time: ";
+			echo substr($row['timestamp'], 11, 8);
             echo      "</tr></td>";
 
 

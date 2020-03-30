@@ -38,37 +38,16 @@ if (!isset($_SESSION['id'])) {
                     <img src="../images/IconCSE442.png" alt="Girl in a jacket" style="width:30%;">
                 </center>
                 <span class="login100-form-title">
-						Discussion Board 
+						DM Thread 
                 </span>
                 <div>
                     
                     <p>
                         <?php
-// 1. database credentials
-$host = "tethys.cse.buffalo.edu";
-$username = "mdrafsan";
-$password = "50100208";
-$dbname = "cse442_542_2020_spring_teamg_db";
-// 2. connect to database
+
 try {
     
-    $conn = new mysqli($host, $username, $password, $dbname);
-    $post_id = $_GET['post_id'];
-    $sql = "SELECT id, subject, content, date FROM POSTS where id=$post_id";
-    $result = $conn->query($sql);
-    if ($result->num_rows > 0) {
-        echo "<table><tr><th></th><th></th></tr>";
-        
-        while($row = $result->fetch_assoc()) {
-            echo "<tr><td>"." ".""." ".$row["content"]."</td></tr>";
-            echo "<tr><td>"."<hr>"."</td></tr>";
-            
-
-        }
-        echo "</table>";
-    } else {
-        echo "0 results";
-    }
+    
     
 } catch(PDOException $e) {
     echo $e->getMessage();
@@ -106,57 +85,3 @@ try {
 
 </body>
 </html>
-<?php
-function testdb_connect ($host, $username, $password){
-    $dbh = new PDO("mysql:host=$host;dbname=cse442_542_2020_spring_teamg_db", $username, $password);
-    return $dbh;
-}
-if (isset($_POST['number1'])) {
-    $dbh = testdb_connect ($host, $username, $password);
-    $description = addslashes ($_POST['number1']);
-    $postid = $_GET['post_id'];
-    $OP = $_SESSION['id'];
-    $query = "INSERT INTO comments ". "(post_id,content, userid) "."VALUES ". "('$postid','$description', $OP)";
-    
-    $stmt = $dbh->prepare( $query );
-    $product_id=1;
-    $stmt->bindParam(1, $product_id);
-    $stmt->execute();
-    $row = $stmt->fetch(PDO::FETCH_ASSOC);
-    echo "<meta http-equiv='refresh' content='0'>";
-}
-    
-try {
-    $conn = new mysqli($host, $username, $password, $dbname);
-    $postid = $_GET['post_id'];
-    $sql = "SELECT post_id, content, userid FROM comments WHERE post_id='$postid'";
-    $result = $conn->query($sql);
-    if ($result->num_rows > 0) {
-        echo "<table><tr><th></th><th></th></tr>";
-        
-        while($row = $result->fetch_assoc()) {
-            $OPID = $row['userid'];
-            $userq = mysqli_query($conn, "select username, name, picture_path from users where id = '$OPID'");
-            $userrows=mysqli_fetch_array($userq);
-            $OPuser = $userrows['username'];
-            $OPpath = $userrows['picture_path'];
-
-            //display OP
-            echo "<tr><td>Posted by: ";
-            echo $OPuser;
-            //display OP image
-            echo "<img src='".$OPpath."' width='17' height='17' >
-                  <tr></td>";
-
-            echo "<tr><td>".$row["content"]."</td></tr>";
-            $postID = $row["post_id"];
-            echo "<tr><td>"."<hr>"."</td></tr>";
-        }
-        echo "</table>";
-    } else {
-    }
-    
-} catch(PDOException $e) {
-    echo $e->getMessage();
-}
-?>
