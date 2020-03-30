@@ -28,7 +28,7 @@ try {
     $sql = "SELECT * FROM direct_messages where recipient_id = '$userid' ORDER BY timestamp";
     $messages = $conn->query($sql);
     if ($messages->num_rows > 0) {
-        echo "<table><tr><th></th>Received<th></th></tr>";
+        echo "<table><tr><th></th><br><b>Received</b><th></th></tr>";
 		$senders = array();
         while($row = $messages->fetch_assoc()) {
             $sender_id = $row['sender_id'];
@@ -63,7 +63,7 @@ try {
      $sql = "SELECT * FROM direct_messages where sender_id = '$userid' ORDER BY timestamp";
     $messages = $conn->query($sql);
     if ($messages->num_rows > 0) {
-        echo "<table><tr><th></th><br><b>Sent</b><th></th></tr>";
+        echo "<table><tr><th></th><b>Sent</b><th></th></tr>";
 		$recipients = array();
         while($row = $messages->fetch_assoc()) {
             $recipient_id = $row['recipient_id'];
