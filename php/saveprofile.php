@@ -1,5 +1,8 @@
 <?php session_start();
 	  //get data to store
+	  if (!isset($_SESSION['id'])) {
+	    header('Location: loginpage.php');
+		}
 	  $name = $_POST['fullname'];
 	  $picture_file = $_FILES['uploadpic'];
       $major = $_POST['majorinput'];

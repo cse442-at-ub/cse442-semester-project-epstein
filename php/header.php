@@ -26,6 +26,7 @@
 
         <div class="dropdown-content">
             <a href="profile.php">View Profile</a>
+	        <a href="inbox.php">View Inbox</a>
             <a href="logout.php">Sign Out</a>
         </div>
     </div>
