@@ -85,6 +85,78 @@ if (!isset($_SESSION['id'])) {
                          //displays element (one class) with id set as class id
                          echo '<li onclick="rightclk(this.id)" id = "'.$id.'" class = "classoption" > '.$class['classnum'] . $class['name'].' </li> ';
                     } ?>
+            
+        </ul>
+            
+        </form>
+        
+        
+
+    </div>
+    
+    <div class = "right-side-wrapper">
+
+        <strong style="font-size: xx-large"> Community at a Glance </strong>
+        <br>
+        
+        
+        <form name = "allclassf" id = "allclassform" method = "GET" action = "post-thread.php">
+            <input name = "allclassi" type = "hidden" id = "allclassinput" value = "">
+        <ul class = "classes-list">
+            <?php 
+        
+            $totalUsers = mysqli_query($conn, "SELECT COUNT(*) FROM `users`");
+        while ($row = $totalUsers->fetch_assoc()) {
+                echo '<li class = "statOption" > '."Total Users: " . $row['COUNT(*)'].' </li> ';            
+
+            
+        }
+        ?>
+        </ul>
+        </form>
+        
+        <form name = "allclassf" id = "allclassform" method = "GET" action = "post-thread.php">
+            <input name = "allclassi" type = "hidden" id = "allclassinput" value = "">
+        <ul class = "classes-list">
+            <?php 
+        
+            $totalUsers = mysqli_query($conn, "SELECT COUNT(*) FROM `POSTS`");
+        while ($row = $totalUsers->fetch_assoc()) {
+                echo '<li class = "statOption" > '."Total Posts:  " . $row['COUNT(*)'].' </li> ';            
+
+            
+        }
+        ?>
+        </ul>
+        </form>
+        
+        <form name = "allclassf" id = "allclassform" method = "GET" action = "post-thread.php">
+            <input name = "allclassi" type = "hidden" id = "allclassinput" value = "">
+        <ul class = "classes-list">
+            <?php 
+        
+            $totalUsers = mysqli_query($conn, "SELECT COUNT(*) FROM `comments`");
+        while ($row = $totalUsers->fetch_assoc()) {
+                echo '<li class = "statOption" > '."Contributions:  ". $row['COUNT(*)'].' </li> ';            
+
+            
+        }
+        ?>
+        </ul>
+        </form>
+        
+        <form name = "allclassf" id = "allclassform" method = "GET" action = "post-thread.php">
+            <input name = "allclassi" type = "hidden" id = "allclassinput" value = "">
+        <ul class = "classes-list">
+            <?php 
+        
+            $totalUsers = mysqli_query($conn, "SELECT COUNT(*) FROM `userclasses`");
+        while ($row = $totalUsers->fetch_assoc()) {
+                echo '<li class = "statOption" > '."Total Classes: " . $row['COUNT(*)'].' </li> ';            
+
+            
+        }
+        ?>
         </ul>
         </form>
 
