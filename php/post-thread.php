@@ -77,6 +77,7 @@ try {
             $userrows=mysqli_fetch_array($userq);
             $OPuser = $userrows['username'];
             $OPpath = $userrows['picture_path'];
+            $OPdate = $row['date'];
 
             //display OP
             echo "<tr><td>Posted by: ";
@@ -84,6 +85,9 @@ try {
             //display OP image
             echo "<img src='".$OPpath."' width='17' height='17' >
                   <tr></td>";
+            
+            echo "<tr><td>Posted on: ";
+            echo $OPdate;
 
 
             echo "<tr><td>"."<button onclick=\"location.href='expandedPost.php?post_id=$postID'\" type=\"button\">Go To Post</button>"."<hr>"."</td></tr>";
@@ -103,7 +107,6 @@ if (isset($_POST['number1'])) {
     $description = addslashes ($_POST['number1']);
     $OP = $_SESSION['id'];
     $date = date('Y/m/d H:i:s');
-
     $query = "INSERT INTO POSTS ". "(subject,content, date, classid, userid) "."VALUES ". "('->','$description','$date', $classid, $OP )";
 
     $stmt = $dbh->prepare( $query );
@@ -111,7 +114,7 @@ if (isset($_POST['number1'])) {
     $stmt->bindParam(1, $product_id);
     $stmt->execute();
     $row = $stmt->fetch(PDO::FETCH_ASSOC);
-    header("Refresh:0; url=post-thread.php?classi=$classid");
+    echo "<meta http-equiv='refresh' content='0'>";
 
 }
 ?>
