@@ -27,8 +27,8 @@ try {
 	
     $sql = "SELECT * FROM direct_messages where recipient_id = '$userid' ORDER BY timestamp DESC";
     $messages = $conn->query($sql);
+    echo "<table><tr><th></th><br><b>Received</b><th></th></tr>";
     if ($messages->num_rows > 0) {
-        echo "<table><tr><th></th><br><b>Received</b><th></th></tr>";
 		$senders = array();
         while($row = $messages->fetch_assoc()) {
             $sender_id = $row['sender_id'];
@@ -56,14 +56,14 @@ try {
 			}
         }
     } else {
-        echo "0 received messages <br>";
+        echo "<br>0 received messages <br>";
     }
     
     
      $sql = "SELECT * FROM direct_messages where sender_id = '$userid' ORDER BY timestamp DESC";
     $messages = $conn->query($sql);
+	echo "<table><tr><th></th><b>Sent</b><th></th></tr>";
     if ($messages->num_rows > 0) {
-        echo "<table><tr><th></th><b>Sent</b><th></th></tr>";
 		$recipients = array();
         while($row = $messages->fetch_assoc()) {
             $recipient_id = $row['recipient_id'];
@@ -91,7 +91,7 @@ try {
         }
         echo "</table>";
     } else {
-        echo "0 sent messages";
+        echo "<br>0 sent messages";
     }
 
 } catch(PDOException $e) {

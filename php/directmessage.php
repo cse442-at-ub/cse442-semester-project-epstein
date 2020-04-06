@@ -88,12 +88,26 @@ try {
 			}
 			$message_id = $row['lastid'];
 		}
-		echo "</table>";
-} catch(PDOException $e) {
-    echo $e->getMessage();
-}
-?>
-                    </p>
+		if (isset($_POST['message'])) {
+		$message = $_POST['message'];
+		$lastid = $_GET['msg_id'];
+		
+		if($sender_id==$userid){
+			$sender_id = $recipient_id;
+		}
+
+		$query = "INSERT INTO direct_messages (lastid, recipient_id, sender_id, message) VALUES ('$lastid', '$sender_id', '$userid', '$message')";
+
+		$result = mysqli_query($conn, $query); 
+		$query1 = "SELECT id from direct_messages where lastid = '$lastid'";
+		$newidq = mysqli_query($conn, $query1);
+		$row = mysqli_fetch_array($newidq);
+		$newid = $row['id'];
+		header("Refresh:0; url=directmessage.php?msg_id=$newid");
+
+	}
+		echo "</table>
+		</p>
                 </div>
                 
 			</div>
@@ -104,40 +118,32 @@ try {
 
 
 <!--===============================================================================================-->
-	<script src="../vendor/jquery/jquery-3.2.1.min.js"></script>
+	<script src='../vendor/jquery/jquery-3.2.1.min.js'></script>
 <!--===============================================================================================-->
-	<script src="../vendor/bootstrap/js/popper.js"></script>
-	<script src="../vendor/bootstrap/js/bootstrap.min.js"></script>
+	<script src='../vendor/bootstrap/js/popper.js'></script>
+	<script src='../vendor/bootstrap/js/bootstrap.min.js'></script>
 <!--===============================================================================================-->
-	<script src="../vendor/select2/select2.min.js"></script>
+	<script src='../vendor/select2/select2.min.js'></script>
 <!--===============================================================================================-->
-	<script src="../vendor/tilt/tilt.jquery.min.js"></script>
+	<script src='../vendor/tilt/tilt.jquery.min.js'></script>
 	<script >
 		$('.js-tilt').tilt({
 			scale: 1.1
 		})
 	</script>
 <!--===============================================================================================-->
-	<script src="../js/main.js"></script>
+	<script src='../js/main.js'></script>
 
 </body>
 </html>
+";
 
-<?php
-	if (isset($_POST['message'])) {
-		$message = $_POST['message'];
-		$lastid = $_GET['msg_id'];
-		
-		if($sender_id==$userid){
-			$sender_id = $recipient_id;
-		}
+	
 
-		$query = "INSERT INTO direct_messages (lastid, recipient_id, sender_id, message) VALUES ('$lastid', '$sender_id', '$userid', '$message')";
 
-		$result = mysqli_query($conn, $query) or die(mysqli_error($conn)); 
-		$query = "SELECT id from direct_message where lastid = '$lastid'";
-		$row = mysqli_fetch_array(mysqli_query($conn, $query));
-		$id = $row['id'];
-		header("Refresh:0; url=directmessage.php?msg_id='$id'");
-	}
+
+} catch(PDOException $e) {
+    echo $e->getMessage();
+}
+
 ?>
