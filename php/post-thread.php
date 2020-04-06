@@ -16,14 +16,8 @@ if (!isset($_SESSION['id'])) {
 </head>
 <body>
 <?php
-if (isset($_GET['classi']) ||  isset($_GET['allclassi'])){
-    //to differentiate between all classes and user's classes
-    if (!isset($_GET['classi'])){
-        $classid = $_GET['allclassi'];
-    }else{
-        $classid =  $_GET['classi'];
-    }
-
+    if (isset($_SESSION['class'])){
+    $classid = $_SESSION['class'];
     include ('conn.php');
     $classname = mysqli_query($conn,"select * from classes where id = '$classid'");
     $rows = mysqli_fetch_array($classname);
