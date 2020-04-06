@@ -25,7 +25,7 @@ if (!isset($_SESSION['id'])) {
 try {
 	       
 	
-    $sql = "SELECT * FROM direct_messages where recipient_id = '$userid' ORDER BY timestamp";
+    $sql = "SELECT * FROM direct_messages where recipient_id = '$userid' ORDER BY timestamp DESC";
     $messages = $conn->query($sql);
     if ($messages->num_rows > 0) {
         echo "<table><tr><th></th><br><b>Received</b><th></th></tr>";
@@ -60,7 +60,7 @@ try {
     }
     
     
-     $sql = "SELECT * FROM direct_messages where sender_id = '$userid' ORDER BY timestamp";
+     $sql = "SELECT * FROM direct_messages where sender_id = '$userid' ORDER BY timestamp DESC";
     $messages = $conn->query($sql);
     if ($messages->num_rows > 0) {
         echo "<table><tr><th></th><b>Sent</b><th></th></tr>";
