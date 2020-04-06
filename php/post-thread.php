@@ -30,12 +30,32 @@ if (isset($_GET['classi']) ||  isset($_GET['allclassi'])){
     $namerow = $rows['name'];
     $numrow = $rows['classnum'];
     $classnamefull = $namerow.$numrow;
-
-
+    
     echo '<strong style="font-size: xx-large">';
     echo $classnamefull;
-     echo  '</strong>';
+    echo  '</strong>';
+    $totalPOSTS = 0;
+    $totalUsers = mysqli_query($conn, "SELECT COUNT(*) FROM `POSTS` where classid = '$classid'");
+        while ($row = $totalUsers->fetch_assoc()) {
+            $totalPOSTS = $row['COUNT(*)'];
+                        
 
+            
+    }
+    
+    $totalStudents = 0;
+    $totalUsers = mysqli_query($conn, "SELECT COUNT(*) FROM `userclasses` where classid = '$classid'");
+        while ($row = $totalUsers->fetch_assoc()) {
+            $totalStudents = $row['COUNT(*)'];
+                        
+            
+    }
+    
+    echo '<strong style="border: solid 1px; border-color:black; background: white; font-size: normal; color:black; margin: 100px; padding:10px" >';
+            echo "At a glance: Total Posts: ".$totalPOSTS."  "." Total Students: ".$totalStudents;
+                echo  '</strong>';
+    
+    
 }
 ?>
 <div>
