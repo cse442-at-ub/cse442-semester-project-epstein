@@ -89,16 +89,38 @@ try {
     if (isset($_POST['number1'])) {
         $dbh = testdb_connect ($host, $username, $password);
         $description = addslashes ($_POST['number1']);
-        $postid = $_GET['post_id'];
-        $OP = $_SESSION['id'];
-        $date = date('Y/m/d H:i:s');
-        $query = "INSERT INTO comments ". "(post_id,content,userid,datePosted) "."VALUES ". "('$postid','$description', $OP, '$date')";
+        if ($description != "") {
+            $postid = $_GET['post_id'];
+            $OP = $_SESSION['id'];
+            $date = date('Y/m/d H:i:s');
+            $query = "INSERT INTO comments ". "(post_id,content,userid,datePosted) "."VALUES ". "('$postid','$description', $OP, '$date')";
 
-        $stmt = $dbh->prepare( $query );
-        $product_id=1;
-        $stmt->bindParam(1, $product_id);
-        $stmt->execute();
-        $row = $stmt->fetch(PDO::FETCH_ASSOC);
+            $stmt = $dbh->prepare( $query );
+            $product_id=1;
+            $stmt->bindParam(1, $product_id);
+            $stmt->execute();
+            $row = $stmt->fetch(PDO::FETCH_ASSOC);
+        } else {
+            $conn = new mysqli($host, $username, $password, $dbname);
+            $commentID = $_POST['likePressed'];
+            $OP = $_SESSION['id'];
+            
+            $sql = "SELECT commentID, userID FROM likesReceived WHERE commentID='$commentID' && userID='$OP'";	
+            $result = $conn->query($sql);
+            
+            if ($result->num_rows > 0) {	
+                
+            } else {
+                $query = "INSERT INTO likesReceived ". "(commentID, userID) "."VALUES ". "('$commentID','$OP')";
+                
+
+                $stmt = $dbh->prepare( $query );
+                $product_id=1;
+                $stmt->bindParam(1, $product_id);
+                $stmt->execute();
+                $row = $stmt->fetch(PDO::FETCH_ASSOC);
+            }
+        } 
     }
 
     try {
@@ -109,7 +131,7 @@ try {
     if ($result->num_rows > 0) {	
         $conn = new mysqli($host, $username, $password, $dbname);	
     $postid = $_GET['post_id'];	
-    $sql = "SELECT post_id, content, userid, datePosted FROM comments WHERE post_id='$postid'";	
+    $sql = "SELECT id, post_id, content, userid, datePosted FROM comments WHERE post_id='$postid'";	
     $result = $conn->query($sql);	
     if ($result->num_rows > 0) {	
         echo "<table><tr><th></th><th></th></tr>";	
@@ -128,9 +150,14 @@ try {
             //display OP image	
             echo "<img src='".$OPpath."' width='17' height='17' >	
                   <tr></td>";	
-            echo "<tr><td>".$row["content"]."</td></tr>";	
-            $postID = $row["post_id"];	
-            	
+            echo "<tr><td>".$row["content"]."</td></tr>";
+            $postID = $row["id"];	
+            
+            $totalUsers = mysqli_query($conn, "SELECT COUNT(*) FROM `likesReceived` where commentID='$postID'");
+            
+            while ($row = $totalUsers->fetch_assoc()) {
+                echo "<tr><td>"."<button name= \"likePressed\" class=\"button-class\" style=\"border-style: solid; border-radius: 5px;margin-right: 10px; padding-left: 10px; padding-right: 10px;border-color: black;background-color:lime; color:black\" value=\"$postID\">Likes </button>".$row['COUNT(*)']."</td></tr>";
+            }
             echo "<tr><td>"."<hr>"."</td></tr>";	
         }
     }
