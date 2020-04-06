@@ -89,7 +89,7 @@ try {
             echo "<tr><td>Posted on: ";
             echo $OPdate;
 
-
+            echo "<tr><td>"."<button name= \"likePressed\" class=\"button-class\" style=\"border-style: solid; border-radius: 5px;margin-left: 500px; padding-left: 10px; padding-right: 10px;border-color: red;background-color:lime; color:blue\" value=\"$postID\">Delete Comment </button>"."</td></tr>";
             echo "<tr><td>"."<button onclick=\"location.href='expandedPost.php?post_id=$postID'\" type=\"button\">Go To Post</button>"."<hr>"."</td></tr>";
 
         }

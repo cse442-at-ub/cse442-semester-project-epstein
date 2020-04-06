@@ -157,6 +157,7 @@ try {
             
             while ($row = $totalUsers->fetch_assoc()) {
                 echo "<tr><td>"."<button name= \"likePressed\" class=\"button-class\" style=\"border-style: solid; border-radius: 5px;margin-right: 10px; padding-left: 10px; padding-right: 10px;border-color: black;background-color:lime; color:black\" value=\"$postID\">Likes </button>".$row['COUNT(*)']."</td></tr>";
+                echo "<tr><td>"."<button name= \"likePressed\" class=\"button-class\" style=\"border-style: solid; border-radius: 5px;margin-left: 500px; padding-left: 10px; padding-right: 10px;border-color: red;background-color:lime; color:blue\" value=\"$postID\">Delete Comment </button>"."</td></tr>";
             }
             echo "<tr><td>"."<hr>"."</td></tr>";	
         }
@@ -193,3 +194,4 @@ try {
 
 </body>
 </html>
+
