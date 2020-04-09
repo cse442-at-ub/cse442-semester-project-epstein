@@ -1,9 +1,8 @@
-<?php session_start();
-include('header.php');
-if (!isset($_SESSION['id'])) {
-    header('Location: loginpage.php');
-
-}
+<?php session_start();	
+include('header.php');	
+if (!isset($_SESSION['id'])) {	
+    header('Location: loginpage.php');	
+}	
 ?>
 
 <!DOCTYPE html>
@@ -61,6 +60,7 @@ try {
         
         while($row = $result->fetch_assoc()) {
             echo "<tr><td>"." ".""." ".$row["content"]."</td></tr>";
+            echo "<tr><td>"." ".""." "."Posted On: ".$row["date"]."</td></tr>";
             echo "<tr><td>"."<hr>"."</td></tr>";
             
 
@@ -78,8 +78,68 @@ try {
                 </div>
                 
                 <form action="" method="post">
-                <textarea input type="text" name="number1" cols="40" rows="5" style="margin-bottom:10px;width:700px;height: 150px;border: 4px solid #e0b1b1;margin-top: 15px;background-color: coral;"></textarea>
-		        <p><input type="submit"/></p>
+                <textarea input type="text" name="number1" cols="40" rows="5" style="margin-bottom:1px;margin-left:5px; width:100% ;height: 150px;border: 2px solid black;margin-top: 8px;background-color: #f0ffb1;"></textarea>
+		        <p><input type="submit" style="margin-bottom:10px;margin-left:650px;width:80px;height: 50px;border: 2px solid black;margin-top: 1px;background-color: #fdc689; color:black;"></p>
+                    
+<?php
+    function testdb_connect ($host, $username, $password){
+        $dbh = new PDO("mysql:host=$host;dbname=cse442_542_2020_spring_teamg_db", $username, $password);
+        return $dbh;
+    }
+    if (isset($_POST['number1'])) {
+        $dbh = testdb_connect ($host, $username, $password);
+        $description = addslashes ($_POST['number1']);
+        $postid = $_GET['post_id'];
+        $OP = $_SESSION['id'];
+        $date = date('Y/m/d H:i:s');
+        $query = "INSERT INTO comments ". "(post_id,content,userid,datePosted) "."VALUES ". "('$postid','$description', $OP, '$date')";
+
+        $stmt = $dbh->prepare( $query );
+        $product_id=1;
+        $stmt->bindParam(1, $product_id);
+        $stmt->execute();
+        $row = $stmt->fetch(PDO::FETCH_ASSOC);
+    }
+
+    try {
+        $conn = new mysqli($host, $username, $password, $dbname);	
+    $postid = $_GET['post_id'];	
+    $sql = "SELECT post_id, content, userid, datePosted FROM comments WHERE post_id='$postid'";	
+    $result = $conn->query($sql);	
+    if ($result->num_rows > 0) {	
+        $conn = new mysqli($host, $username, $password, $dbname);	
+    $postid = $_GET['post_id'];	
+    $sql = "SELECT post_id, content, userid, datePosted FROM comments WHERE post_id='$postid'";	
+    $result = $conn->query($sql);	
+    if ($result->num_rows > 0) {	
+        echo "<table><tr><th></th><th></th></tr>";	
+        	
+        while($row = $result->fetch_assoc()) {	
+            $OPID = $row['userid'];	
+            $userq = mysqli_query($conn, "select username, name, picture_path from users where id = '$OPID'");	
+            $userrows=mysqli_fetch_array($userq);	
+            $OPuser = $userrows['username'];	
+            $OPpath = $userrows['picture_path'];	
+            //display OP	
+            echo "<tr><td>Posted by: ";	
+            echo $OPuser;	
+            echo "<tr><td>Date posted: ";	
+            echo $row["datePosted"];	
+            //display OP image	
+            echo "<img src='".$OPpath."' width='17' height='17' >	
+                  <tr></td>";	
+            echo "<tr><td>".$row["content"]."</td></tr>";	
+            $postID = $row["post_id"];	
+            	
+            echo "<tr><td>"."<hr>"."</td></tr>";	
+        }
+    }
+    }
+    } catch(PDOException $e) {
+    echo $e->getMessage();
+}
+        echo "</table>";
+?>
 			</div>
 		</div>
 	</div>
@@ -106,57 +166,3 @@ try {
 
 </body>
 </html>
-<?php
-function testdb_connect ($host, $username, $password){
-    $dbh = new PDO("mysql:host=$host;dbname=cse442_542_2020_spring_teamg_db", $username, $password);
-    return $dbh;
-}
-if (isset($_POST['number1'])) {
-    $dbh = testdb_connect ($host, $username, $password);
-    $description = addslashes ($_POST['number1']);
-    $postid = $_GET['post_id'];
-    $OP = $_SESSION['id'];
-    $query = "INSERT INTO comments ". "(post_id,content, userid) "."VALUES ". "('$postid','$description', $OP)";
-    
-    $stmt = $dbh->prepare( $query );
-    $product_id=1;
-    $stmt->bindParam(1, $product_id);
-    $stmt->execute();
-    $row = $stmt->fetch(PDO::FETCH_ASSOC);
-    echo "<meta http-equiv='refresh' content='0'>";
-}
-    
-try {
-    $conn = new mysqli($host, $username, $password, $dbname);
-    $postid = $_GET['post_id'];
-    $sql = "SELECT post_id, content, userid FROM comments WHERE post_id='$postid'";
-    $result = $conn->query($sql);
-    if ($result->num_rows > 0) {
-        echo "<table><tr><th></th><th></th></tr>";
-        
-        while($row = $result->fetch_assoc()) {
-            $OPID = $row['userid'];
-            $userq = mysqli_query($conn, "select username, name, picture_path from users where id = '$OPID'");
-            $userrows=mysqli_fetch_array($userq);
-            $OPuser = $userrows['username'];
-            $OPpath = $userrows['picture_path'];
-
-            //display OP
-            echo "<tr><td>Posted by: ";
-            echo $OPuser;
-            //display OP image
-            echo "<img src='".$OPpath."' width='17' height='17' >
-                  <tr></td>";
-
-            echo "<tr><td>".$row["content"]."</td></tr>";
-            $postID = $row["post_id"];
-            echo "<tr><td>"."<hr>"."</td></tr>";
-        }
-        echo "</table>";
-    } else {
-    }
-    
-} catch(PDOException $e) {
-    echo $e->getMessage();
-}
-?>
