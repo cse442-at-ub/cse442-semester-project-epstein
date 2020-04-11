@@ -47,10 +47,29 @@ if (!isset($_SESSION['id'])) {
 	include ('conn.php');
     $userid=$_SESSION['id'];
 try {
-	    $message_id = $_GET['msg_id'];
+		echo	"<form action='' method='post'> <textarea input type='text' name='message' cols='40' rows='5' style='margin-bottom:10px;width:700px;height: 150px;border: 4px solid #e0b1b1;margin-top: 15px;background-color: coral;'></textarea> <p><input type='submit'/></p>";
+			echo "<table><tr><th></th><th></th></tr>";
 		
-	echo	"<form action='' method='post'> <textarea input type='text' name='message' cols='40' rows='5' style='margin-bottom:10px;width:700px;height: 150px;border: 4px solid #e0b1b1;margin-top: 15px;background-color: coral;'></textarea> <p><input type='submit'/></p>";
-		echo "<table><tr><th></th><th></th></tr>";
+		if(isset($_GET['msg_id'])){
+		    $message_id = $_GET['msg_id'];
+		}
+		if(isset($_GET['user_id'])){
+			$target_id = $_GET['user_id'];
+
+			$msg_query = "SELECT id from direct_messages where (recipient_id = '$target_id' AND sender_id = '$userid') OR (recipient_id = '$userid' AND sender_id = '$target_id')";
+			$message_results = $conn->query($msg_query);
+			$message_id = -1;
+			while($row = $message_results->fetch_assoc()) {
+				if($row['id']>$message_id){
+					$message_id = $row['id'];
+				}
+				$row = mysqli_fetch_row($message_results);
+			}
+			
+			
+		}
+		if(isset($message_id)){
+			$lastid = $message_id;
 		while($message_id!=-1){
 			$sql = "SELECT * FROM direct_messages where id = '$message_id'";
 			$messageq = mysqli_query($conn, $sql);
@@ -88,24 +107,24 @@ try {
 			}
 			$message_id = $row['lastid'];
 		}
-		if (isset($_POST['message'])) {
-		$message = $_POST['message'];
-		$lastid = $_GET['msg_id'];
-		
-		if($sender_id==$userid){
-			$sender_id = $recipient_id;
+	
 		}
+		if (isset($_POST['message'])) {
+				$message = $_POST['message'];
+				if($sender_id==$userid){
+					$sender_id = $recipient_id;
+				}
 
-		$query = "INSERT INTO direct_messages (lastid, recipient_id, sender_id, message) VALUES ('$lastid', '$sender_id', '$userid', '$message')";
+				$query = "INSERT INTO direct_messages (lastid, recipient_id, sender_id, message) VALUES ('$lastid', '$sender_id', '$userid', '$message')";
 
-		$result = mysqli_query($conn, $query); 
-		$query1 = "SELECT id from direct_messages where lastid = '$lastid'";
-		$newidq = mysqli_query($conn, $query1);
-		$row = mysqli_fetch_array($newidq);
-		$newid = $row['id'];
-		header("Refresh:0; url=directmessage.php?msg_id=$newid");
+				$result = mysqli_query($conn, $query); 
+				$query1 = "SELECT id from direct_messages where lastid = '$lastid'";
+				$newidq = mysqli_query($conn, $query1);
+				$row = mysqli_fetch_array($newidq);
+				$newid = $row['id'];
+				header("Refresh:0; url=directmessage.php?msg_id=$newid");
 
-	}
+		}
 		echo "</table>
 		</p>
                 </div>

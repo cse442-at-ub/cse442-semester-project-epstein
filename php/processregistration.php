@@ -5,6 +5,7 @@
         // get values passed in from userRegistration.php
         $firstName = $_POST['firstName'];
         $lastName = $_POST['lastName'];
+        $name = $firstName.$lastName;
         $email = $_POST['email'];
         $username = $_POST['username'];
         $password = $_POST['pass'];
@@ -38,8 +39,8 @@
         }
 
         //if not, insert new user into database
-       $insertquery = mysqli_query($conn, "INSERT INTO `users` (`id` , `username` , `email` , `password` ,`firstname` ,`lastname` ,`major` ,`graduationyear` ,`linkedin` ,`github` ,`profiledescription` ,`skills` ,`picture_path`)
-                  VALUES (NULL , '$username', '$email', '$password', '$firstName', '$lastName', NULL , NULL , NULL , NULL , NULL , NULL , '/path/to/images/default')");
+       $insertquery = mysqli_query($conn, "INSERT INTO `users` (username , email , password , name )
+                  VALUES ('$username', '$email', '$password', '$name')");
 
 
         $query = mysqli_query($conn, "select * from 'users' where username = '$username'");
@@ -51,5 +52,6 @@
     }else{
         $_SESSION['message'] = "Error processing submitted form";
         header('location:loginpage.php');
+        exit();
     }
 ?>
