@@ -35,7 +35,7 @@
        $skills=$userrow['skills'];
        
        //gets all class-user data
-        $allclasses = mysqli_query($conn, "select * from `userclasses` where userid ='$userid'");
+        $allclasses = mysqli_query($conn, "select * from `userclasses` where userid ='$profileid'");
         if (!$allclasses){
             echo "Error accessing class list";
         }
