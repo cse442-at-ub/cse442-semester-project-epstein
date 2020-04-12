@@ -2,7 +2,7 @@
 include('header.php');
 if (!isset($_SESSION['id'])) {
     header('Location: loginpage.php');
-
+    exit();
 }?>
 
 <!DOCTYPE html>
@@ -15,32 +15,28 @@ if (!isset($_SESSION['id'])) {
 
 <body class = "container full-height-grow">
 
-
-
-
-
 <section class = "home-main-section">
 
     <div class = "left-side-wrapper">
 
         <strong style="font-size: xx-large"> Your Classes</strong>
 
-        <form name = "classf" id = "classform" method = "GET" action = "post-thread.php">
-               <input name = "classi" type = "hidden" id = "classinput" value = "">
+        <form name = "classf" id = "classform" method = "GET" action = "processclass.php">
+               <input name = "classi" type = "hidden" id = "classinput" >
+               <input name  = "unsubinput" type = "hidden" id = "unsubinput" >
                <ul class = "classes-list">
                 <?php
                 include('conn.php');
                 $user_id = $_SESSION['id'];
 
-
                 //gets all class-user data
-                $allclasses = mysqli_query($conn, "select * from `userclasses` where userid ='$user_id'");
-                if (!$allclasses){
+                $subclasses = mysqli_query($conn, "select * from `userclasses` where userid ='$user_id'");
+                if (!$subclasses){
                     echo "Error accessing class list";
                 }
                 //fetches classid list
                 $class_ids = array();
-                while ($line = mysqli_fetch_assoc($allclasses)){
+                while ($line = mysqli_fetch_assoc($subclasses)){
                     $class_ids[] = $line['classid'];
                 }
                 //fetches actual classes by classid and sets to $classes
@@ -53,7 +49,18 @@ if (!isset($_SESSION['id'])) {
                 foreach($classes as $class){
                          $id = $class['id'];
                          //displays element (one class) with id set as class id
-                         echo '<li onclick="leftclk(this.id)" id = "'.$id.'" class = "classoption" > '.$class['classnum'] . $class['name'].' </li> ';
+                         echo '<li onclick="leftclk(this.id)" id = "'.$id.'" class = "classoptiond" > 
+                         
+                         '.$class['classnum'] . $class['name'].'
+                          
+                          <div class = "dropdown-content">
+                                <a onclick="unsubscribe(this.id)" id = "'.$id.'" > Unsubscribe from class  </a>
+                                <a onclick="rightclk(this.id)" id = "'.$id.'" > Go to class page </a>
+                               
+                               </div>
+                          
+                          
+                          </li> ';
                      } ?>
                </ul>
         </form>
@@ -68,6 +75,14 @@ if (!isset($_SESSION['id'])) {
                 document.getElementById("allclassinput").setAttribute("value", elem);
                 document.getElementById("allclassform").submit();
             }
+            function subscribe(elem){
+                document.getElementById("subinput").setAttribute("value", elem);
+                document.getElementById("allclassform").submit();
+            }
+            function unsubscribe(elem){
+                document.getElementById("unsubinput").setAttribute("value", elem);
+                document.getElementById("classform").submit();
+            }
         </script>
     </div>
 
@@ -76,14 +91,31 @@ if (!isset($_SESSION['id'])) {
 
         <strong style="font-size: xx-large"> Available Classes</strong>
 
-        <form name = "allclassf" id = "allclassform" method = "GET" action = "post-thread.php">
-            <input name = "allclassi" type = "hidden" id = "allclassinput" value = "">
+        <!-form will be used for class page navigation and subscritption>
+        <form name = "allclassf" id = "allclassform" method = "GET" action = "processclass.php">
+            <input name = "allclassi" type = "hidden" id = "allclassinput" >
+            <input name  = "subinput" type = "hidden" id = "subinput" >
         <ul class = "classes-list">
             <?php $class_list = mysqli_query($conn, "select * from classes");
                     foreach($class_list as $class){
                         $id = $class['id'];
-                         //displays element (one class) with id set as class id
-                         echo '<li onclick="rightclk(this.id)" id = "'.$id.'" class = "classoption" > '.$class['classnum'] . $class['name'].' </li> ';
+                        if (!(in_array($id, $class_ids))) {
+                            //displays element (one class) with id set as class id
+
+
+                            echo '<li class = "classoptiond" >'
+                                . $class['classnum'] . $class['name'] .
+
+                                ' <div class = "dropdown-content">
+                               
+                                <a onclick="subscribe(this.id)" id = "'.$id.'" > Subscribe to class  </a>
+                                <a onclick="rightclk(this.id)" id = "'.$id.'" > Go to class page </a>
+                               
+                               </div>
+                                 </li> ';
+
+
+                        }
                     } ?>
             
         </ul>
