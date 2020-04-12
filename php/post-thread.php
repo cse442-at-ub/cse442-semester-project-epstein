@@ -131,7 +131,7 @@ if (isset($_GET['classi']) ||  isset($_GET['allclassi'])){
 </dialog>
 <span>
 
-  <button id="updateDetails" style="width:150px;height:50px; background-color:#ED2939;border:solid 3px; border-color:white; color:white; font-size:15px; font-style:bold" display="inline">Report a Post!</button>
+  <button id="updateDetails" style="width:150px;height:50px; background-color:#ED2939;border:solid 3px; border-color:white; color:white; font-size:15px; font-style: italic" display="inline">Report a Post!</button>
 </span>
 
 <br>
@@ -140,6 +140,7 @@ if (isset($_GET['classi']) ||  isset($_GET['allclassi'])){
 }
 ?>
 <div>
+    <div type = "text">POST:</div>
     <form action="" method="post">
         <textarea input type="text" name="number1" cols="40" rows="5" style="margin-bottom:10px;width:1200px;height: 150px;border: 4px solid #e0b1b1;margin-top: 15px;background-color: white;"></textarea>
         <p><input type="submit"/></p>
@@ -170,9 +171,8 @@ try {
             $postID = $row["id"];
             $OPID = $row['userid'];
             if ($_SESSION['id'] == $row['userid']) {
-                $classId = $_GET['allclassi'];
 
-                echo "<tr><td>"."<button onclick=\"location.href='post-thread.php?allclassi=$classId&&postToDelete=$postID&&OPID=$OPID'\" style=\"border-style: solid; border-radius: 5px;margin-left: 500px; padding-left: 10px; padding-right: 10px;border-color: red;background-color:red; color:white;\"type=\"button\">Delete Post</button>"."</td></tr>";
+                echo "<tr><td>"."<button onclick=\"location.href='post-thread.php?allclassi=$classid&&postToDelete=$postID&&OPID=$OPID'\" style=\"border-style: solid; border-radius: 5px;margin-left: 500px; padding-left: 10px; padding-right: 10px;border-color: red;background-color:red; color:white;\"type=\"button\">Delete Post</button>"."</td></tr>";
             }
             $postID = $row["id"];
             
@@ -195,7 +195,14 @@ try {
             echo $OPdate;
 
 
-            echo "<tr><td>"."<button onclick=\"location.href='expandedPost.php?post_id=$postID'\" type=\"button\">Go To Post</button>"."<hr>"."</td></tr>";
+            echo "<tr><td>"."<button onclick=\"location.href='expandedPost.php?post_id=$postID'\" type=\"button\">Go To Post</button>";
+            if ($OPID == $_SESSION['id']){
+
+                echo "<button onclick=\"location.href='editContent.php?post_id=$postID'\" type=\"button\"> Edit Post </button>";
+            }
+            echo "<hr></td></tr>";
+            //to record which page to return to upon editing
+            $_SESSION['fromExpanded'] = false;
             
             
         }
@@ -261,9 +268,7 @@ if (isset($_POST['number1'])) {
             var parts = window.location.href.replace(/[?&]+([^=&]+)=([^&]*)/gi, function(m,key,value) {
                 vars[key] = value;
             });
-            
-            var hello = "hello";
-            var world = "world";
+
             window.location.href = "post-thread.php?allclassi=" + vars["allclassi"] + "&postToReport=" + favDialog.returnValue;
         }
 
