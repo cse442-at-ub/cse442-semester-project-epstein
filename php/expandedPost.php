@@ -2,7 +2,6 @@
 include('header.php');
 if (!isset($_SESSION['id'])) {
     header('Location: loginpage.php');
-
 }
 ?>
 
@@ -54,21 +53,41 @@ try {
     
     $conn = new mysqli($host, $username, $password, $dbname);
     $post_id = $_GET['post_id'];
-    $sql = "SELECT id, subject, content, date FROM POSTS where id=$post_id";
-    $result = $conn->query($sql);
-    if ($result->num_rows > 0) {
+    $post = mysqli_query($conn, "SELECT id, userid, subject, content, date FROM POSTS where id='$post_id'");
+
+    if (mysqli_num_rows($post) > 0) {
+
+        $postrows = mysqli_fetch_array($post);
+        $OPID = $postrows['userid'];
+        $user = mysqli_query($conn, "select username, name, picture_path from users where id = '$OPID'");
+        $userrows=mysqli_fetch_array($user);
+        $OPuser = $userrows['username'];
+        $OPpath = $userrows['picture_path'];
+
         echo "<table><tr><th></th><th></th></tr>";
-        
-        while($row = $result->fetch_assoc()) {
-            echo "<tr><td>"." ".""." ".$row["content"]."</td></tr>";
+
+            echo "<tr><td>".$postrows['content']."</td></tr>";
+
             echo "<tr><td>"."<hr>"."</td></tr>";
+
+            echo "<tr><td>Posted by: ";
+            echo $OPuser;
+            //display OP image
+            echo "<img src='".$OPpath."' width='17' height='17' >
+                  <tr></td>";
+
+            if ($OPID == $_SESSION['id']){
+
+                echo "<tr><td><button onclick=\"location.href='editContent.php?post_id=$post_id'\" type=\"button\" style = color:brown>Edit Post</button> </td></tr>";
+            }
             
 
-        }
+
         echo "</table>";
     } else {
         echo "0 results";
     }
+    $_SESSION['fromExpanded'] = true;
     
 } catch(PDOException $e) {
     echo $e->getMessage();
@@ -76,7 +95,7 @@ try {
 ?>
                     </p>
                 </div>
-                
+
                 <form action="" method="post">
                 <textarea input type="text" name="number1" cols="40" rows="5" style="margin-bottom:10px;width:700px;height: 150px;border: 4px solid #e0b1b1;margin-top: 15px;background-color: coral;"></textarea>
 		        <p><input type="submit"/></p>

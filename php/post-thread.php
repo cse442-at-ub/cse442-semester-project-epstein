@@ -13,6 +13,7 @@ if (!isset($_SESSION['id'])) {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Post</title>
     <link href="styles.css" rel="stylesheet" type="text/css">
+
 </head>
 <body>
 <?php
@@ -40,16 +41,13 @@ if (isset($_GET['classi']) ||  isset($_GET['allclassi'])){
 ?>
 <div>
     <form action="" method="post">
-        <textarea input type="text" name="number1" cols="40" rows="5" style="margin-bottom:10px;width:1200px;height: 150px;border: 4px solid #e0b1b1;margin-top: 15px;background-color: white;"></textarea>
-
-
-
+        <textarea input type="text" name="number1" cols="40" rows="5" style="margin-bottom:10px;width:1200px;height: 150px;border: 4px solid #e0b1b1;margin-top: 15px;background-color: white;"></textarea
+        <hr>
         <p><input type="submit"/></p>
         <hr style="margin-top: 0px;">
 </div>
 
 
-</body></html>
 <?php
 // 1. database credentials
 $host = "tethys.cse.buffalo.edu";
@@ -57,10 +55,12 @@ $username = "mdrafsan";
 $password = "50100208";
 $dbname = "cse442_542_2020_spring_teamg_db";
 // 2. connect to database
-function testdb_connect ($host, $username, $password){
+function testdb_connect ($host, $username, $password)
+{
     $dbh = new PDO("mysql:host=$host;dbname=cse442_542_2020_spring_teamg_db", $username, $password);
     return $dbh;
 }
+
 try {
     $conn = new mysqli($host, $username, $password, $dbname);
 
@@ -86,7 +86,16 @@ try {
                   <tr></td>";
 
 
-            echo "<tr><td>"."<button onclick=\"location.href='expandedPost.php?post_id=$postID'\" type=\"button\">Go To Post</button>"."<hr>"."</td></tr>";
+            echo "<tr><td>"."<button onclick=\"location.href='expandedPost.php?post_id=$postID'\" type=\"button\">Go To Post</button>";
+           //option to edit if posted by logged in user
+            if ($OPID == $_SESSION['id']){
+
+                echo "<button onclick=\"location.href='editContent.php?post_id=$postID'\" type=\"button\"> Edit Post </button>";
+            }
+            echo "<hr></td></tr>";
+            $_SESSION['fromExpanded'] = false;
+
+
 
         }
         echo "</table>";
@@ -113,3 +122,6 @@ if (isset($_POST['number1'])) {
 
 }
 ?>
+
+
+</body></html>
