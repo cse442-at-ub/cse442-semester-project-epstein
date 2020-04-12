@@ -172,6 +172,17 @@ removes left side div from screen when too small
     text-decoration: none;
 }
 
+.statOption{
+    background: #ffffff;  /* fallback for old browsers */
+    background: -webkit-linear-gradient(to top, #ff5e62, #ff9966);  /* Chrome 10-25, Safari 5.1-6 */
+    background: linear-gradient(to top, #ffffff, #ffffff); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+    border-style: dashed;
+    padding: 16px 20px 20px 20px;
+    display: inline;
+    
+    text-decoration: none;
+}
+
 .classes-list{
     list-style: none;
     text-decoration: none;
