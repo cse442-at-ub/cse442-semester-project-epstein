@@ -145,36 +145,21 @@ try {
         }
     }
 
-
-
-        $postid = $_GET['post_id'];
-        $OP = $_SESSION['id'];
-        $date = date('Y/m/d H:i:s');
-        $query = "INSERT INTO comments ". "(post_id,content,userid,datePosted) "."VALUES ". "('$postid','$description', $OP, '$date')";
-
-        $stmt = $dbh->prepare( $query );
-        $product_id=1;
-        $stmt->bindParam(1, $product_id);
-        $stmt->execute();
-        $row = $stmt->fetch(PDO::FETCH_ASSOC);
-    }
-
-    try {
-        $conn = new mysqli($host, $username, $password, $dbname);
-    $postid = $_GET['post_id'];
-    $sql = "SELECT post_id, content, userid, datePosted FROM comments WHERE post_id='$postid'";
-    $result = $conn->query($sql);
-    if ($result->num_rows > 0) {
-        $conn = new mysqli($host, $username, $password, $dbname);
-    $postid = $_GET['post_id'];
-    $sql = "SELECT id, post_id, content, userid, datePosted FROM comments WHERE post_id='$postid'";
-    $sql = "SELECT post_id, content, userid, datePosted FROM comments WHERE post_id='$postid'";
-    $result = $conn->query($sql);
-    if ($result->num_rows > 0) {
-        echo "<table><tr><th></th><th></th></tr>";
-
-        while($row = $result->fetch_assoc()) {
-            $OPID = $row['userid'];
+    try {	
+        $conn = new mysqli($host, $username, $password, $dbname);		
+    $postid = $_GET['post_id'];		
+    $sql = "SELECT post_id, content, userid, datePosted FROM comments WHERE post_id='$postid'";		
+    $result = $conn->query($sql);		
+    if ($result->num_rows > 0) {		
+        $conn = new mysqli($host, $username, $password, $dbname);		
+    $postid = $_GET['post_id'];		
+    $sql = "SELECT id, post_id, content, userid, datePosted FROM comments WHERE post_id='$postid'";		
+    $result = $conn->query($sql);		
+    if ($result->num_rows > 0) {		
+        echo "<table><tr><th></th><th></th></tr>";		
+        		
+        while($row = $result->fetch_assoc()) {		
+            $OPID = $row['userid'];		
             $commentID = $row["id"];
             if ($_SESSION['id'] == $row['userid']) {
                 echo "<tr><td>"."<button onclick=\"location.href='expandedPost.php?post_id=$postid&&commentToDelete=$commentID&&OPID=$OPID'\" style=\"border-style: solid; border-radius: 5px;margin-left: 500px; padding-left: 10px; padding-right: 10px;border-color: red;background-color:red; color:white;\"type=\"button\">Delete Comment</button>"."</td></tr>";

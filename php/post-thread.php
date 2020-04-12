@@ -97,11 +97,6 @@ if (isset($_GET['classi']) ||  isset($_GET['allclassi'])){
             
     }
     
-    
-    
-    echo '<strong style="border: solid 1px; border-color:black; background: white; font-size: normal; color:black; margin: 100px; padding:10px" >';
-            echo "At a glance: Total Posts: ".$totalPOSTS."  "." Total Students: ".$totalStudents;
-                echo  '</strong>';
     echo '<strong style="border: solid 1px; border-color:black; background: white; font-size: normal; color:black; margin: 100px; padding:10px" >';
             echo "At a glance: Total Posts: ".$totalPOSTS."  "." Total Students: ".$totalStudents;
                 echo  '</strong>';
@@ -232,20 +227,7 @@ if (isset($_POST['number1'])) {
     }
     
 }
-    
-?>
-    $OP = $_SESSION['id'];
-    $date = date('Y/m/d H:i:s');
-    $query = "INSERT INTO POSTS ". "(subject,content, date, classid, userid) "."VALUES ". "('->','$description','$date', $classid, $OP )";
 
-    $stmt = $dbh->prepare( $query );
-    $product_id=1;
-    $stmt->bindParam(1, $product_id);
-    $stmt->execute();
-    $row = $stmt->fetch(PDO::FETCH_ASSOC);
-    echo "<meta http-equiv='refresh' content='0'>";
-    echo $_COOKIE['post'];
-}
     
 ?>
 <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js" type="text/javascript"></script>
