@@ -50,16 +50,20 @@ $password = "50100208";
 $dbname = "cse442_542_2020_spring_teamg_db";
 // 2. connect to database
 try {
-
+    //displaying Main post
     $conn = new mysqli($host, $username, $password, $dbname);
     $post_id = $_GET['post_id'];
-    $sql = "SELECT id, subject, content, date FROM POSTS where id=$post_id";
+    $sql = "SELECT userid, id, subject, content, date FROM POSTS where id=$post_id";
     $result = $conn->query($sql);
     if ($result->num_rows > 0) {
         echo "<table><tr><th></th><th></th></tr>";
 
         while($row = $result->fetch_assoc()) {
             echo "<tr><td>"." ".""." ".$row["content"]."</td></tr>";
+            if ($row['userid'] == $_SESSION['id']){
+
+                echo "<tr><td><button onclick=\"location.href='editContent.php?post_id=$post_id'\" type=\"button\" style = color:brown>Edit Post</button> </td></tr>";
+            }
             echo "<tr><td>"." ".""." "."Posted On: ".$row["date"]."</td></tr>";
             echo "<tr><td>"."<hr>"."</td></tr>";
 
@@ -69,6 +73,7 @@ try {
     } else {
         echo "0 results";
     }
+    $_SESSION['fromExpanded'] = true;
 
 } catch(PDOException $e) {
     echo $e->getMessage();
@@ -76,9 +81,10 @@ try {
 ?>
                     </p>
                 </div>
-
                 <form action="" method="post">
+                    <div type-"text"> COMMENT:</div>
                 <textarea input type="text" name="number1" cols="40" rows="5" style="margin-bottom:1px;margin-left:5px; width:100% ;height: 150px;border: 2px solid black;margin-top: 8px;background-color: #f0ffb1;"></textarea>
+
 		        <p><input type="submit" style="margin-bottom:10px;margin-left:650px;width:80px;height: 50px;border: 2px solid black;margin-top: 1px;background-color: #fdc689; color:black;"></p>
 
 <?php
@@ -90,10 +96,9 @@ try {
         $dbh = testdb_connect ($host, $username, $password);
         $description = addslashes ($_POST['number1']);
         if ($description != "") {
-            $postid = $_GET['post_id'];
             $OP = $_SESSION['id'];
             $date = date('Y/m/d H:i:s');
-            $query = "INSERT INTO comments ". "(post_id,content,userid,datePosted) "."VALUES ". "('$postid','$description', $OP, '$date')";
+            $query = "INSERT INTO comments ". "(post_id,content,userid,datePosted) "."VALUES ". "('$post_id','$description', $OP, '$date')";
 
             $stmt = $dbh->prepare( $query );
             $product_id=1;
@@ -145,24 +150,18 @@ try {
         }
     }
 
-    try {	
-        $conn = new mysqli($host, $username, $password, $dbname);		
-    $postid = $_GET['post_id'];		
-    $sql = "SELECT post_id, content, userid, datePosted FROM comments WHERE post_id='$postid'";		
-    $result = $conn->query($sql);		
-    if ($result->num_rows > 0) {		
-        $conn = new mysqli($host, $username, $password, $dbname);		
-    $postid = $_GET['post_id'];		
-    $sql = "SELECT id, post_id, content, userid, datePosted FROM comments WHERE post_id='$postid'";		
+    try {
+        $conn = new mysqli($host, $username, $password, $dbname);
+    $sql = "SELECT id, post_id, content, userid, datePosted FROM comments WHERE post_id='$post_id'";
     $result = $conn->query($sql);		
     if ($result->num_rows > 0) {		
         echo "<table><tr><th></th><th></th></tr>";		
         		
         while($row = $result->fetch_assoc()) {		
-            $OPID = $row['userid'];		
+            $OPID = $row['userid'];
             $commentID = $row["id"];
             if ($_SESSION['id'] == $row['userid']) {
-                echo "<tr><td>"."<button onclick=\"location.href='expandedPost.php?post_id=$postid&&commentToDelete=$commentID&&OPID=$OPID'\" style=\"border-style: solid; border-radius: 5px;margin-left: 500px; padding-left: 10px; padding-right: 10px;border-color: red;background-color:red; color:white;\"type=\"button\">Delete Comment</button>"."</td></tr>";
+                echo "<tr><td>"."<button onclick=\"location.href='expandedPost.php?post_id=$post_id&&commentToDelete=$commentID&&OPID=$OPID'\" style=\"border-style: solid; border-radius: 5px;margin-left: 500px; padding-left: 10px; padding-right: 10px;border-color: red;background-color:red; color:white;\"type=\"button\">Delete Comment</button>"."</td></tr>";
             }
             $userq = mysqli_query($conn, "select username, name, picture_path from users where id = '$OPID'");
             $userrows=mysqli_fetch_array($userq);
@@ -176,20 +175,25 @@ try {
             //display OP image
             echo "<img src='".$OPpath."' width='17' height='17' >
                   <tr></td>";
-            echo "<tr><td>".$row["content"]."</td></tr>";
-            $postID = $row["id"];
 
-            $totalUsers = mysqli_query($conn, "SELECT COUNT(*) FROM `likesReceived` where commentID='$postID'");
+
+            echo "<tr><td>".$row["content"]."</td></tr>";
+
+            $totalUsers = mysqli_query($conn, "SELECT COUNT(*) FROM `likesReceived` where commentID='$post_id'");
 
             while ($row = $totalUsers->fetch_assoc()) {
-                echo "<tr><td>"."<button name= \"likePressed\" class=\"button-class\" style=\"border-style: solid; border-radius: 5px;margin-right: 10px; padding-left: 10px; padding-right: 10px;border-color: black;background-color:lime; color:black\" value=\"$postID\">Likes </button>".$row['COUNT(*)']."</td></tr>";
+                echo "<tr><td>"."<button name= \"likePressed\" class=\"button-class\" style=\"border-style: solid; border-radius: 5px;margin-right: 10px; padding-left: 10px; padding-right: 10px;border-color: black;background-color:lime; color:black\" value=\"$post_id\">Likes </button>".$row['COUNT(*)'];
+            if ($_SESSION['id'] == $OPID) {
+
+                echo "<tr><td><button onclick=\"location.href='editContent.php?post_id=$post_id&&comment_id=$commentID'\" type=\"button\" style = color:brown>Edit Comment</button>";
+
             }
-            echo "<tr><td>".$row["content"]."</td></tr>";
-            $postID = $row["post_id"];
+
+             echo  "</td></tr>";
+            }
 
             echo "<tr><td>"."<hr>"."</td></tr>";
         }
-    }
     }
     } catch(PDOException $e) {
     echo $e->getMessage();
