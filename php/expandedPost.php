@@ -122,6 +122,31 @@ try {
             }
         } 
     }
+                    
+    if (isset($_GET['commentToDelete']) && isset($_GET['OPID'])) {
+    $currentUSERID = $_SESSION['id'];
+    $requestUSERID = $_GET['OPID'];
+    
+    if ($currentUSERID == $requestUSERID) {
+         $host = "tethys.cse.buffalo.edu";
+         $username = "mdrafsan";
+         $password = "50100208";
+         $dbname = "cse442_542_2020_spring_teamg_db";
+    
+         $dbh = testdb_connect ($host, $username, $password);
+    
+         $query = "DELETE FROM comments WHERE id=".$_GET["commentToDelete"];
+
+         $stmt = $dbh->prepare( $query );
+         $product_id=1;
+         $stmt->bindParam(1, $product_id);
+         $stmt->execute();
+         $row = $stmt->fetch(PDO::FETCH_ASSOC);                
+        }
+    }
+                    
+                    
+                
 
     try {
         $conn = new mysqli($host, $username, $password, $dbname);	
@@ -138,6 +163,10 @@ try {
         	
         while($row = $result->fetch_assoc()) {	
             $OPID = $row['userid'];	
+            $commentID = $row["id"];
+            if ($_SESSION['id'] == $row['userid']) {
+                echo "<tr><td>"."<button onclick=\"location.href='expandedPost.php?post_id=$postid&&commentToDelete=$commentID&&OPID=$OPID'\" style=\"border-style: solid; border-radius: 5px;margin-left: 500px; padding-left: 10px; padding-right: 10px;border-color: red;background-color:red; color:white;\"type=\"button\">Delete Comment</button>"."</td></tr>";
+            }
             $userq = mysqli_query($conn, "select username, name, picture_path from users where id = '$OPID'");	
             $userrows=mysqli_fetch_array($userq);	
             $OPuser = $userrows['username'];	
@@ -157,7 +186,6 @@ try {
             
             while ($row = $totalUsers->fetch_assoc()) {
                 echo "<tr><td>"."<button name= \"likePressed\" class=\"button-class\" style=\"border-style: solid; border-radius: 5px;margin-right: 10px; padding-left: 10px; padding-right: 10px;border-color: black;background-color:lime; color:black\" value=\"$postID\">Likes </button>".$row['COUNT(*)']."</td></tr>";
-                echo "<tr><td>"."<button name= \"likePressed\" class=\"button-class\" style=\"border-style: solid; border-radius: 5px;margin-left: 500px; padding-left: 10px; padding-right: 10px;border-color: red;background-color:lime; color:blue\" value=\"$postID\">Delete Comment </button>"."</td></tr>";
             }
             echo "<tr><td>"."<hr>"."</td></tr>";	
         }
@@ -194,4 +222,5 @@ try {
 
 </body>
 </html>
+
 

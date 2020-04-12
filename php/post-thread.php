@@ -16,6 +16,31 @@ if (!isset($_SESSION['id'])) {
 </head>
 <body>
 <?php
+    
+    
+if (isset($_GET['postToDelete']) && isset($_GET['OPID'])) {
+    $currentUSERID = $_SESSION['id'];
+    $requestUSERID = $_GET['OPID'];
+    
+    if ($currentUSERID == $requestUSERID) {
+         $host = "tethys.cse.buffalo.edu";
+         $username = "mdrafsan";
+         $password = "50100208";
+         $dbname = "cse442_542_2020_spring_teamg_db";
+    
+         $dbh = testdb_connect ($host, $username, $password);
+         $classId = $_GET['allclassi'];
+    
+         $query = "DELETE FROM POSTS WHERE id=".$_GET["postToDelete"];
+
+         $stmt = $dbh->prepare( $query );
+         $product_id=1;
+         $stmt->bindParam(1, $product_id);
+         $stmt->execute();
+         $row = $stmt->fetch(PDO::FETCH_ASSOC);                
+    }
+} 
+    
 if (isset($_GET['classi']) ||  isset($_GET['allclassi'])){
     //to differentiate between all classes and user's classes
     if (!isset($_GET['classi'])){
@@ -30,20 +55,38 @@ if (isset($_GET['classi']) ||  isset($_GET['allclassi'])){
     $namerow = $rows['name'];
     $numrow = $rows['classnum'];
     $classnamefull = $namerow.$numrow;
-
-
+    
     echo '<strong style="font-size: xx-large">';
     echo $classnamefull;
-     echo  '</strong>';
+    echo  '</strong>';
+    $totalPOSTS = 0;
+    $totalUsers = mysqli_query($conn, "SELECT COUNT(*) FROM POSTS where classid = '$classid'");
+        while ($row = $totalUsers->fetch_assoc()) {
+            $totalPOSTS = $row['COUNT(*)'];
+                        
+
+            
+    }
+    
+    $totalStudents = 0;
+    $totalUsers = mysqli_query($conn, "SELECT COUNT(*) FROM userclasses where classid = '$classid'");
+        while ($row = $totalUsers->fetch_assoc()) {
+            $totalStudents = $row['COUNT(*)'];
+                        
+            
+    }
+    
+    
+    
+    echo '<strong style="border: solid 1px; border-color:black; background: white; font-size: normal; color:black; margin: 100px; padding:10px" >';
+            echo "At a glance: Total Posts: ".$totalPOSTS."  "." Total Students: ".$totalStudents;
+                echo  '</strong>';
 
 }
 ?>
 <div>
     <form action="" method="post">
         <textarea input type="text" name="number1" cols="40" rows="5" style="margin-bottom:10px;width:1200px;height: 150px;border: 4px solid #e0b1b1;margin-top: 15px;background-color: white;"></textarea>
-
-
-
         <p><input type="submit"/></p>
         <hr style="margin-top: 0px;">
 </div>
@@ -68,10 +111,17 @@ try {
     $result = $conn->query($sql);
     if ($result->num_rows > 0) {
         echo "<table><tr><th></th><th></th></tr>";
-
         while($row = $result->fetch_assoc()) {
-            echo "<tr><td>".$row["subject"]." - "." ".$row["content"]."</td></tr>";
             $postID = $row["id"];
+            $OPID = $row['userid'];
+            if ($_SESSION['id'] == $row['userid']) {
+                $classId = $_GET['allclassi'];
+
+                echo "<tr><td>"."<button onclick=\"location.href='post-thread.php?allclassi=$classId&&postToDelete=$postID&&OPID=$OPID'\" style=\"border-style: solid; border-radius: 5px;margin-left: 500px; padding-left: 10px; padding-right: 10px;border-color: red;background-color:red; color:white;\"type=\"button\">Delete Post</button>"."</td></tr>";
+            }
+            $postID = $row["id"];
+            
+            echo "<tr><td>".$row["subject"]." - "." ".$row["content"]."</td></tr>";
             $OPID = $row['userid'];
             $userq = mysqli_query($conn, "select username, name, picture_path from users where id = '$OPID'");
             $userrows=mysqli_fetch_array($userq);
@@ -89,9 +139,10 @@ try {
             echo "<tr><td>Posted on: ";
             echo $OPdate;
 
-            echo "<tr><td>"."<button name= \"likePressed\" class=\"button-class\" style=\"border-style: solid; border-radius: 5px;margin-left: 500px; padding-left: 10px; padding-right: 10px;border-color: red;background-color:lime; color:blue\" value=\"$postID\">Delete Comment </button>"."</td></tr>";
-            echo "<tr><td>"."<button onclick=\"location.href='expandedPost.php?post_id=$postID'\" type=\"button\">Go To Post</button>"."<hr>"."</td></tr>";
 
+            echo "<tr><td>"."<button onclick=\"location.href='expandedPost.php?post_id=$postID'\" type=\"button\">Go To Post</button>"."<hr>"."</td></tr>";
+            
+            
         }
         echo "</table>";
     } else {
@@ -105,16 +156,21 @@ try {
 if (isset($_POST['number1'])) {
     $dbh = testdb_connect ($host, $username, $password);
     $description = addslashes ($_POST['number1']);
-    $OP = $_SESSION['id'];
-    $date = date('Y/m/d H:i:s');
-    $query = "INSERT INTO POSTS ". "(subject,content, date, classid, userid) "."VALUES ". "('->','$description','$date', $classid, $OP )";
+    
+    if ($description != "") {
+        $OP = $_SESSION['id'];
+        $date = date('Y/m/d H:i:s');
+        $query = "INSERT INTO POSTS ". "(subject,content, date, classid, userid) "."VALUES ". "('->','$description','$date', $classid, $OP )";
 
-    $stmt = $dbh->prepare( $query );
-    $product_id=1;
-    $stmt->bindParam(1, $product_id);
-    $stmt->execute();
-    $row = $stmt->fetch(PDO::FETCH_ASSOC);
-    echo "<meta http-equiv='refresh' content='0'>";
-
+        $stmt = $dbh->prepare( $query );
+        $product_id=1;
+        $stmt->bindParam(1, $product_id);
+        $stmt->execute();
+        $row = $stmt->fetch(PDO::FETCH_ASSOC);
+        echo "<meta http-equiv='refresh' content='0'>";
+        echo $_COOKIE['post'];
+    }
+    
 }
+    
 ?>
