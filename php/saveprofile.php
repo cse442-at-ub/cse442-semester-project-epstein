@@ -1,5 +1,8 @@
 <?php session_start();
 	  //get data to store
+	  if (!isset($_SESSION['id'])) {
+	    header('Location: loginpage.php');
+		}
 	  $name = $_POST['fullname'];
 	  $picture_file = $_FILES['uploadpic'];
       $major = $_POST['majorinput'];
@@ -86,15 +89,17 @@
        linkedin = '$linkedin', github = '$github', biography = '$bio',
        skills = '$skills' WHERE users .id = '$id'";
 		}
-	   $host = "tethys.cse.buffalo.edu";
+	    include ('conn.php');
 
-	   $username = "jjgrimm";
-	   $password = "50240176";
-	   $dbh = new PDO("mysql:host=$host;dbname=cse442_542_2020_spring_teamg_db", $username, $password);
-       
-       $stmt = $dbh->prepare( $query );
-		
-		$stmt->execute();
+	  $result = mysqli_query($conn, $query) or die(mysqli_error());
+
+		if ($result){ // I would usually use mysql_insert_id as a validation from auto_increment tables.
+			header("Location:profile.php");
+			exit;
+		} else {
+			echo "<p> There was an error when creating the subject </p>
+			<p>". mysqli_error()."</p>" ;
+		}
 
     echo "<meta http-equiv='refresh' content='0'>";
 

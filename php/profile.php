@@ -17,7 +17,12 @@
        //connect to database, pull the appropriate row from the user database for whoever is logged in
        include('conn.php');
        $userid=$_SESSION['id'];
-       $userrow=mysqli_fetch_array(mysqli_query($conn,"select * from users where id='$userid'"));
+	   $profileid=$_GET['profileid'];
+	   $is_user = "false";
+	   if($userid==$profileid){
+			$is_user = "true";
+	   }
+       $userrow=mysqli_fetch_array(mysqli_query($conn,"select * from users where id='$profileid'"));
     
        //create all the variables to be used in the html elements
 	   $name=$userrow['name'];
@@ -30,7 +35,7 @@
        $skills=$userrow['skills'];
        
        //gets all class-user data
-        $allclasses = mysqli_query($conn, "select * from `userclasses` where userid ='$userid'");
+        $allclasses = mysqli_query($conn, "select * from `userclasses` where userid ='$profileid'");
         if (!$allclasses){
             echo "Error accessing class list";
         }
@@ -50,11 +55,17 @@ echo '
 		<img id="profile_pic" src = "'.$profile_pic.'" width=100px; height=100px;></img>
 		<div class="text" id="name">
 		<p id = "name_text">'.$name.'</p>
-		</div>
-		<img class = "icons" onclick="openDM()" title="Start direct message" src = "../images/message.svg" width = "26" height ="26"></img>
-	    <img class="icons" onclick="share()" title="Copy profile link" src = "../images/share.svg" width = "26" height ="26"></img>
-		<img class="icons" onClick="edit();" title="Edit profile" src = "../images/edit.svg" width = "26" height ="26" id="edit"></img>
-		<div class="info">
+		</div>';
+	if($is_user=="false"){
+		echo '<button class = "icons" onclick="location.href=\'directmessage.php?user_id='.$profileid.'\'" title="Start direct message" style="background: url(../images/message.svg); height:30px;width:30px"></button>';
+	}
+	echo '<img class="icons" onclick="share()" title="Copy profile link" src = "../images/share.svg" width = "26" height ="26"></img>';
+	if($is_user=="true"){
+		echo '<img class="icons" onClick="edit();" title="Edit profile" src = "../images/edit.svg" width = "26" height ="26" id="edit"></img>';
+	}
+	
+	echo '
+       	<div class="info">
 		<div class="smalltext" id="major">
 		<p id = "major_text">Major: '.$major.'</p>
 		</div>
