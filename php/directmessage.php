@@ -64,8 +64,10 @@ try {
 					$message_id = $row['id'];
 				}
 				$row = mysqli_fetch_row($message_results);
+				
 			}
-			
+			$recipient_id = $target_id;
+			$sender_id = $userid;
 			
 		}
 		if(isset($message_id)){
@@ -118,12 +120,16 @@ try {
 				$query = "INSERT INTO direct_messages (lastid, recipient_id, sender_id, message) VALUES ('$lastid', '$sender_id', '$userid', '$message')";
 
 				$result = mysqli_query($conn, $query); 
-				$query1 = "SELECT id from direct_messages where lastid = '$lastid'";
-				$newidq = mysqli_query($conn, $query1);
-				$row = mysqli_fetch_array($newidq);
-				$newid = $row['id'];
-				header("Refresh:0; url=directmessage.php?msg_id=$newid");
-
+				if($lastid!=-1){
+					$query1 = "SELECT id from direct_messages where lastid = '$lastid'";
+					$newidq = mysqli_query($conn, $query1);
+					$row = mysqli_fetch_array($newidq);
+					$newid = $row['id'];
+					header("Refresh:0; url=directmessage.php?msg_id=$newid");
+				}
+				else{
+					header("Refresh:0; url=directmessage.php?user_id=$recipient_id");
+				}
 		}
 		echo "</table>
 		</p>
