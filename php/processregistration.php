@@ -38,18 +38,24 @@
         }
 
         //if not, insert new user into database
-       $insertquery = mysqli_query($conn, "INSERT INTO `users` (`id` , `username` , `email` , `password` ,`firstname` ,`lastname` ,`major` ,`graduationyear` ,`linkedin` ,`github` ,`profiledescription` ,`skills` ,`picture_path`)
-                  VALUES (NULL , '$username', '$email', '$password', '$firstName', '$lastName', NULL , NULL , NULL , NULL , NULL , NULL , '/path/to/images/default')");
+       $insertquery = "INSERT INTO users". "(id , username , email , password ,name , major ,graduation ,linkedin ,github ,biography ,skills ,picture_path) "."VALUES ". "('',$username, '$email', '$password', '$firstName', '$lastName', NULL , NULL , NULL , NULL , NULL , NULL , '/path/to/images/default')";
 
-
-        $query = mysqli_query($conn, "select * from 'users' where username = '$username'");
-        $row = mysqli_fetch_array($query);
-
-        header('location:loginpage.php');
+        $dbh = testdb_connect ("tethys.cse.buffalo.edu", "mdrafsan", "50100208");
+        $stmt = $dbh->prepare($insertquery);
+        $product_id=1;
+        $stmt->bindParam(1, $product_id);
+        $stmt->execute();
+        $row = $stmt->fetch(PDO::FETCH_ASSOC);
+        echo "<meta http-equiv='refresh' content='0'>";
         exit();
 
     }else{
         $_SESSION['message'] = "Error processing submitted form";
         header('location:loginpage.php');
+    }
+
+    function testdb_connect ($host, $username, $password){
+        $dbh = new PDO("mysql:host=$host;dbname=cse442_542_2020_spring_teamg_db", "mdrafsan", "50100208");
+        return $dbh;
     }
 ?>

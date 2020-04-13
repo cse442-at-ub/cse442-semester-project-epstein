@@ -23,13 +23,15 @@
             <img src = "../images/heis.png" width = "50" height ="50">
         </button>
 
-
-        <div class="dropdown-content">
-            <a href="profile.php">View Profile</a>
+<?php
+		 $userid=$_SESSION['id'];
+    echo   ' <div class="dropdown-content">
+            <a href="profile.php?profileid='.$userid.'">View Profile</a>
+	        <a href="inbox.php">View Inbox</a>
             <a href="logout.php">Sign Out</a>
         </div>
-    </div>
-
+    </div>';
+?>
 
 </header>
 
