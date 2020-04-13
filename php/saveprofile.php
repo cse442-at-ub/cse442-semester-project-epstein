@@ -76,8 +76,9 @@
 	   	    $randomid = "1000" . strval($id*3);
 			$localdir = "../images/profile/" . $randomid . basename($_FILES['uploadpic']['name']);
 			$upload_file = $uploaddir . $randomid . basename($_FILES['uploadpic']['name']);
-			copy($_FILES['uploadpic']['tmp_name'], $upload_file);
+			move_uploaded_file($_FILES['uploadpic']['tmp_name'], $upload_file);
 			chmod($upload_file, 0777);
+			$name = $_SERVER['DOCUMENT_ROOT'];
 			$query = "update cse442_542_2020_spring_teamg_db.users set name = '$name', major = '$major', graduation = '$year',
 			linkedin = '$linkedin', github = '$github', biography = '$bio',
 			skills = '$skills', picture_path = '$localdir' WHERE users .id = '$id'";
