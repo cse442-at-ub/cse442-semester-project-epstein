@@ -105,18 +105,7 @@ echo '
 	</div>
 
     <div class = "column" id = "right-side-wrapper">
-		 <script type = "text/javascript">
-
-            function rightclk(elem) {
-                document.getElementById("allclassinput").setAttribute("value", elem);
-                document.getElementById("allclassform").submit();
-            }
-
-            function unsubscribe(elem){
-                document.getElementById("unsubinput").setAttribute("value", elem);
-                document.getElementById("classform").submit();
-            }
-        </script>
+		
 		<div class="smalltext" id="class_text">Registered Classes</div>
 	    <form name = "classf" id = "classform" method = "POST" action = "post-thread.php">
                <input name = "classi" type = "hidden" id = "classinput" value = "">
@@ -141,7 +130,7 @@ echo '
 						  } 
         echo '</ul>
               </form>
-
+	
 		 
 		
 	</div>
@@ -150,7 +139,18 @@ echo '
 
 
 </section>
+ <script type = "text/javascript">
 
+            function rightclk(elem) {
+                document.getElementById("allclassinput").setAttribute("value", elem);
+                document.getElementById("allclassform").submit();
+            }
+
+            function unsubscribe(elem){
+                document.getElementById("unsubinput").setAttribute("value", elem);
+                document.getElementById("classform").submit();
+            }
+        </script>
 
   <section class = "edit-profile-section" id="edit-section">
   	<form action="saveprofile.php" method = "POST" enctype="multipart/form-data">
