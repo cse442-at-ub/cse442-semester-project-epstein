@@ -169,7 +169,7 @@ try {
             $OPpath = $userrows['picture_path'];
             //display OP
             echo "<tr><td>Posted by: ";
-            echo $OPuser;
+            echo "<tr><td><button onclick=\"location.href='profile.php?profileid=$OPID'\" type=\"button\" style = color:brown>".$OPuser."</button>";
             echo "<tr><td>Date posted: ";
             echo $row["datePosted"];
             //display OP image
