@@ -72,9 +72,9 @@
        }
 	   
 	   //
-	   $uploaddir = $_SERVER['DOCUMENT_ROOT'] . "/images/profile/";
+	   $uploaddir = $_SERVER['DOCUMENT_ROOT'] . "/images/";
 	   	   $randomid = "1000" . strval($id*3);
-	   $localdir = "../images/profile/" . $randomid . basename($_FILES['uploadpic']['name']);
+	   $localdir = "../images/" . $randomid . basename($_FILES['uploadpic']['name']);
 	   $upload_file = $uploaddir . $randomid . basename($_FILES['uploadpic']['name']);
 	   move_uploaded_file($_FILES['uploadpic']['tmp_name'], $upload_file);
 		$query = "";
