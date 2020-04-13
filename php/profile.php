@@ -140,7 +140,10 @@ echo '
 
 </section>
  <script type = "text/javascript">
-
+			 function leftclk(elem) {
+                document.getElementById("classinput").setAttribute("value", elem);
+                document.getElementById("classform").submit();
+            }
             function rightclk(elem) {
                 document.getElementById("allclassinput").setAttribute("value", elem);
                 document.getElementById("allclassform").submit();
