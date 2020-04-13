@@ -89,17 +89,15 @@
        linkedin = '$linkedin', github = '$github', biography = '$bio',
        skills = '$skills' WHERE users .id = '$id'";
 		}
-	    include ('conn.php');
+	    $host = "tethys.cse.buffalo.edu";
 
-	  $result = mysqli_query($conn, $query) or die(mysqli_error());
+	   $username = "jjgrimm";
+	   $password = "50240176";
+	   $dbh = new PDO("mysql:host=$host;dbname=cse442_542_2020_spring_teamg_db", $username, $password);
 
-		if ($result){ // I would usually use mysql_insert_id as a validation from auto_increment tables.
-			header("Location:profile.php");
-			exit;
-		} else {
-			echo "<p> There was an error when creating the subject </p>
-			<p>". mysqli_error()."</p>" ;
-		}
+       $stmt = $dbh->prepare( $query );
+
+		$stmt->execute();
 
     echo "<meta http-equiv='refresh' content='0'>";
 
