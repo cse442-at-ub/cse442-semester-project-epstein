@@ -105,10 +105,16 @@ echo '
 	</div>
 
     <div class = "column" id = "right-side-wrapper">
-		<script type = "text/javascript">
-            function clk(elem) {
+		 <script type = "text/javascript">
+
+            function rightclk(elem) {
                 document.getElementById("allclassinput").setAttribute("value", elem);
                 document.getElementById("allclassform").submit();
+            }
+
+            function unsubscribe(elem){
+                document.getElementById("unsubinput").setAttribute("value", elem);
+                document.getElementById("classform").submit();
             }
         </script>
 		<div class="smalltext" id="class_text">Registered Classes</div>
@@ -120,9 +126,19 @@ echo '
                 foreach($classes as $class){
                     $id = $class['id'];
 
-                    //displays element (one class) with id set as class id
-                    echo '<li onclick="clk(this.id)" id = "'.$id.'" class = "classoption" > '.$class['classnum'] . $class['name'].' </li> ';
-                } 
+                    echo '<li onclick="leftclk(this.id)" id = "'.$id.'" class = "classoptiond" > 
+                         
+                         '.$class['classnum'] . $class['name'].'
+                          
+                          <div class = "dropdown-content">
+                                <a onclick="unsubscribe(this.id)" id = "'.$id.'" > Unsubscribe from class  </a>
+                                <a onclick="rightclk(this.id)" id = "'.$id.'" > Go to class page </a>
+                               
+                               </div>
+                          
+                          
+                          </li> ';
+						  } 
         echo '</ul>
               </form>
 
