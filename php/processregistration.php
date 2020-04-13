@@ -5,6 +5,7 @@
         // get values passed in from userRegistration.php
         $firstName = $_POST['firstName'];
         $lastName = $_POST['lastName'];
+        $name = $firstName.$lastName;
         $email = $_POST['email'];
         $username = $_POST['username'];
         $password = $_POST['pass'];
@@ -38,24 +39,19 @@
         }
 
         //if not, insert new user into database
-       $insertquery = "INSERT INTO users". "(id , username , email , password ,name , major ,graduation ,linkedin ,github ,biography ,skills ,picture_path) "."VALUES ". "('',$username, '$email', '$password', '$firstName', '$lastName', NULL , NULL , NULL , NULL , NULL , NULL , '/path/to/images/default')";
+       $insertquery = mysqli_query($conn, "INSERT INTO `users` (username , email , password , name )
+                  VALUES ('$username', '$email', '$password', '$name')");
 
-        $dbh = testdb_connect ("tethys.cse.buffalo.edu", "mdrafsan", "50100208");
-        $stmt = $dbh->prepare($insertquery);
-        $product_id=1;
-        $stmt->bindParam(1, $product_id);
-        $stmt->execute();
-        $row = $stmt->fetch(PDO::FETCH_ASSOC);
-        echo "<meta http-equiv='refresh' content='0'>";
+
+        $query = mysqli_query($conn, "select * from 'users' where username = '$username'");
+        $row = mysqli_fetch_array($query);
+
+        header('location:loginpage.php');
         exit();
 
     }else{
         $_SESSION['message'] = "Error processing submitted form";
         header('location:loginpage.php');
-    }
-
-    function testdb_connect ($host, $username, $password){
-        $dbh = new PDO("mysql:host=$host;dbname=cse442_542_2020_spring_teamg_db", "mdrafsan", "50100208");
-        return $dbh;
+        exit();
     }
 ?>
