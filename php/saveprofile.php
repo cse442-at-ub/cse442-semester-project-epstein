@@ -1,4 +1,5 @@
 <?php session_start();
+  	 	include ('conn.php');			
 	  //get data to store
 	  $name = $_POST['fullname'];
 	  $picture_file = $_FILES['uploadpic'];
@@ -75,29 +76,25 @@
 	   $upload_file = $uploaddir . $randomid . basename($_FILES['uploadpic']['name']);
 	   move_uploaded_file($_FILES['uploadpic']['tmp_name'], $upload_file);
 		$query = "";
-		if(file_exists($upload_file)){
-			chmod($upload_file, 0777);
+		if(isset($picture_file)){
+		//	chmod($upload_file, 0777);
 			$query = "update cse442_542_2020_spring_teamg_db.users set name = '$name', major = '$major', graduation = '$year',
 			linkedin = '$linkedin', github = '$github', biography = '$bio',
 			skills = '$skills', picture_path = '$localdir' WHERE users .id = '$id'";
 		}
 		else{
+			echo "file doesnt exist";
 			$query = "update cse442_542_2020_spring_teamg_db.users set name = '$name', major = '$major', graduation = '$year',
        linkedin = '$linkedin', github = '$github', biography = '$bio',
        skills = '$skills' WHERE users .id = '$id'";
 		}
-	   $host = "tethys.cse.buffalo.edu";
-
-	   $username = "jjgrimm";
-	   $password = "50240176";
-	   $dbh = new PDO("mysql:host=$host;dbname=cse442_542_2020_spring_teamg_db", $username, $password);
-
-       $stmt = $dbh->prepare( $query );
-
-		$stmt->execute();
-
+		$result = mysqli_query($conn, $query); 
+		if($result){
 		header("Refresh:0; url=profile.php?profileid=$id");
-
+		}
+		else{
+			echo "FCUK";
+		}
 
 	class validate_profile {
 
