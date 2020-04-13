@@ -70,7 +70,7 @@
        }
 
 	   //
-	   $uploaddir = "/../images/profile/";
+	   $uploaddir = "images/profile/";
 	   	   $randomid = "1000" . strval($id*3);
 	   $localdir = "../images/profile/" . $randomid . basename($_FILES['uploadpic']['name']);
 	   $upload_file = $uploaddir . $randomid . basename($_FILES['uploadpic']['name']);
@@ -88,12 +88,8 @@
        skills = '$skills' WHERE users .id = '$id'";
 		}
 		$result = mysqli_query($conn, $query); 
-		if($result){
 		header("Refresh:0; url=profile.php?profileid=$id");
-		}
-		else{
-			echo "FCUK";
-		}
+
 
 	class validate_profile {
 
