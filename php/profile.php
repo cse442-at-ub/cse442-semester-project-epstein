@@ -29,8 +29,18 @@
        $profile_pic=$userrow['picture_path'];
        $major=$userrow['major'];
        $year=$userrow['graduation'];
-       $linkedin=$userrow['linkedin'];
-       $github=$userrow['github'];
+	   if($userrow['linkedin']==NULL){
+		   $linkedin="https://www.linkedin.com/";
+	   }
+	   else{
+			$linkedin=$userrow['linkedin'];
+       }
+	    if($userrow['github']==NULL){
+		   $github="https://www.github.com/";
+	   }
+	   else{
+			$github=$userrow['github'];
+       }
        $bio=$userrow['biography'];
        $skills=$userrow['skills'];
        

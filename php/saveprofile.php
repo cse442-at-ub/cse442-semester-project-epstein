@@ -1,5 +1,4 @@
 <?php session_start();
-  	 	include ('conn.php');			
 	  //get data to store
 	  $name = $_POST['fullname'];
 	  $picture_file = $_FILES['uploadpic'];
@@ -70,13 +69,14 @@
        }
 
 	   //
-	   $uploaddir = "images/profile/";
-	   	   $randomid = "1000" . strval($id*3);
-	   $localdir = "../images/profile/" . $randomid . basename($_FILES['uploadpic']['name']);
-	   $upload_file = $uploaddir . $randomid . basename($_FILES['uploadpic']['name']);
-	   move_uploaded_file($_FILES['uploadpic']['tmp_name'], $upload_file);
+	   
 		$query = "";
-		if(isset($picture_file)){
+		if(isset($_FILES['uploadpic'])){
+			$uploaddir = "../images/profile/";
+	   	    $randomid = "1000" . strval($id*3);
+			$localdir = "../images/profile/" . $randomid . basename($_FILES['uploadpic']['name']);
+			$upload_file = $uploaddir . $randomid . basename($_FILES['uploadpic']['name']);
+			copy($_FILES['uploadpic']['tmp_name'], $upload_file);
 			chmod($upload_file, 0777);
 			$query = "update cse442_542_2020_spring_teamg_db.users set name = '$name', major = '$major', graduation = '$year',
 			linkedin = '$linkedin', github = '$github', biography = '$bio',
@@ -84,10 +84,13 @@
 		}
 		else{
 			$query = "update cse442_542_2020_spring_teamg_db.users set name = '$name', major = '$major', graduation = '$year',
-       linkedin = '$linkedin', github = '$github', biography = '$bio',
-       skills = '$skills' WHERE users .id = '$id'";
+			linkedin = '$linkedin', github = '$github', biography = '$bio',
+			skills = '$skills' WHERE users .id = '$id'";
 		}
-		$result = mysqli_query($conn, $query); 
+		 include ('conn.php');
+
+        $result = mysqli_query($conn, $query);
+		sleep(3);
 		header("Refresh:0; url=profile.php?profileid=$id");
 
 
