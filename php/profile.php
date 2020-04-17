@@ -60,7 +60,20 @@
             $classq = mysqli_fetch_array(mysqli_query($conn, "select * from classes where id ='$class_id'"));
             $classes[] = $classq;
         }
- 
+		$friend_ids = array();
+		$friends0 = mysqli_query($conn, "select friend1_id from `friends` where friend0_id ='$profileid' AND request_accepted = 1");
+		$friends1 = mysqli_query($conn, "select friend0_id from `friends` where friend1_id ='$profileid' AND request_accepted = 1");
+		while ($row = mysqli_fetch_assoc($friends0)){
+            $friend_ids[] = $row['friend1_id'];
+        }
+		while ($row = mysqli_fetch_assoc($friends1)){
+            $friend_ids[] = $row['friend0_id'];
+        }
+		$friends = array();
+		foreach($friend_ids as $friend_id){
+            $friendq = mysqli_fetch_array(mysqli_query($conn, "select * from users where id ='$friend_id'"));
+            $friends[] = $friendq;
+        }
 echo '
 		<img id="profile_pic" src = "'.$profile_pic.'" width=100px; height=100px;></img>
 		<div class="text" id="name">
@@ -68,6 +81,12 @@ echo '
 		</div>';
 	if($is_user=="false"){
 		echo '<button class = "icons" onclick="location.href=\'directmessage.php?user_id='.$profileid.'\'" title="Start direct message" style="background: url(../images/message.svg); height:30px;width:30px"></button>';
+		if(!in_array($userid, $friend_ids)){
+		echo '<button class = "icons" onclick="location.href=\'friendrequest.php?user_id='.$profileid.'\'" title="Friend Request" style="background: url(../images/friend.png); height:30px;width:30px"></button>';
+		}
+		else{
+		echo '<button class = "icons" onclick="location.href=\'removefriend.php?user_id='.$profileid.'\'" title="Remove Friend" style="background: url(../images/removefriend.svg); height:30px;width:30px"></button>';
+		}
 	}
 	echo '<img class="icons" onclick="share()" title="Copy profile link" src = "../images/share.svg" width = "26" height ="26"></img>';
 	if($is_user=="true"){
@@ -133,10 +152,22 @@ echo '
 	
 		 
 		
+
+		<div class="smalltext" id="class_text">Friends List</div>
+	
+			<nav>
+				<ul>';
+				 foreach($friends as $friend){
+                    $friendid = $friend['id'];
+
+                    echo '<button onclick="location.href=\'profile.php?profileid='.$friendid.'\'" type="button" style = color:brown>'.$friend['name'].'</button><br>';
+					} 
+				
+	echo '		</ul>
+			</nav>
+	
+		</div>
 	</div>
-
-
-
 
 </section>
  <script type = "text/javascript">
