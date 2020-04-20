@@ -160,34 +160,34 @@ try {
         while($row = $result->fetch_assoc()) {		
             $OPID = $row['userid'];
             $commentID = $row["id"];
-            if ($_SESSION['id'] == $row['userid']) {
-                echo "<tr><td>"."<button onclick=\"location.href='expandedPost.php?post_id=$post_id&&commentToDelete=$commentID&&OPID=$OPID'\" style=\"border-style: solid; border-radius: 5px;margin-left: 500px; padding-left: 10px; padding-right: 10px;border-color: red;background-color:red; color:white;\"type=\"button\">Delete Comment</button>"."</td></tr>";
-            }
+
             $userq = mysqli_query($conn, "select username, name, picture_path from users where id = '$OPID'");
             $userrows=mysqli_fetch_array($userq);
             $OPuser = $userrows['username'];
             $OPpath = $userrows['picture_path'];
             //display OP
-            echo "<tr><td>Posted by: ";
-            echo "<tr><td><button onclick=\"location.href='profile.php?profileid=$OPID'\" type=\"button\" style = color:brown>".$OPuser."</button>";
-            echo "<tr><td>Date posted: ";
+
+            echo "<div></div><tr><td><span style='background: #DCDCDC'>".$row["content"]."</span>";
+            if ($_SESSION['id'] == $row['userid']) {
+                echo "<div></div><tr><td>"."<button onclick=\"location.href='expandedPost.php?post_id=$post_id&&commentToDelete=$commentID&&OPID=$OPID'\" style=\"border-style: solid; border-radius: 2px;margin-left: 500px; padding-left: 3px; padding-right: 3px;border-color: red;background-color:red; color:white;\"type=\"button\">Delete Comment</button>"."</td></tr>";
+            }
+            if ($_SESSION['id'] == $OPID) {
+                echo "<tr><td><button onclick=\"location.href='editContent.php?post_id=$post_id&&comment_id=$commentID'\" type=\"button\" style = \"color:brown; float:right;\" '>Edit Comment</button></td></tr></div>";
+            }
+            echo "</td></tr></div>";
+            echo "<div><tr><td style = 'float:left'>Posted by: <button onclick=\"location.href='profile.php?profileid=$OPID'\" type=\"button\" style = color:brown>".$OPuser."</button></div></td></tr>";
+            echo "<tr><td style='float: right'>Date posted: ";
             echo $row["datePosted"];
             //display OP image
             echo "<img src='".$OPpath."' width='17' height='17' >
                   <tr></td>";
 
 
-            echo "<tr><td>".$row["content"]."</td></tr>";
 
             $totalUsers = mysqli_query($conn, "SELECT COUNT(*) FROM `likesReceived` where commentID='$post_id'");
 
             while ($row = $totalUsers->fetch_assoc()) {
                 echo "<tr><td>"."<button name= \"likePressed\" class=\"button-class\" style=\"border-style: solid; border-radius: 5px;margin-right: 10px; padding-left: 10px; padding-right: 10px;border-color: black;background-color:lime; color:black\" value=\"$post_id\">Likes </button>".$row['COUNT(*)'];
-            if ($_SESSION['id'] == $OPID) {
-
-                echo "<tr><td><button onclick=\"location.href='editContent.php?post_id=$post_id&&comment_id=$commentID'\" type=\"button\" style = color:brown>Edit Comment</button>";
-
-            }
 
              echo  "</td></tr>";
             }
