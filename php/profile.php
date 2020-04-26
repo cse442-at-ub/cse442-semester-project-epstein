@@ -80,17 +80,17 @@ echo '
 		<p id = "name_text">'.$name.'</p>
 		</div>';
 	if($is_user=="false"){
-		echo '<button class = "icons" onclick="location.href=\'directmessage.php?user_id='.$profileid.'\'" title="Start direct message" style="background: url(../images/message.svg); height:30px;width:30px"></button>';
+		echo '<button class = "icons" onclick="location.href=\'directmessage.php?user_id='.$profileid.'\'" title="Start direct message" style="background: url(../images/message.svg); height:40px;width:40px"></button>';
 		if(!in_array($userid, $friend_ids)){
-		echo '<button class = "icons" onclick="location.href=\'friendrequest.php?user_id='.$profileid.'\'" title="Friend Request" style="background: url(../images/friend.png); height:30px;width:30px"></button>';
+		echo '<button class = "icons" onclick="location.href=\'friendrequest.php?user_id='.$profileid.'\'" title="Friend Request" style="background: url(../images/friend.svg); height:40px;width:40px"></button>';
 		}
 		else{
-		echo '<button class = "icons" onclick="location.href=\'removefriend.php?user_id='.$profileid.'\'" title="Remove Friend" style="background: url(../images/removefriend.svg); height:30px;width:30px"></button>';
+		echo '<button class = "icons" onclick="location.href=\'removefriend.php?user_id='.$profileid.'\'" title="Remove Friend" style="background: url(../images/removefriend.png); height:40px;width:40px"></button>';
 		}
 	}
-	echo '<img class="icons" onclick="share()" title="Copy profile link" src = "../images/share.svg" width = "26" height ="26"></img>';
+	echo '<img class="icons" onclick="share()" title="Copy profile link" src = "../images/share.svg" width = "36" height ="36"></img>';
 	if($is_user=="true"){
-		echo '<img class="icons" onClick="edit();" title="Edit profile" src = "../images/edit.svg" width = "26" height ="26" id="edit"></img>';
+		echo '<img class="icons" onClick="edit();" title="Edit profile" src = "../images/edit.svg" width = "40" height ="40" id="edit"></img>';
 	}
 	
 	echo '
@@ -156,14 +156,14 @@ echo '
 		<div class="smalltext" id="class_text">Friends List</div>
 	
 			<nav>
-				<ul>';
+				';
 				 foreach($friends as $friend){
                     $friendid = $friend['id'];
 
                     echo '<button onclick="location.href=\'profile.php?profileid='.$friendid.'\'" type="button" style = color:brown>'.$friend['name'].'</button><br>';
 					} 
 				
-	echo '		</ul>
+	echo '		
 			</nav>
 	
 		</div>
