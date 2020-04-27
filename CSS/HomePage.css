@@ -158,7 +158,7 @@ removes left side div from screen when too small
 
 /* Show the dropdown menu on hover */
 .dropdown:hover .dropdown-content {display: block; left: auto;
-    right: auto;}
+    right: 4px;}
 
 .classoption{
     background: #ff9966;  /* fallback for old browsers */

@@ -29,8 +29,18 @@
        $profile_pic=$userrow['picture_path'];
        $major=$userrow['major'];
        $year=$userrow['graduation'];
-       $linkedin=$userrow['linkedin'];
-       $github=$userrow['github'];
+	   if($userrow['linkedin']==NULL){
+		   $linkedin="https://www.linkedin.com/";
+	   }
+	   else{
+			$linkedin=$userrow['linkedin'];
+       }
+	    if($userrow['github']==NULL){
+		   $github="https://www.github.com/";
+	   }
+	   else{
+			$github=$userrow['github'];
+       }
        $bio=$userrow['biography'];
        $skills=$userrow['skills'];
        
@@ -95,12 +105,7 @@ echo '
 	</div>
 
     <div class = "column" id = "right-side-wrapper">
-		<script type = "text/javascript">
-            function clk(elem) {
-                document.getElementById("allclassinput").setAttribute("value", elem);
-                document.getElementById("allclassform").submit();
-            }
-        </script>
+		
 		<div class="smalltext" id="class_text">Registered Classes</div>
 	    <form name = "classf" id = "classform" method = "POST" action = "post-thread.php">
                <input name = "classi" type = "hidden" id = "classinput" value = "">
@@ -110,12 +115,22 @@ echo '
                 foreach($classes as $class){
                     $id = $class['id'];
 
-                    //displays element (one class) with id set as class id
-                    echo '<li onclick="clk(this.id)" id = "'.$id.'" class = "classoption" > '.$class['classnum'] . $class['name'].' </li> ';
-                } 
+                    echo '<li onclick="leftclk(this.id)" id = "'.$id.'" class = "classoptiond" > 
+                         
+                         '.$class['classnum'] . $class['name'].'
+                          
+                          <div class = "dropdown-content">
+                                <a onclick="unsubscribe(this.id)" id = "'.$id.'" > Unsubscribe from class  </a>
+                                <a onclick="rightclk(this.id)" id = "'.$id.'" > Go to class page </a>
+                               
+                               </div>
+                          
+                          
+                          </li> ';
+						  } 
         echo '</ul>
               </form>
-
+	
 		 
 		
 	</div>
@@ -124,7 +139,21 @@ echo '
 
 
 </section>
+ <script type = "text/javascript">
+			 function leftclk(elem) {
+                document.getElementById("classinput").setAttribute("value", elem);
+                document.getElementById("classform").submit();
+            }
+            function rightclk(elem) {
+                document.getElementById("allclassinput").setAttribute("value", elem);
+                document.getElementById("allclassform").submit();
+            }
 
+            function unsubscribe(elem){
+                document.getElementById("unsubinput").setAttribute("value", elem);
+                document.getElementById("classform").submit();
+            }
+        </script>
 
   <section class = "edit-profile-section" id="edit-section">
   	<form action="saveprofile.php" method = "POST" enctype="multipart/form-data">

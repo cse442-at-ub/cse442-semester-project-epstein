@@ -183,7 +183,7 @@ try {
 
             //display OP
             echo "<tr><td>Posted by: ";
-            echo $OPuser;
+            echo "<tr><td><button onclick=\"location.href='profile.php?profileid=$OPID'\" type=\"button\" style = color:brown>".$OPuser."</button>";
             //display OP image
             echo "<img src='".$OPpath."' width='17' height='17' >
                   <tr></td>";
