@@ -134,6 +134,8 @@ if (isset($_GET['postToReport'])) {
 <br>
 <br>
 <output aria-live="polite"></output></div>';
+        
+        echo "<button onclick=\"location.href='announcements.php?allclassi=$classid'\" style=\"border-style: solid; margin-bottom:20px; border-radius: 5px; padding-left: 10px; padding-right: 10px;border-color: white;background-color:blue; height: 50px; color:white;\"type=\"button\">Announcements</button>";
 }
 ?>
 <div>
