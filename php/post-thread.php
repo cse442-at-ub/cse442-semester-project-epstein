@@ -16,41 +16,41 @@ if (!isset($_SESSION['id'])) {
 </head>
 <body>
 <?php
-    
-    
+
+
 if (isset($_GET['postToDelete']) && isset($_GET['OPID'])) {
     $currentUSERID = $_SESSION['id'];
     $requestUSERID = $_GET['OPID'];
-    
-    if ($currentUSERID == $requestUSERID) {
-         $host = "tethys.cse.buffalo.edu";
-         $username = "mdrafsan";
-         $password = "50100208";
-         $dbname = "cse442_542_2020_spring_teamg_db";
-    
-         $dbh = testdb_connect ($host, $username, $password);
-         $classId = $_GET['allclassi'];
-    
-         $query = "DELETE FROM POSTS WHERE id=".$_GET["postToDelete"];
 
-         $stmt = $dbh->prepare( $query );
-         $product_id=1;
-         $stmt->bindParam(1, $product_id);
-         $stmt->execute();
-         $row = $stmt->fetch(PDO::FETCH_ASSOC);                
+    if ($currentUSERID == $requestUSERID) {
+        $host = "tethys.cse.buffalo.edu";
+        $username = "mdrafsan";
+        $password = "50100208";
+        $dbname = "cse442_542_2020_spring_teamg_db";
+
+        $dbh = testdb_connect ($host, $username, $password);
+        $classId = $_GET['allclassi'];
+
+        $query = "DELETE FROM POSTS WHERE id=".$_GET["postToDelete"];
+
+        $stmt = $dbh->prepare( $query );
+        $product_id=1;
+        $stmt->bindParam(1, $product_id);
+        $stmt->execute();
+        $row = $stmt->fetch(PDO::FETCH_ASSOC);
     }
-} 
-    
+}
+
 if (isset($_GET['postToReport'])) {
     $host = "tethys.cse.buffalo.edu";
     $username = "mdrafsan";
     $password = "50100208";
     $dbname = "cse442_542_2020_spring_teamg_db";
-    
+
     $dbh = testdb_connect ($host, $username, $password);
     $postToReport = addslashes ($_GET['postToReport']);
     $classId = $_GET['allclassi'];
-    
+
     $query = "INSERT INTO reportedPosts ". "(postReported,classId) "."VALUES ". "('$postToReport','$classId' )";
 
     $stmt = $dbh->prepare( $query );
@@ -58,10 +58,10 @@ if (isset($_GET['postToReport'])) {
     $stmt->bindParam(1, $product_id);
     $stmt->execute();
     $row = $stmt->fetch(PDO::FETCH_ASSOC);
-    
+
 }
 
-    if (isset($_SESSION['class'])){
+if (isset($_SESSION['class'])){
 
     $classid = $_SESSION['class'];
 
@@ -71,34 +71,34 @@ if (isset($_GET['postToReport'])) {
     $namerow = $rows['name'];
     $numrow = $rows['classnum'];
     $classnamefull = $namerow.$numrow;
-    
+
     echo '<strong style="font-size: xx-large">';
     echo $classnamefull;
     echo  '</strong>';
     $totalPOSTS = 0;
     $totalUsers = mysqli_query($conn, "SELECT COUNT(*) FROM POSTS where classid = '$classid'");
     $totalUsers = mysqli_query($conn, "SELECT COUNT(*) FROM `POSTS` where classid = '$classid'");
-        while ($row = $totalUsers->fetch_assoc()) {
-            $totalPOSTS = $row['COUNT(*)'];
-                        
+    while ($row = $totalUsers->fetch_assoc()) {
+        $totalPOSTS = $row['COUNT(*)'];
 
-            
+
+
     }
-    
+
     $totalStudents = 0;
     $totalUsers = mysqli_query($conn, "SELECT COUNT(*) FROM userclasses where classid = '$classid'");
     $totalUsers = mysqli_query($conn, "SELECT COUNT(*) FROM `userclasses` where classid = '$classid'");
-        while ($row = $totalUsers->fetch_assoc()) {
-            $totalStudents = $row['COUNT(*)'];
-                        
-            
+    while ($row = $totalUsers->fetch_assoc()) {
+        $totalStudents = $row['COUNT(*)'];
+
+
     }
-    
+
     echo '<strong style="border: solid 1px; border-color:black; background: white; font-size: normal; color:black; margin: 100px; padding:10px" >';
-            echo "At a glance: Total Posts: ".$totalPOSTS."  "." Total Students: ".$totalStudents;
-                echo  '</strong>';
-    
-     echo '
+    echo "At a glance: Total Posts: ".$totalPOSTS."  "." Total Students: ".$totalStudents;
+    echo  '</strong>';
+
+    echo '
 <dialog id="favDialog">
   <form method="dialog">
     <p><label>Which post would you like to report? :
@@ -117,8 +117,8 @@ if (isset($_GET['postToReport'])) {
             echo "<option>".$row["content"]."</option>";
         }
     }
-        
-      echo '</select>
+
+    echo '</select>
     </label></p>
     <menu>
       <button value="cancel">Cancel</button>
@@ -137,9 +137,10 @@ if (isset($_GET['postToReport'])) {
 }
 ?>
 <div>
-    <div type = "text">POST:</div>
+    <div type = "text">Make a Post:</div>
     <form action="" method="post">
-        <textarea input type="text" name="number1" cols="40" rows="5" style="margin-bottom:10px;width:1200px;height: 150px;border: 4px solid #e0b1b1;margin-top: 15px;background-color: white;"></textarea>
+        <textarea placeholder = "Subject" type="text" name="subject"  cols="40" rows="5" style="margin-bottom:5px;width:1200px;height: 50px;border: 4px solid #e0b1b1;margin-top: 10px;background-color: white;"></textarea>
+        <textarea placeholder = "Content" type="text" name="content"  cols="40" rows="5" style="margin-bottom:5px;width:1200px;height: 115px;border: 4px solid #e0b1b1;margin-top: 10px;background-color: white;"></textarea>
         <p><input type="submit"/></p>
         <hr style="margin-top: 0px;">
 </div>
@@ -172,8 +173,10 @@ try {
                 echo "<tr><td>"."<button onclick=\"location.href='post-thread.php?allclassi=$classid&&postToDelete=$postID&&OPID=$OPID'\" style=\"border-style: solid; border-radius: 5px;margin-left: 500px; padding-left: 10px; padding-right: 10px;border-color: red;background-color:red; color:white;\"type=\"button\">Delete Post</button>"."</td></tr>";
             }
             $postID = $row["id"];
-            
-            echo "<tr><td>".$row["subject"]." - "." ".$row["content"]."</td></tr>";
+
+            echo "<tr><td style='font-weight: bold; font-size: larger'>".$row["subject"]."</td></tr>";
+            echo "<tr><td> "." ".$row["content"]."</td></tr>";
+
             $OPID = $row['userid'];
             $userq = mysqli_query($conn, "select username, name, picture_path from users where id = '$OPID'");
             $userrows=mysqli_fetch_array($userq);
@@ -182,12 +185,11 @@ try {
             $OPdate = $row['date'];
 
             //display OP
-            echo "<tr><td>Posted by: ";
-            echo "<tr><td><button onclick=\"location.href='profile.php?profileid=$OPID'\" type=\"button\" style = color:brown>".$OPuser."</button>";
+            echo "<tr><td>Posted by: <button onclick=\"location.href='profile.php?profileid=$OPID'\" type=\"button\" style = color:brown>".$OPuser."</button>";
             //display OP image
             echo "<img src='".$OPpath."' width='17' height='17' >
                   <tr></td>";
-            
+
             echo "<tr><td>Posted on: ";
             echo $OPdate;
 
@@ -200,8 +202,8 @@ try {
             echo "<hr></td></tr>";
             //to record which page to return to upon editing
             $_SESSION['fromExpanded'] = false;
-            
-            
+
+
         }
         echo "</table>";
     } else {
@@ -212,14 +214,15 @@ try {
     echo $e->getMessage();
 }
 
-if (isset($_POST['number1'])) {
+if (isset($_POST['content']) && isset($_POST['subject'])) {
     $dbh = testdb_connect ($host, $username, $password);
-    $description = addslashes ($_POST['number1']);
-    
-    if ($description != "") {
+    $sub = addslashes($_POST['subject']);
+    $cont = addslashes ($_POST['content']);
+
+    if ($cont != "") {
         $OP = $_SESSION['id'];
         $date = date('Y/m/d H:i:s');
-        $query = "INSERT INTO POSTS ". "(subject,content, date, classid, userid) "."VALUES ". "('->','$description','$date', $classid, $OP )";
+        $query = "INSERT INTO POSTS ". "(subject,content, date, classid, userid) "."VALUES ". "('$sub','$cont','$date', $classid, $OP )";
 
         $stmt = $dbh->prepare( $query );
         $product_id=1;
@@ -229,10 +232,10 @@ if (isset($_POST['number1'])) {
         echo "<meta http-equiv='refresh' content='0'>";
         echo $_COOKIE['post'];
     }
-    
+
 }
 
-    
+
 ?>
 <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js" type="text/javascript"></script>
 
@@ -245,15 +248,15 @@ if (isset($_POST['number1'])) {
 
     // "Update details" button opens the <dialog> modally
     updateButton.addEventListener('click', function onOpen() {
-      if (typeof favDialog.showModal === "function") {
-        favDialog.showModal();
-      } else {
-        alert("The <dialog> API is not supported by this browser");
-      }
+        if (typeof favDialog.showModal === "function") {
+            favDialog.showModal();
+        } else {
+            alert("The <dialog> API is not supported by this browser");
+        }
     });
     // "Favorite animal" input sets the value of the submit button
     selectEl.addEventListener('change', function onSelect(e) {
-      confirmBtn.value = selectEl.value;
+        confirmBtn.value = selectEl.value;
     });
     // "Confirm" button of form triggers "close" on dialog because of [method="dialog"]
     favDialog.addEventListener('close', function onClose() {
@@ -270,9 +273,9 @@ if (isset($_POST['number1'])) {
         }
 
     });
-    
-    
-    
-    
-    
+
+
+
+
+
 </script>
