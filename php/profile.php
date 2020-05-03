@@ -73,7 +73,7 @@ echo '
 	if($is_user=="true"){
 		echo '<img class="icons" onClick="edit();" title="Edit profile" src = "../images/edit.svg" width = "26" height ="26" id="edit"></img>';
 	}
-	
+	$profile = 1;
 	echo '
        	<div class="info">
 		<div class="smalltext" id="major">
@@ -107,9 +107,9 @@ echo '
     <div class = "column" id = "right-side-wrapper">
 		
 		<div class="smalltext" id="class_text">Registered Classes</div>
-	    <form name = "classf" id = "classform" method = "POST" action = "post-thread.php">
-               <input name = "classi" type = "hidden" id = "classinput" value = "">
-        
+	    <form name = "classf" id = "classform" method = "GET" action = "processclass.php?profile='.$profile.'">
+            <input name = "classi" type = "hidden" id = "classinput" >
+            <input name  = "profileunsubinput" type = "hidden" id = "profileunsubinput" >	
                <ul class = "classes-list">';
 
                 foreach($classes as $class){
@@ -145,12 +145,12 @@ echo '
                 document.getElementById("classform").submit();
             }
             function rightclk(elem) {
-                document.getElementById("allclassinput").setAttribute("value", elem);
-                document.getElementById("allclassform").submit();
+                document.getElementById("classinput").setAttribute("value", elem);
+                document.getElementById("classform").submit();
             }
 
             function unsubscribe(elem){
-                document.getElementById("unsubinput").setAttribute("value", elem);
+                document.getElementById("profileunsubinput").setAttribute("value", elem);
                 document.getElementById("classform").submit();
             }
         </script>
