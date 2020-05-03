@@ -73,6 +73,7 @@ try {
 					$query = "update cse442_542_2020_spring_teamg_db.favorites set commentid = '$newcomment_id', comment_time = '$new_time' WHERE favorites.id = '$favorite_id'";				
 					$result = mysqli_query($conn, $query); 
 					echo $post_content;
+					echo "<tr><td><button onclick=\"location.href='unfavorite.php?post_id=$post_id'\" type=\"button\">Unfavorite Class</button>"."<hr>"."</td></tr>";
 					echo "<br>Posted by: ".$poster_name."<br>";
 	
 	
