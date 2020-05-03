@@ -58,7 +58,6 @@ if (isset($_GET['postToReport'])) {
     $stmt->bindParam(1, $product_id);
     $stmt->execute();
     $row = $stmt->fetch(PDO::FETCH_ASSOC);
-    
 }
 
     if (isset($_SESSION['class'])){
@@ -235,44 +234,3 @@ if (isset($_POST['number1'])) {
     
 ?>
 <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js" type="text/javascript"></script>
-
-<script>
-    var updateButton = document.getElementById('updateDetails');
-    var favDialog = document.getElementById('favDialog');
-    var outputBox = document.querySelector('output');
-    var selectEl = document.querySelector('select');
-    var confirmBtn = document.getElementById('confirmBtn');
-
-    // "Update details" button opens the <dialog> modally
-    updateButton.addEventListener('click', function onOpen() {
-      if (typeof favDialog.showModal === "function") {
-        favDialog.showModal();
-      } else {
-        alert("The <dialog> API is not supported by this browser");
-      }
-    });
-    // "Favorite animal" input sets the value of the submit button
-    selectEl.addEventListener('change', function onSelect(e) {
-      confirmBtn.value = selectEl.value;
-    });
-    // "Confirm" button of form triggers "close" on dialog because of [method="dialog"]
-    favDialog.addEventListener('close', function onClose() {
-        if (favDialog.returnValue === "cancel") {
-        } else {
-            outputBox.value = "Your feedback has been sent to the instructor for "+ favDialog.returnValue;
-            document.cookie="post=favDialog.returnValue";
-            var vars = {};
-            var parts = window.location.href.replace(/[?&]+([^=&]+)=([^&]*)/gi, function(m,key,value) {
-                vars[key] = value;
-            });
-
-            window.location.href = "post-thread.php?allclassi=" + vars["allclassi"] + "&postToReport=" + favDialog.returnValue;
-        }
-
-    });
-    
-    
-    
-    
-    
-</script>
