@@ -197,7 +197,16 @@ try {
 
                 echo "<button onclick=\"location.href='editContent.php?post_id=$postID'\" type=\"button\"> Edit Post </button>";
             }
-            echo "<hr></td></tr>";
+			$user_id = $_SESSION['id'];
+			$favoritedq =  mysqli_query($conn, "select * from favorites where userid = '$user_id' AND postid = '$postID'");
+			if($favoritedq->num_rows==0){
+				echo "<button onclick=\"location.href='favorite.php?classid=$classid&post_id=$postID'\" type=\"button\">Favorite Post</button>";
+            }
+			else{
+				echo "<button onclick=\"location.href='unfavorite.php?classid=$classid&post_id=$postID'\" type=\"button\">Unfavorite Post</button>";
+			}
+			
+			echo "<hr></td></tr>";
             //to record which page to return to upon editing
             $_SESSION['fromExpanded'] = false;
             
