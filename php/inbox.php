@@ -34,26 +34,29 @@ try {
         while($row = $messages->fetch_assoc()) {
             $sender_id = $row['sender_id'];
 			if(!in_array($sender_id, $senders)){
-			array_push($senders, $sender_id);
-            $msgID = $row["id"];
-            $previous_msgID = $row['lastid'];
-            echo "<tr><td>".$row["message"]."</td></tr>";            
-            $senderq = mysqli_query($conn, "select name from users where id = '$sender_id'");
-            $sender_rows=mysqli_fetch_array($senderq);
-            $sender_name = $sender_rows['name'];
+				array_push($senders, $sender_id);
+				$msgID = $row["id"];
+				$previous_msgID = $row['lastid'];
+				echo "<tr><td>".$row["message"]."</td></tr>";            
+				$senderq = "select * from users where id = '$sender_id'";
+				$sender= $conn->query($senderq);
+				if($sender->num_rows>0){
+					$sender_row = $sender->fetch_assoc();
+					$sender_name = $sender_row['name'];
 
 
-            echo "<tr><td>Sent From: ";
-            echo $sender_name;
-            echo " <br> Date: " ;
-            echo substr($row['timestamp'], 5, 5);
-			echo " <br> Time: ";
-			echo substr($row['timestamp'], 11, 8);
-            echo      "</tr></td>";
+				echo "<tr><td>Sent From: ";
+				echo $sender_name;
+				echo " <br> Date: " ;
+				echo substr($row['timestamp'], 5, 5);
+				echo " <br> Time: ";
+				echo substr($row['timestamp'], 11, 8);
+				echo      "</tr></td>";
 
 
 
-            echo "<tr><td>"."<button onclick=\"location.href='directmessage.php?msg_id=$msgID'\" type=\"button\">Open Message Thread</button>"."<hr>"."</td></tr>";
+				echo "<tr><td>"."<button onclick=\"location.href='directmessage.php?msg_id=$msgID'\" type=\"button\">Open Message Thread</button>"."<hr>"."</td></tr>";
+				}
 			}
         }
     } else {
@@ -72,25 +75,27 @@ try {
         while($row = $messages->fetch_assoc()) {
             $recipient_id = $row['recipient_id'];
 			if(!in_array($recipient_id, $recipients)){
-			array_push($recipients, $recipient_id);
-            $msgID = $row["id"];
-            $previous_msgID = $row['lastid'];
-            echo "<tr><td>".$row["message"]."</td></tr>";            
-            $recipientq = mysqli_query($conn, "select name from users where id = '$recipient_id'");
-            $recipient_rows=mysqli_fetch_array($recipientq);
-            $recipient_name = $recipient_rows['name'];
+				array_push($recipients, $recipient_id);
+				$msgID = $row["id"];
+				$previous_msgID = $row['lastid'];
+				echo "<tr><td>".$row["message"]."</td></tr>";            
+				$recipientq = "select * from users where id = '$recipient_id'";
+				$recipient= $conn->query($recipientq);
+				if($recipient->num_rows>0){
+					$recipient_row = $recipient->fetch_assoc();
+					$recipient_name = $recipient_row['name'];
+
+				echo "<tr><td>Sent To: ";
+				echo $recipient_name;
+				echo " <br> Date: " ;
+				echo substr($row['timestamp'], 5, 5);
+				echo " <br> Time: ";
+				echo substr($row['timestamp'], 11, 8);
+				echo      "</tr></td>";
 
 
-            echo "<tr><td>Sent To: ";
-            echo $recipient_name;
-            echo " <br> Date: " ;
-            echo substr($row['timestamp'], 5, 5);
-			echo " <br> Time: ";
-			echo substr($row['timestamp'], 11, 8);
-            echo      "</tr></td>";
-
-
-            echo "<tr><td>"."<button onclick=\"location.href='directmessage.php?msg_id=$msgID'\" type=\"button\">Open Message Thread</button>"."<hr>"."</td></tr>";
+				echo "<tr><td>"."<button onclick=\"location.href='directmessage.php?msg_id=$msgID'\" type=\"button\">Open Message Thread</button>"."<hr>"."</td></tr>";
+				}
 			}
         }
         echo "</table>";
