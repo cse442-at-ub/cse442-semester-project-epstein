@@ -167,6 +167,17 @@ try {
              $stmt->bindParam(1, $product_id);
              $stmt->execute();
              $row = $stmt->fetch(PDO::FETCH_ASSOC);
+            
+            $query = "DELETE FROM POSTS WHERE content LIKE '%".$description."%'";
+
+             $stmt = $dbh->prepare( $query );
+             $product_id=1;
+             $stmt->bindParam(1, $product_id);
+             $stmt->execute();
+             $row = $stmt->fetch(PDO::FETCH_ASSOC);
+            
+            header("Refresh:0");
+
         } 
         
     }                    
