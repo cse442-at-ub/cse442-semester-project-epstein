@@ -53,8 +53,9 @@ if (!isset($_SESSION['id'])) {
                         //displaying Main post
                         $conn = new mysqli($host, $username, $password, $dbname);
                         $post_id = $_GET['post_id'];
-                        $sql = "SELECT userid, id, subject, content, date FROM POSTS where id=$post_id";
+                        $sql = "SELECT userid, id, subject, content, date, imagepath FROM POSTS where id=$post_id";
                         $result = $conn->query($sql);
+
 
 
                         if ($result->num_rows > 0) {
@@ -62,12 +63,18 @@ if (!isset($_SESSION['id'])) {
 
                             while($row = $result->fetch_assoc()) {
                                 $OPID = $row['userid'];
+                                $ipath = $row['imagepath'];
                                 $userq = mysqli_query($conn, "select username, name, picture_path from users where id = '$OPID'");
                                 $userrows=mysqli_fetch_array($userq);
                                 $OPuser = $userrows['username'];
                                 $OPpath = $userrows['picture_path'];
                                 echo "<tr><td style='font-weight: bold; font-size: larger'>"." ".""." ".$row["subject"]."</td></tr>";
                                 echo "<tr><td>"." ".""." ".$row["content"]."</td></tr>";
+
+                                if ($ipath != "none" && $ipath != "zero") {
+                                    echo '<tr><td><img src="'.$ipath.'"  width="400" height = "400">  </td></tr>';
+                                }
+
                                 if ($row['userid'] == $_SESSION['id']){
 
                                     echo "<tr><td><button onclick=\"location.href='editContent.php?post_id=$post_id'\" type=\"button\" style = color:brown>Edit Post</button> </td></tr>";

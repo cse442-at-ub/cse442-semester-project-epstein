@@ -72,7 +72,7 @@
 	   
 		$query = "";
 		if(isset($_FILES['uploadpic'])){
-			$uploaddir = $_SERVER['DOCUMENT_ROOT'] . "/CSE442-542/2020-spring/cse-442g/images/profile/";
+			$uploaddir = "../images/profile/";
 	   	    $randomid = "1000" . strval($id*3);
 			$localdir = "../images/profile/" . $randomid . basename($_FILES['uploadpic']['name']);
 			$upload_file = $uploaddir . $randomid . basename($_FILES['uploadpic']['name']);

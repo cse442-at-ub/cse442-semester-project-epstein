@@ -95,7 +95,7 @@ if (isset($_SESSION['class'])){
 
     }
 
-    echo '<strong style="border: solid 1px; border-color:black; background: white; font-size: normal; color:black; margin: 100px; padding:10px" >';
+    echo '<strong style="border: solid 1px; border-color:black; background: white;  color:black; margin: 100px; padding:10px" >';
     echo "At a glance: Total Posts: ".$totalPOSTS."  "." Total Students: ".$totalStudents;
     echo  '</strong>';
 
@@ -141,17 +141,24 @@ if (isset($_SESSION['class'])){
 ?>
 <div>
     <div type = "text">Make a Post:</div>
-    <form action="" method="post">
+    <form action="" method="post" enctype="multipart/form-data">
         <textarea placeholder = "Subject" type="text" name="subject"  cols="40" rows="5" style="margin-bottom:5px;width:1200px;height: 50px;border: 4px solid #e0b1b1;margin-top: 10px;background-color: white;"></textarea>
         <textarea placeholder = "Content" type="text" name="content"  cols="40" rows="5" style="margin-bottom:5px;width:1200px;height: 115px;border: 4px solid #e0b1b1;margin-top: 10px;background-color: white;"></textarea>
+        <br><label type="text">Attach image:  </label>
+        <input type="file" value = "Attach image" name="image" id="image" accept="image/gif, image/jpeg, image/png" />
         <p><input type="submit"/></p>
+
         <span>
-            <input type="text" name="searchQuery" style="margin-bottom:10px;font-style: bold;width:400px;height: 40px;border: 2px solid black;margin-top: 15px;background-color: white" placeholder="Search for posts...">
+            <input type="text" name="searchQuery" style="margin-bottom:10px;;width:400px;height: 40px;border: 2px solid black;margin-top: 15px;background-color: white" placeholder="Search for posts...">
         </span>
-        
+
         <hr style="margin-top: 0px;">
 </div>
 
+<div id = "image-container">
+    <a id = "x" type = text onclick="closeimage()">Close Image</a>
+    <img id = "image-holder">
+</div>
 
 </body></html>
 <?php
@@ -170,26 +177,27 @@ try {
         $classId = $_GET['allclassi'];
         $searchedQuery = $_POST['searchQuery'];
         $conn = new mysqli($host, $username, $password, $dbname);
-        $sql = "SELECT id, userid, subject, content, date FROM POSTS where classid = '$classid' AND content LIKE '%$searchedQuery%'";
+        $sql = "SELECT id, userid, subject, content, date, imagepath FROM POSTS where classid = '$classid' AND content LIKE '%$searchedQuery%'";
         $result = $conn->query($sql);
         if ($result->num_rows > 0) {
             echo "<table><tr><th></th><th></th></tr>";
             while($row = $result->fetch_assoc()) {
                 $postID = $row["id"];
                 $OPID = $row['userid'];
+                $ipath = $row['imagepath'];
                 if ($_SESSION['id'] == $row['userid']) {
 
                     echo "<tr><td>"."<button onclick=\"location.href='post-thread.php?allclassi=$classid&&postToDelete=$postID&&OPID=$OPID'\" style=\"border-style: solid; border-radius: 5px;margin-left: 500px; padding-left: 10px; padding-right: 10px;border-color: red;background-color:red; color:white;\"type=\"button\">Delete Post</button>"."</td></tr>";
                 }
-                $postID = $row["id"];
                 echo "<tr><td>"."<button onclick=\"location.href='post-thread.php?allclassi=$classid&&postToDelete=$postID&&OPID=$OPID'\" style=\"border-style: solid; border-radius: 5px;margin-left: 500px; padding-left: 10px; padding-right: 10px;border-color: red;background-color:red; color:white;\"type=\"button\">Delete Post</button>"."</td></tr>";
-            
-            $postID = $row["id"];
 
-            echo "<tr><td style='font-weight: bold; font-size: larger'>".$row["subject"]."</td></tr>";
-            echo "<tr><td> "." ".$row["content"]."</td></tr>";
+            echo "<tr><td style='font-weight: bold; font-size: larger'>" . $row["subject"] . "</td></tr>";
+            echo "<tr><td> " . " " . $row["content"] . "</td></tr>";
 
-            $OPID = $row['userid'];
+            if ($ipath != "none" && $ipath != "zero") {
+                echo '<tr><td><img src="'.$ipath.'" onclick=showimage("'.$ipath.'"); id='.$postID.' width=100px; height=100px;>  </td></tr>';
+            }
+
             $userq = mysqli_query($conn, "select username, name, picture_path from users where id = '$OPID'");
             $userrows=mysqli_fetch_array($userq);
             $OPuser = $userrows['username'];
@@ -223,15 +231,8 @@ try {
 				echo "<hr></td></tr>";
                 //to record which page to return to upon editing
                 $_SESSION['fromExpanded'] = false;
-
-
-            
-
 			}
-            
-            
             echo "</table>";
-			
         } else {
             echo "0 results";
         }
@@ -239,13 +240,14 @@ try {
     } else {
         $conn = new mysqli($host, $username, $password, $dbname);
 
-        $sql = "SELECT id, userid, subject, content, date FROM POSTS where classid = '$classid'";
+        $sql = "SELECT id, userid, subject, content, date, imagepath FROM POSTS where classid = '$classid'";
         $result = $conn->query($sql);
         if ($result->num_rows > 0) {
             echo "<table><tr><th></th><th></th></tr>";
             while($row = $result->fetch_assoc()) {
                 $postID = $row["id"];
                 $OPID = $row['userid'];
+                $ipath = $row['imagepath'];
                 if ($_SESSION['id'] == $row['userid']) {
 
                     echo "<tr><td>"."<button onclick=\"location.href='post-thread.php?allclassi=$classid&&postToDelete=$postID&&OPID=$OPID'\" style=\"border-style: solid; border-radius: 5px;margin-left: 500px; padding-left: 10px; padding-right: 10px;border-color: red;background-color:red; color:white;\"type=\"button\">Delete Post</button>"."</td></tr>";
@@ -253,6 +255,9 @@ try {
                 $postID = $row["id"];
 
                 echo "<tr><td>".$row["subject"]." - "." ".$row["content"]."</td></tr>";
+                if ($ipath != "none" && $ipath != "zero") {
+                    echo '<tr><td><img src="'.$ipath.'" onclick=showimage("'.$ipath.'"); id='.$postID.' width=100px; height=100px;>  </td></tr>';
+                }
                 $OPID = $row['userid'];
                 $userq = mysqli_query($conn, "select username, name, picture_path from users where id = '$OPID'");
                 $userrows=mysqli_fetch_array($userq);
@@ -304,29 +309,111 @@ try {
 }
 
 
-if (isset($_POST['content']) && isset($_POST['subject'])) {
-    $dbh = testdb_connect ($host, $username, $password);
+
+if (isset($_POST['content']) && isset($_POST['subject']) && !isset($_FILES['image'])) {
+    $dbh = new mysqli($host, $username, $password, $dbname);
+
     $sub = addslashes($_POST['subject']);
     $cont = addslashes ($_POST['content']);
 
     if ($cont != "") {
         $OP = $_SESSION['id'];
         $date = date('Y/m/d H:i:s');
-        $query = "INSERT INTO POSTS ". "(subject,content, date, classid, userid) "."VALUES ". "('$sub','$cont','$date', $classid, $OP )";
+        $query = "INSERT INTO POSTS ". "(subject,content, date, classid, userid, imagepath) "."VALUES ". "('$sub','$cont','$date', $classid, $OP, 'zero' )";
+        $execute = mysqli_query($dbh, $query);
+        echo "<meta http-equiv='refresh' content='0'>";
+        echo $_COOKIE['post'];
+    }
+//not duplicate - just have two seperate conditionals for an image being present/not present
+}else if (isset($_POST['content']) && isset($_POST['subject']) && isset($_FILES['image'])) {
+    $dbh = new mysqli($host, $username, $password, $dbname);
+    $sub = addslashes($_POST['subject']);
+    $cont = addslashes ($_POST['content']);
 
-        $stmt = $dbh->prepare( $query );
-        $product_id=1;
-        $stmt->bindParam(1, $product_id);
-        $stmt->execute();
-        $row = $stmt->fetch(PDO::FETCH_ASSOC);
+    if ($cont != "") {
+        $OP = $_SESSION['id'];
+        $date = date('Y/m/d H:i:s');
+        $query = "INSERT INTO POSTS ". "(subject,content, date, classid, userid, imagepath) "."VALUES ". "('$sub','$cont','$date', $classid, $OP, 'none')";
+        $execute = mysqli_query($dbh, $query);
+        $pid = mysqli_insert_id($dbh);
+
+        $image = $_FILES['image'];
+        if (!(valid_picture($image))) {
+            $_SESSION['message']="Picture must be less than 2MB";
+            sleep(2);
+            unset($_FILES['image']);
+            header('location:post-thread.php');
+            exit();
+        }
+        //iffy here
+
+        $uploaddir = "../images/postimages/";
+        $randomid = "1000" . strval(($pid*3));
+        $localdir = "../images/postimages/".$randomid;
+        $upload_file = $uploaddir . $randomid;
+        move_uploaded_file($_FILES['image']['tmp_name'], $upload_file);
+
+        //and past here
+        $query = mysqli_query($conn, "UPDATE POSTS SET imagepath = '$localdir' WHERE id = '$pid'");
+
+        unset($_FILES['image']);
+
         echo "<meta http-equiv='refresh' content='0'>";
         echo $_COOKIE['post'];
     }
 
 }
+function valid_picture($picture){
 
+    $size = $picture['size'];
+    $kbs = round($size / 1024 , 2);
+    if($kbs<2048){
+        return true;
+    }
+    return false;
+}
 
 ?>
+<style>
+    #image-container {
+        width: 500px;
+        height: auto;
+        position: sticky;
+        top: 20%;
+        left: 50%;
+        display: none;
+    }
+    #image-holder{
+        width: auto;
+        display: inherit;
+        flex-shrink: 0;
+        min-width: 100%;
+        min-height: 100%
+    }
+    #x{
+        position: absolute;
+        top: 0px;
+        right: 0px;
+        min-width: 100%;
+        min-height: 100%
+    }
+
+
+</style>
+<script>
+    function showimage(pid) {
+        var container = document.getElementById('image-container');
+        var img = document.getElementById('image-holder')
+        img.src = pid;
+        container.style.display = 'block';
+
+    }
+    function closeimage(){
+        var cont = document.getElementById('image-container');
+        cont.style.display = 'none';
+    }
+
+</script>
 
 <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js" type="text/javascript"></script>
 
