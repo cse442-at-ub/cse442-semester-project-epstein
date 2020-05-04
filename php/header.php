@@ -28,6 +28,8 @@
     echo   ' <div class="dropdown-content">
             <a href="profile.php?profileid='.$userid.'">View Profile</a>
 	        <a href="inbox.php">View Inbox</a>
+			<a href="favorites.php">View Favorited Posts</a>
+	        <a href="requests.php">View Friend Requests</a>
             <a href="logout.php">Sign Out</a>
         </div>
     </div>';

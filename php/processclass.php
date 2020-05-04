@@ -20,16 +20,30 @@ if (!empty($_GET['subinput'])){
     header('location:homepage.php');
     exit();
 }
-if (!empty($_GET['unsubinput'])){
-    $unsub_id = $_GET['unsubinput'];
-    $user_id = $_SESSION['id'];
-    $unsubque = mysqli_query($conn, "DELETE FROM `userclasses` WHERE classid = '$unsub_id' AND userid = '$user_id'");
-    if (!$unsubque){
-        echo 'failed';
-        exit();
-    }
-    header('location:homepage.php');
-    exit();
+if (!empty($_GET['unsubinput']) || !empty($_GET['profileunsubinput'])){
+ 
+	if(!isset($_GET['profileunsubinput'])){
+		$unsub_id = $_GET['unsubinput'];
+		$user_id = $_SESSION['id'];
+		$unsubque = mysqli_query($conn, "DELETE FROM `userclasses` WHERE classid = '$unsub_id' AND userid = '$user_id'");
+		if (!$unsubque){
+			echo 'failed';
+			exit();
+		}
+		header('location:homepage.php');
+		exit();
+	}
+	else{
+		$unsub_id = $_GET['profileunsubinput'];
+		$user_id = $_SESSION['id'];
+		$unsubque = mysqli_query($conn, "DELETE FROM `userclasses` WHERE classid = '$unsub_id' AND userid = '$user_id'");
+		if (!$unsubque){
+			echo 'failed';
+			exit();
+		}
+		header('location:profile.php?profileid='.$user_id.'');
+		exit();
+	}
 }
 
 //This part is used for redirection to class page
@@ -41,9 +55,10 @@ if (!empty($_GET['allclassi']) || !empty($_GET['classi'])) {
     } else {
         $classid = $_GET['classi'];
     }
-
+	
     $_SESSION['class'] = $classid;
-    header('location:post-thread.php');
+
+	header('location:post-thread.php');
     exit();
 }
 
