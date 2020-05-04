@@ -183,7 +183,7 @@ try {
                 }
                 $postID = $row["id"];
                 echo "<tr><td>"."<button onclick=\"location.href='post-thread.php?allclassi=$classid&&postToDelete=$postID&&OPID=$OPID'\" style=\"border-style: solid; border-radius: 5px;margin-left: 500px; padding-left: 10px; padding-right: 10px;border-color: red;background-color:red; color:white;\"type=\"button\">Delete Post</button>"."</td></tr>";
-            }
+            
             $postID = $row["id"];
 
             echo "<tr><td style='font-weight: bold; font-size: larger'>".$row["subject"]."</td></tr>";
@@ -227,10 +227,10 @@ try {
                 $_SESSION['fromExpanded'] = false;
 
 
-            }
+            
 			$user_id = $_SESSION['id'];
-			$favoritedq =  mysqli_query($conn, "select * from favorites where userid = '$user_id' AND postid = '$postID'");
-			if($favoritedq->num_rows==0){
+			$favoritedresult = $conn->query("select * from favorites where userid = '$user_id' AND postid = '$postID'");
+			if($favoritedresult->num_rows==0){
 				echo "<button onclick=\"location.href='favorite.php?classid=$classid&post_id=$postID'\" type=\"button\">Favorite Post</button>";
             }
 			else{
@@ -243,6 +243,7 @@ try {
             
             
             echo "</table>";
+			}
         } else {
             echo "0 results";
         }
