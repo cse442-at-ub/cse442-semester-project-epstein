@@ -48,32 +48,41 @@ $password = "50100208";
 $dbname = "cse442_542_2020_spring_teamg_db";
 // 2. connect to database
 try {
+    echo '<h3>Reported Posts</h3>';
+    echo '<br>';
     //displaying Main post
     $conn = new mysqli($host, $username, $password, $dbname);
-    $post_id = $_GET['post_id'];
-    $sql = "SELECT userid, id, subject, content, date FROM POSTS where id=$post_id";
+
+    $sql = "SELECT id, classnum, name, professor FROM classes where secret_key='$secret_key'";
     $result = $conn->query($sql);
+    echo "<table><tr><th></th><th></th></tr>";
     if ($result->num_rows > 0) {
-        echo "<table><tr><th></th><th></th></tr>";
-
         while($row = $result->fetch_assoc()) {
-            echo "<tr><td>"." ".""." ".$row["content"]."</td></tr>";
-            if ($row['userid'] == $_SESSION['id']){
+            $clasdId = $row["id"];
+            $sql = "SELECT postReported FROM reportedPosts where classId='$clasdId'";
+            $result = $conn->query($sql);
+            if ($result->num_rows > 0) {
+            echo "<table><tr><th></th><th></th></tr>";
 
-                echo "<tr><td><button onclick=\"location.href='editContent.php?post_id=$post_id'\" type=\"button\" style = color:brown>Edit Post</button> </td></tr>";
+            while($reportedPOST = $result->fetch_assoc()) {
+                $postAssoc = $reportedPOST["postReported"];
+                echo "<tr><td>"." ".""." ".$reportedPOST["postReported"]."</td></tr>";
+                echo "<tr><td>"."<button onclick=\"location.href='professorPanel.php?secret_key=$secret_key&&postToDelete=$postAssoc'\" style=\"border-style: solid; border-radius: 5px;margin-left: 500px; padding-left: 10px; padding-right: 10px;border-color: red;background-color:red; color:white;\"type=\"button\">Delete Post</button>"."</td></tr>";
+                echo "<tr><td>"."<hr>"."</td></tr>";
+
+
             }
-            echo "<tr><td>"." ".""." "."Posted On: ".$row["date"]."</td></tr>";
-            echo "<tr><td>"."<hr>"."</td></tr>";
-
-
+            echo "</table>";
+        } else {
+            echo "0 results";
         }
-        echo "</table>";
+        }
     } else {
     }
-    $_SESSION['fromExpanded'] = true;
 
 } catch(PDOException $e) {
 }
+
 ?>
                         <?php
                         echo '
@@ -143,81 +152,25 @@ try {
             $row = $stmt->fetch(PDO::FETCH_ASSOC);
         } 
         
-    }              
-
-    if (isset($_GET['commentToDelete']) && isset($_GET['OPID'])) {
-    $currentUSERID = $_SESSION['id'];
-    $requestUSERID = $_GET['OPID'];
+    } 
+                        
+     if ($_GET["postToDelete"]) {
         
-    
+        $dbh = testdb_connect ($host, $username, $password);
+        $description = addslashes ($_GET["postToDelete"]);
+        if ($description != "") {
+            
+            $query = "DELETE FROM reportedPosts WHERE postReported LIKE '%".$description."%'";
 
-    if ($currentUSERID == $requestUSERID) {
-         $host = "tethys.cse.buffalo.edu";
-         $username = "mdrafsan";
-         $password = "50100208";
-         $dbname = "cse442_542_2020_spring_teamg_db";
+             $stmt = $dbh->prepare( $query );
+             $product_id=1;
+             $stmt->bindParam(1, $product_id);
+             $stmt->execute();
+             $row = $stmt->fetch(PDO::FETCH_ASSOC);
+        } 
+        
+    }                    
 
-         $dbh = testdb_connect ($host, $username, $password);
-
-         $query = "DELETE FROM comments WHERE id=".$_GET["commentToDelete"];
-
-         $stmt = $dbh->prepare( $query );
-         $product_id=1;
-         $stmt->bindParam(1, $product_id);
-         $stmt->execute();
-         $row = $stmt->fetch(PDO::FETCH_ASSOC);
-        }
-    }
-
-    try {
-        $conn = new mysqli($host, $username, $password, $dbname);
-    $sql = "SELECT id, post_id, content, userid, datePosted FROM comments WHERE post_id='$post_id'";
-    $result = $conn->query($sql);		
-    if ($result->num_rows > 0) {		
-        echo "<table><tr><th></th><th></th></tr>";		
-        		
-        while($row = $result->fetch_assoc()) {		
-            $OPID = $row['userid'];
-            $commentID = $row["id"];
-            if ($_SESSION['id'] == $row['userid']) {
-                echo "<tr><td>"."<button onclick=\"location.href='expandedPost.php?post_id=$post_id&&commentToDelete=$commentID&&OPID=$OPID'\" style=\"border-style: solid; border-radius: 5px;margin-left: 500px; padding-left: 10px; padding-right: 10px;border-color: red;background-color:red; color:white;\"type=\"button\">Delete Comment</button>"."</td></tr>";
-            }
-            $userq = mysqli_query($conn, "select username, name, picture_path from users where id = '$OPID'");
-            $userrows=mysqli_fetch_array($userq);
-            $OPuser = $userrows['username'];
-            $OPpath = $userrows['picture_path'];
-            //display OP
-            echo "<tr><td>Posted by: ";
-            echo "<tr><td><button onclick=\"location.href='profile.php?profileid=$OPID'\" type=\"button\" style = color:brown>".$OPuser."</button>";
-            echo "<tr><td>Date posted: ";
-            echo $row["datePosted"];
-            //display OP image
-            echo "<img src='".$OPpath."' width='17' height='17' >
-                  <tr></td>";
-
-
-            echo "<tr><td>".$row["content"]."</td></tr>";
-
-            $totalUsers = mysqli_query($conn, "SELECT COUNT(*) FROM `likesReceived` where commentID='$post_id'");
-
-            while ($row = $totalUsers->fetch_assoc()) {
-                echo "<tr><td>"."<button name= \"likePressed\" class=\"button-class\" style=\"border-style: solid; border-radius: 5px;margin-right: 10px; padding-left: 10px; padding-right: 10px;border-color: black;background-color:lime; color:black\" value=\"$post_id\">Likes </button>".$row['COUNT(*)'];
-            if ($_SESSION['id'] == $OPID) {
-
-                echo "<tr><td><button onclick=\"location.href='editContent.php?post_id=$post_id&&comment_id=$commentID'\" type=\"button\" style = color:brown>Edit Comment</button>";
-
-            }
-
-             echo  "</td></tr>";
-            }
-
-            echo "<tr><td>"."<hr>"."</td></tr>";
-        }
-    }
-    } catch(PDOException $e) {
-    echo $e->getMessage();
-}
-        echo "</table>";
 ?>
 			</div>
 		</div>
