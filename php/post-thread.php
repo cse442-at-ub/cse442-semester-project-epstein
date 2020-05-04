@@ -50,7 +50,7 @@ if (isset($_GET['postToReport'])) {
 
     $dbh = testdb_connect ($host, $username, $password);
     $postToReport = addslashes ($_GET['postToReport']);
-    $classId = $_GET['allclassi'];
+    $classId = $_SESSION['class'];
 
     $query = "INSERT INTO reportedPosts ". "(postReported,classId) "."VALUES ". "('$postToReport','$classId' )";
 
